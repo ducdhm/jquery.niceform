@@ -29,12 +29,12 @@
     /**
      * Generate password regex
      * @method generatePasswordRegex
-     * @param {Int} min Minimum length of password
-     * @param {Int} max Maximum length of password
+     * @param {Number} min Minimum length of password
+     * @param {Number} max Maximum length of password
      * @param {String} specialCharacter List of special characters
-     * @param {Int} specialLength Number of required special character in password
-     * @param {Int} uppercaseLength Number of required uppercase character in password
-     * @param {Int} numberLength Number of digit character in password * 
+     * @param {Number} specialLength Number of required special character in password
+     * @param {Number} uppercaseLength Number of required uppercase character in password
+     * @param {Number} numberLength Number of digit character in password *
      */
     $.form.generatePasswordRegex = function (options) {
         var regexString = '(?=(?:.*[a-z]){1})';
@@ -57,7 +57,7 @@
     };
 
     $.form.addRule('required', {
-        validate: function (value, options) {
+        validate: function (control, value, options) {
             return !!value.trim();
         },
         useTemplate: false,
@@ -67,7 +67,7 @@
     });
 
     $.form.addRule('password', {
-        validate: function (value, options) {
+        validate: function (control, value, options) {
             var regex = $.form.generatePasswordRegex(options.password);
 
             return !!value.trim() && regex.test(value);
