@@ -48,7 +48,7 @@
         var targets = $(selector);
         var optionName;
 
-        targets.attr('data-valid-type');
+        targets.attr('data-valid-type', name);
 
         for (optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
@@ -154,7 +154,7 @@
             return options.regex.email.test(value);
         },
         message: function (control, controlName) {
-            return controlName + ' is invalid';
+            return controlName + ' is invalid!';
         }
     });
 
@@ -176,11 +176,35 @@
      * Url rule: Control value must be url
      */
     $.form.addRule('url', {
-        validate: function (control, gvalue, options) {
+        validate: function (control, value, options) {
             return options.regex.url.test(value);
         },
         message: function (control, controlName) {
-            return controlName + ' is invalid';
+            return controlName + ' is invalid!';
+        }
+    });
+
+    /**
+     * IP rule: Control value must be IP address
+     */
+    $.form.addRule('ip', {
+        validate: function (control, value, options) {
+            return options.regex.ip.test(value);
+        },
+        message: function (control, controlName) {
+            return controlName + ' is invalid!';
+        }
+    });
+
+    /**
+     * Hex rule: Control value must be hexa value such as #f00 or #ff0000
+     */
+    $.form.addRule('hex', {
+        validate: function (control, value, options) {
+            return options.regex.hex.test(value);
+        },
+        message: function (control, controlName) {
+            return controlName + ' is invalid!';
         }
     });
 
@@ -216,7 +240,9 @@
         },
         regex: {
             email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/,
-            url: /a/
+            url: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
+            hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/,
+            ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
         },
         messages: {
             enable: true,
