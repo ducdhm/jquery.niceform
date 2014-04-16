@@ -11,13 +11,6 @@
     // List of validation rules
     $.form.rules = {};
 
-    // Default rule option
-    var DEFAULT = {
-        validate: null,
-        useTemplate: false,
-        message: null
-    };
-
     /**
      * Add a validation rule
      * @param {String} name Rule name
@@ -26,7 +19,7 @@
     $.form.addRule = function (name, options) {
         var old = $.form.rules[name] || {};
 
-        $.form.rules[name] = $.extend({}, DEFAULT, old, options);
+        $.form.rules[name] = $.extend({}, old, options);
     };
 
     /**
@@ -210,8 +203,9 @@
 
 })(jQuery);
 
-(function ($) {
-    var DEFAULTS = {
+(function ($, undefined) {
+    // Default configuration of form plugin
+    var DEFAULT = {
         debug: true,
         preventDefault: true,
         whenInvalid: null,
@@ -219,7 +213,6 @@
         beforeValidate: null,
         beforeSubmit: null,
         ignoreHidden: false,
-        ignoreDisable: true,
         trimValue: {
             enable: true,
             ignorePassword: true
@@ -258,6 +251,7 @@
                     '</ul>' +
                 '</div>',
             inline: false,
+            inlineTemplate: '<span class="help-block"><#= msg #></span>',
             wrapperSelector: '.form-group',
             addMethod: 'append',
             classForWrapper: true,
@@ -271,13 +265,60 @@
 
     var method = {
         init: function (options) {
+            var form = $(this);
 
+            // Options
+            options = $.extend({}, DEFAULT, options);
+            form.data('options', options);
+
+            form.on('submit', function (e) {
+                var results = method.validate.apply(this, options);
+
+            });
+        },
+        reset: function () {
+            var form = $(this);
+
+            form.reset();
+
+            return form;
+        },
+        clear: function (controlSelectors) {
+            var form = $(this);
+
+            var controls = null;
+
+            if (controlSelectors === undefined) {
+                controls = form.find('input, textarea, select');
+            } else {
+                controls = form.find(controlSelectors);
+            }
+
+            controls.each(function () {
+                var control = $(this);
+                var isCheckbox = control.is(':checkbox');
+                var isRadio = control.is(':radio');
+
+                if (isCheckbox || isRadio) {
+                    control.attr('checked', false);
+                } else {
+                    control.val('');
+                }
+            });
+
+            return form;
+        },
+        enable: function (isEnable) {
+            var form = $(this);
+
+            form.find('input, button, textarea, select').attr('disabled', isEnable === undefined ? true : isEnable);
+
+            return form;
+        },
+        validate: function (options) {
+            var form = $(this);
         }
     };
-
-    function validate(input) {
-
-    }
 
     $.fn.form = function (method) {
         log("form", this);
