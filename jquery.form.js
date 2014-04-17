@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, undefined) {
     /**
      * Init form plugin
      * @param {String|HTMLElement|jQuery} selector Selector, HTMLElement or jQuery object of form
@@ -6,6 +6,58 @@
      */
     $.form = function (selector, options) {
         return $(selector).form(options);
+    };
+
+    // Set debug mode of form plugin
+    $.form.debug = true;
+
+    /**
+     * Log message with prefix is `[jquery.form]`
+     * @param {String} msg
+     */
+    var log = $.form.log = function (msg) {
+        if (!$.form.debug) {
+            return;
+        }
+
+        var msg = '[jquery.form] ' + msg;
+
+        if (console && console.log) {
+            console.log(msg);
+        }
+    };
+
+    /**
+     * Log message list with prefix is `[jquery.form]`
+     */
+    var logArray = $.form.logArray = function () {
+        if (!$.form.debug) {
+            return;
+        }
+
+        if (console && console.log) {
+            var args = Array.prototype.slice.call(arguments, 0);
+
+            if (navigator.appName == 'Microsoft Internet Explorer') {
+                if (arguments.length == 1) {
+                    console.log('[jquery.form]', arguments[0]);
+                } else if ('[jquery.form]', arguments.length == 2) {
+                    console.log(arguments[0], arguments[1]);
+                } else if (arguments.length > 2) {
+                    console.log('[jquery.form]', arguments[0], arguments[1], arguments[2]);
+                }
+            } else {
+                console.log(['[jquery.form]'].concat(args));
+            }
+        }
+    };
+
+    /**
+     * Throw error message with prefix is `[jquery.form]`
+     * @param {String} msg
+     */
+    var error = $.form.error = function (msg) {
+        $.error('[jquery.form] ' + msg);
     };
 
     // List of validation rules
@@ -40,8 +92,14 @@
     $.form.applyRule = function (selector, name, options) {
         var targets = $(selector);
         var optionName;
+        var validType = name;
 
-        targets.attr('data-valid-type', name);
+        if (options.requiredIf === true) {
+            validType = 'requiredIf|' + validType;
+            delete options.requiredIf;
+        }
+
+        targets.attr('data-valid-type', validType);
 
         for (optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
@@ -107,6 +165,20 @@
     });
 
     /**
+     * Repassword rule: Control value must be same with password control
+     */
+    $.form.addRule('repassword', {
+        validate: function (control, value, options) {
+            var password = control.closest('form').find(':password').not(control);
+
+            return value === password.val();
+        },
+        message: function (control, controlName) {
+            return 'Confirm password must be matched with password!';
+        }
+    });
+
+    /**
      * Limited rule: Control value length must be between min and max characters long
      */
     $.form.addRule('limited', {
@@ -120,6 +192,20 @@
             return controlName + ' must be between ' + control.attr('data-min') + ' and ' + control.attr('data-max') + ' characters long!';
         }
     });
+
+    /**
+     * Exact rule: Control value length must be matched the specified long
+     */
+     $.form.addRule('exact', {
+        validate: function (control, value, options) {
+            var length = +control.attr('data-length');
+
+            return value.length === length;
+        },
+        message: function (control, controlName) {
+            return controlName + ' length must be ' + control.attr('data-length') + ' characters long!';
+        }
+     });
 
     /**
      * Integer rule: Control value must be digits. Min and max value are optional.
@@ -201,12 +287,62 @@
         }
     });
 
+    /**
+     * Date rule: Control value must be date format (options.format.date)
+     */
+     $.form.addRule('date', {
+        validate: function (control, value, options) {
+            if (moment === undefined) {
+                error('Require MomentJs for validating Date');
+                return false;
+            }
+
+            return moment(value, options.format.date, true).isValid();
+        },
+        message: function (control, controlName) {
+            return controlName + ' is invalid!';
+        }
+    });
+
+    /**
+     * Time rule: Control value must be time format (options.format.time)
+     */
+     $.form.addRule('time', {
+        validate: function (control, value, options) {
+            if (moment === undefined) {
+                error('Require MomentJs for validating Time');
+                return false;
+            }
+
+            return moment(value, options.format.time, true).isValid();
+        },
+        message: function (control, controlName) {
+            return controlName + ' is invalid!';
+        }
+    });
+
+    /**
+     * DateTime rule: Control value must be date format (options.format.datetime)
+     */
+     $.form.addRule('datetime', {
+        validate: function (control, value, options) {
+            if (moment === undefined) {
+                error('Require MomentJs for validating DateTime');
+                return false;
+            }
+
+            return moment(value, options.format.datetime, true).isValid();
+        },
+        message: function (control, controlName) {
+            return controlName + ' is invalid!';
+        }
+    });
+
 })(jQuery);
 
 (function ($, undefined) {
     // Default configuration of form plugin
     var DEFAULT = {
-        debug: true,
         preventDefault: true,
         whenInvalid: null,
         whenValid: null,
@@ -217,11 +353,17 @@
             enable: true,
             ignorePassword: true
         },
+        disableFormBeforeSubmit: true,
         clearFormAfterSubmit: true,
         ajaxOptions: {
             type: 'POST',
             dataType: 'JSON',
             data: null
+        },
+        format: {
+            date: 'DD-MM-YYYY',
+            time: 'HH:mm',
+            datetime: 'DD-MM-YYYY HH:mm'
         },
         password: {
             min: 8,
@@ -235,13 +377,12 @@
             email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/,
             url: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
             hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/,
-            ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+            ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:\d{2,5}){0,1}$/
         },
-        messages: {
-            enable: true,
-            summary: true,
-            summaryTarget: null,
-            summaryTemplate:
+        summaryMessage: {
+            enable: false,
+            selector: '.jq-form-msg-summary',
+            template: 
                 '<div class="jq-form-msg-summary">' +
                     'Form is not valid:' +
                     '<ul>' +
@@ -249,9 +390,12 @@
                             '<li><#= msg #></li>' +
                         '<# } #>' +
                     '</ul>' +
-                '</div>',
-            inline: false,
-            inlineTemplate: '<span class="help-block"><#= msg #></span>',
+                '</div>'
+        },
+        inlineMessage: {
+            enable: true,
+            selector: '.help-block',
+            template: '<span class="help-block"><#= msg #></span>',
             wrapperSelector: '.form-group',
             addMethod: 'append',
             classForWrapper: true,
@@ -263,7 +407,12 @@
         }
     };
 
-    var method = {
+    // Shortcut of log functions
+    var log = $.form.log;
+    var logArray = $.form.logArray;
+    var error = $.form.error;
+
+    var methods = {
         init: function (options) {
             var form = $(this);
 
@@ -296,10 +445,13 @@
 
             controls.each(function () {
                 var control = $(this);
+                var isSelect = control.is('select');
                 var isCheckbox = control.is(':checkbox');
                 var isRadio = control.is(':radio');
 
-                if (isCheckbox || isRadio) {
+                if (isCheckbox) {
+                    this.selectedIndex = -1;
+                } else if (isCheckbox || isRadio) {
                     control.attr('checked', false);
                 } else {
                     control.val('');
@@ -327,8 +479,8 @@
         } else if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error('Method ' + method + ' does not exist on jquery.form');
+            error('Method ' + method + ' does not exist on jquery.form');
         }
-    }
+    };
 
 })(jQuery);
