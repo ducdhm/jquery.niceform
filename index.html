@@ -9,14 +9,16 @@
 	<script type="text/javascript" src="resources/plugins/jquery/jquery-1.10.2.min.js">//</script>
 	<script type="text/javascript" src="jquery.form.js">//</script>
 	<script type="text/javascript">
-	
+	    $(function () {
+            $('#myForm').form();
+        });
 	</script>
 	<link rel="stylesheet" href="">
 </head>
 <body>
 	<div class="container">
 		<h1>Examples</h1>
-		<form action="http://google.com" method="POST" class="form-horizontal">
+		<form action="" method="POST" class="form-horizontal" id="myForm">
 			<div class="form-group">
 				<label for="username" class="control-label col-md-4">Username:</label>
 				<div class="col-md-8">
@@ -35,6 +37,29 @@
 					<input type="password" class="form-control" id="repassword" name="repassword" value="" />
 				</div>
 			</div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Gender:</label>
+                <div class="col-md-8">
+                    <input type="radio" name="gender" value="male" />Male
+                    <input type="radio" name="gender" value="female" />Female
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4">Interests:</label>
+                <div class="col-md-8">
+                    <input type="checkbox" name="interest" value="game" />Game
+                    <input type="checkbox" name="interest" value="football" />Football
+                    <input type="checkbox" name="interest" value="chat" />Chat
+                    <input type="checkbox" name="interest" value="shopping" />Shopping
+                    <input type="checkbox" name="interest" value="travel" />Travel
+                    <input type="checkbox" name="interest" value="cooking" />Cooking
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
 		</form>
 	</div>
 </body>

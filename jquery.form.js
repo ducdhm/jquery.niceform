@@ -12,7 +12,7 @@
     $.form.debug = true;
 
     /**
-     * Log message with prefix is `[jquery.form]`
+     * Log message with prefix is `[jquery.form - LOG]`
      * @param {String} msg
      */
     var log = $.form.log = function (msg) {
@@ -20,15 +20,13 @@
             return;
         }
 
-        var msg = '[jquery.form] ' + msg;
-
         if (console && console.log) {
-            console.log(msg);
+            console.log(['[jquery.form - LOG] ' + msg]);
         }
     };
 
     /**
-     * Log message list with prefix is `[jquery.form]`
+     * Log message list
      */
     var logArray = $.form.logArray = function () {
         if (!$.form.debug) {
@@ -36,32 +34,43 @@
         }
 
         if (console && console.log) {
-            var args = Array.prototype.slice.call(arguments, 0);
-
             if (navigator.appName == 'Microsoft Internet Explorer') {
                 if (arguments.length == 1) {
-                    console.log('[jquery.form]', arguments[0]);
-                } else if ('[jquery.form]', arguments.length == 2) {
+                    console.log(arguments[0]);
+                } else if (arguments.length == 2) {
                     console.log(arguments[0], arguments[1]);
                 } else if (arguments.length > 2) {
-                    console.log('[jquery.form]', arguments[0], arguments[1], arguments[2]);
+                    console.log(arguments[0], arguments[1], arguments[2]);
                 }
             } else {
-                console.log(['[jquery.form]'].concat(args));
+                console.log(arguments);
             }
         }
     };
 
     /**
-     * Throw error message with prefix is `[jquery.form]`
+     * Throw error message with prefix is `[jquery.form - ERROR]`
      * @param {String} msg
      */
     var error = $.form.error = function (msg) {
-        $.error('[jquery.form] ' + msg);
+        if (!$.form.debug) {
+            return;
+        }
+
+        if (console && console.log) {
+            console.log(['[jquery.form - ERROR] ' + msg]);
+        }
     };
 
     // List of validation rules
     $.form.rules = {};
+
+    // Default for rule
+    var DEFAULT = {
+        validate: null,
+        message: null,
+        forGroup: false
+    };
 
     /**
      * Add a validation rule
@@ -71,7 +80,7 @@
     $.form.addRule = function (name, options) {
         var old = $.form.rules[name] || {};
 
-        $.form.rules[name] = $.extend({}, old, options);
+        $.form.rules[name] = $.extend({}, DEFAULT, old, options);
     };
 
     /**
@@ -106,6 +115,69 @@
         }
 
         return targets;
+    };
+
+    /**
+     * Convert dash-case string to camel-case string.
+     * Example: `bob-khin` to `bobKhin`
+     * @param {String} string
+     * @returns {String}
+     */
+    $.form.dashToCamel = function (string) {
+        return string.replace(/(\-[a-z])/g, function ($1) {
+            return $1.toUpperCase().replace('-', '');
+        });
+    };
+
+    /**
+     * Convert underscore-case string to camel-case string.
+     * Example: `bob_khin` to `bobKhin`
+     * @param {String} string
+     * @returns {String}
+     */
+    $.form.underscoreToCamel = function (string) {
+        return string.replace(/(\_[a-z])/g, function ($1) {
+            return $1.toUpperCase().replace('_','');
+        });
+    };
+
+    /**
+     * Convert camel-case string to dash-case string.
+     * Example: `bobKhin` to `bob-khin`
+     * @param {String} string
+     * @returns {String}
+     */
+    $.form.camelToDash = function (string) {
+        return string.replace(/([A-Z])/g, function ($1) {
+            return '-' + $1.toLowerCase();
+        });
+    };
+    /**
+     * Convert camel-case string to underscore-case string.
+     * Example: `bobKhin` to `bob_khin`
+     * @param {String} string
+     * @returns {String}
+     */
+    $.form.camelToUnderscore = function (string) {
+        return string.replace(/([A-Z])/g, function ($1) {
+            return '_' + $1.toLowerCase();
+        });
+    };
+
+    /**
+     * Capitalise a string
+     * @param {String} string
+     * @param {Boolean} all Is capitalise first letter of all words or not
+     * @returns {String}
+     */
+    $.form.capitalise = function (string, all) {
+        if (all) {
+            return string.replace(/(^|\s)([a-z])/g , function (m, p1, p2) {
+                return p1 + p2.toUpperCase();
+            });
+        } else {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
     };
 
     /**
@@ -341,6 +413,12 @@
 })(jQuery);
 
 (function ($, undefined) {
+    // Shortcut of log functions
+    var log = $.form.log;
+    var logArray = $.form.logArray;
+    var error = $.form.error;
+    var errorArray = $.form.errorArray;
+
     // Default configuration of form plugin
     var DEFAULT = {
         preventDefault: true,
@@ -379,6 +457,41 @@
             hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/,
             ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:\d{2,5}){0,1}$/
         },
+        getControlName: function (control, form) {
+            console.log(control);
+            var label = form.find('label[for=' + control.attr('id') + ']');
+
+            if (label[0]) {
+                log('Get control name from label');
+                return label.html();
+            }
+
+            var name = control.attr('name');
+
+            if(name.indexOf('-') > 0) {
+                log('Name attribute is dash-case');
+                return $.form.capitalise(name.replace(/\-/g, ' '), true);
+            }
+
+            if(name.indexOf('_') > 0) {
+                log('Name attribute is underscore-case');
+                return $.form.capitalise(name.replace(/\_/g, ' '), true);
+            }
+
+            if (name) {
+                log('Name attribute is camel-case');
+                return $.form.capitalise($.form.camelToDash(name).replace(/\_/g, ' '), true);
+            }
+
+            var attrName = control.attr('data-name');
+            if(attrName) {
+                log('Get control name from data-name');
+                return attrName;
+            }
+
+            logArray('Can\'t get name of control', control);
+            return '';
+        },
         summaryMessage: {
             enable: false,
             selector: '.jq-form-msg-summary',
@@ -407,11 +520,6 @@
         }
     };
 
-    // Shortcut of log functions
-    var log = $.form.log;
-    var logArray = $.form.logArray;
-    var error = $.form.error;
-
     var methods = {
         init: function (options) {
             var form = $(this);
@@ -421,16 +529,19 @@
             form.data('options', options);
 
             form.on('submit', function (e) {
-                var results = method.validate.apply(this, options);
+                e.preventDefault();
 
+                var results = methods.validate.call(this, options);
+
+                if (options.preventDefault) {
+                    e.preventDefault();
+                }
             });
         },
         reset: function () {
-            var form = $(this);
+            this.get(0).reset();
 
-            form.reset();
-
-            return form;
+            return this;
         },
         clear: function (controlSelectors) {
             var form = $(this);
@@ -463,17 +574,115 @@
         enable: function (isEnable) {
             var form = $(this);
 
-            form.find('input, button, textarea, select').attr('disabled', isEnable === undefined ? true : isEnable);
+            form.find('input, button, textarea, select').attr('disabled', isEnable === undefined ? false : !isEnable);
 
             return form;
         },
         validate: function (options) {
             var form = $(this);
+            var controls = methods.getControls.call(form, true);
+            var data = {};
+            var errorControls = [];
+            var errorMessages = [];
+            var ignoreHidden = options.ignoreHidden;
+
+            var isIgnored = function (control) {
+                return control.is(':disabled') || (options.ignoreHidden && control.is(':hidden'));
+            };
+
+            // Validate textboxes
+            var textboxes = controls.textboxes;
+            textboxes.each(function () {
+                var textbox = $(this);
+                var isPassword = textbox.is(':password');
+                var value = textbox.val();
+
+                if (options.trimValue.enable) {
+                    if (isPassword) {
+                        value = options.trimValue.ignorePassword ? value : value.trim();
+                    } else {
+                        value = value.trim();
+                    }
+                }
+
+                if (isIgnored(textbox)) {
+                    return;
+                }
+
+                var name = options.getControlName(textbox, form);
+                var validType = textbox.attr('data-valid-type');
+                var rule =  $.form.rules[validType];
+
+                if (rule) {
+                    var isOk = rule.validate(textbox, value, options);
+
+                    if (isOk) {
+                        data[name] = value;
+                    } else {
+                        errorControls.push(textbox);
+                        errorMessages.push(rule.message(textbox, name));
+                    }
+                } else {
+                    if (validType === undefined) {
+                        errorArray('data-valid-type is undefined!', textbox);
+                    } else {
+                        error(validType + ' is not exited in rules!');
+                    }
+                }
+            });
+
+            return [data, errorControls, errorMessages];
+        },
+        getControls: function (groupByName) {
+            var form = $(this);
+
+            console.log(form);
+
+            var selects = form.find('select');
+            var buttons = form.find('button, input[type=button], input[type=reset], input[type=submit]');
+            var checkboxes = form.find(':checkbox');
+            var radios = form.find(':radio');
+            var textboxes = form.find('input, textarea').not(buttons).not(checkboxes).not(radios);
+
+            if (groupByName) {
+                var newCheckboxes = {};
+                checkboxes.each(function () {
+                    var checkbox = $(this);
+                    var name = checkbox.attr('name');
+
+                    if (name in newCheckboxes) {
+                        newCheckboxes[name].push(checkbox);
+                    } else {
+                        newCheckboxes[name] = [checkbox];
+                    }
+                });
+                checkboxes = newCheckboxes;
+
+                var newRadios = {};
+                radios.each(function () {
+                    var radio = $(this);
+                    var name = radio.attr('name');
+
+                    if (name in newRadios) {
+                        newRadios[name].push(radio);
+                    } else {
+                        newRadios[name] = [radio];
+                    }
+                });
+                radios = newRadios;
+            }
+
+            return {
+                buttons: buttons,
+                textboxes: textboxes,
+                selects: selects,
+                checkboxes: checkboxes,
+                radios: radios
+            }
         }
     };
 
     $.fn.form = function (method) {
-        log("form", this);
         if (methods[method]) {
             return methods[ method ].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
