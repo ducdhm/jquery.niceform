@@ -12,23 +12,9 @@
     $.form.debug = true;
 
     /**
-     * Log message with prefix is `[jquery.form - LOG]`
-     * @param {String} msg
-     */
-    var log = $.form.log = function (msg) {
-        if (!$.form.debug) {
-            return;
-        }
-
-        if (console && console.log) {
-            console.log(['[jquery.form - LOG] ' + msg]);
-        }
-    };
-
-    /**
      * Log message list
      */
-    var logArray = $.form.logArray = function () {
+    var log = $.form.logArray = function () {
         if (!$.form.debug) {
             return;
         }
@@ -45,20 +31,6 @@
             } else {
                 console.log(arguments);
             }
-        }
-    };
-
-    /**
-     * Throw error message with prefix is `[jquery.form - ERROR]`
-     * @param {String} msg
-     */
-    var error = $.form.error = function (msg) {
-        if (!$.form.debug) {
-            return;
-        }
-
-        if (console && console.log) {
-            console.log(['[jquery.form - ERROR] ' + msg]);
         }
     };
 
@@ -365,7 +337,7 @@
      $.form.addRule('date', {
         validate: function (control, value, options) {
             if (moment === undefined) {
-                error('Require MomentJs for validating Date');
+                $.error('Require MomentJs for validating Date');
                 return false;
             }
 
@@ -382,7 +354,7 @@
      $.form.addRule('time', {
         validate: function (control, value, options) {
             if (moment === undefined) {
-                error('Require MomentJs for validating Time');
+                $.error('Require MomentJs for validating Time');
                 return false;
             }
 
@@ -399,7 +371,7 @@
      $.form.addRule('datetime', {
         validate: function (control, value, options) {
             if (moment === undefined) {
-                error('Require MomentJs for validating DateTime');
+                $.error('Require MomentJs for validating DateTime');
                 return false;
             }
 
@@ -415,9 +387,6 @@
 (function ($, undefined) {
     // Shortcut of log functions
     var log = $.form.log;
-    var logArray = $.form.logArray;
-    var error = $.form.error;
-    var errorArray = $.form.errorArray;
 
     // Default configuration of form plugin
     var DEFAULT = {
@@ -489,7 +458,7 @@
                 return attrName;
             }
 
-            logArray('Can\'t get name of control', control);
+            log('Can\'t get name of control', control);
             return '';
         },
         summaryMessage: {
@@ -611,10 +580,14 @@
 
                 var name = options.getControlName(textbox, form);
                 var validType = textbox.attr('data-valid-type');
+                var isRequiredIf = validType.indexOf('requiredIf') !== -1;
                 var rule =  $.form.rules[validType];
 
                 if (rule) {
                     var isOk = rule.validate(textbox, value, options);
+                    if (isRequiredIf) {
+                        isOk = !!value ? isOk : true;
+                    }
 
                     if (isOk) {
                         data[name] = value;
@@ -624,12 +597,21 @@
                     }
                 } else {
                     if (validType === undefined) {
-                        errorArray('data-valid-type is undefined!', textbox);
+                        $.error('data-valid-type is undefined!', textbox);
                     } else {
-                        error(validType + ' is not exited in rules!');
+                        $.error(validType + ' is not existed in rules!');
                     }
                 }
             });
+
+            // Validate checkboxes
+            var checkboxes = controls.checkboxes;
+            var groupName;
+            for (groupName in checkboxes) {
+                var group = checkboxes[groupName];
+                var first = group.get(0);
+                var name = options.getControlName(first, form);
+            }
 
             return [data, errorControls, errorMessages];
         },
@@ -688,7 +670,7 @@
         } else if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            error('Method ' + method + ' does not exist on jquery.form');
+            $.error('Method ' + method + ' does not exist on jquery.form');
         }
     };
 
