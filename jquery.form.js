@@ -636,8 +636,6 @@
         getControls: function (groupByName) {
             var form = $(this);
 
-            console.log(form);
-
             var selects = form.find('select');
             var buttons = form.find('button, input[type=button], input[type=reset], input[type=submit]');
             var checkboxes = form.find(':checkbox');
