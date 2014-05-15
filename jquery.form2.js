@@ -4,18 +4,18 @@
      * @param {String|HTMLElement|jQuery} selector Selector, HTMLElement or jQuery object of form
      * @param {String|Object} options Method name or configuration of form plugin
      */
-    $.form = function (selector, options) {
+    $.form2 = function (selector, options) {
         return $(selector).form(options);
     };
 
     // Set debug mode of form plugin
-    $.form.debug = true;
+    $.form2.debug = true;
 
     /**
      * Log message list
      */
-    var log = $.form.logArray = function () {
-        if (!$.form.debug) {
+    var log = $.form2.logArray = function () {
+        if (!$.form2.debug) {
             return;
         }
 
@@ -35,7 +35,7 @@
     };
 
     // List of validation rules
-    $.form.rules = {};
+    $.form2.rules = {};
 
     // Default for rule
     var DEFAULT = {
@@ -49,18 +49,18 @@
      * @param {String} name Rule name
      * @param {Object} options The configuration of rule
      */
-    $.form.addRule = function (name, options) {
-        var old = $.form.rules[name] || {};
+    $.form2.addRule = function (name, options) {
+        var old = $.form2.rules[name] || {};
 
-        $.form.rules[name] = $.extend({}, DEFAULT, old, options);
+        $.form2.rules[name] = $.extend({}, DEFAULT, old, options);
     };
 
     /**
      * Remove a validation rule
      * @param {String} name Name of removed rule
      */
-    $.form.removeRule = function (name) {
-        delete $.form.rules[name];
+    $.form2.removeRule = function (name) {
+        delete $.form2.rules[name];
     };
 
     /**
@@ -70,17 +70,16 @@
      * @param {Object} options Addition configuration of rule such as min, max, pattern...
      * @return {jQuery}
      */
-    $.form.applyRule = function (selector, name, options) {
+    $.form2.applyRule = function (selector, name, options) {
         var targets = $(selector);
         var optionName;
-        var validType = name;
 
         if (options.requiredIf === true) {
-            validType = 'requiredIf|' + validType;
+            targets.attr('data-required-if', true);
             delete options.requiredIf;
         }
 
-        targets.attr('data-valid-type', validType);
+        targets.attr('data-valid', name);
 
         for (optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
@@ -95,7 +94,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form.dashToCamel = function (string) {
+    $.form2.dashToCamel = function (string) {
         return string.replace(/(\-[a-z])/g, function ($1) {
             return $1.toUpperCase().replace('-', '');
         });
@@ -107,7 +106,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form.underscoreToCamel = function (string) {
+    $.form2.underscoreToCamel = function (string) {
         return string.replace(/(\_[a-z])/g, function ($1) {
             return $1.toUpperCase().replace('_','');
         });
@@ -119,22 +118,43 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form.camelToDash = function (string) {
+    $.form2.camelToDash = function (string) {
         return string.replace(/([A-Z])/g, function ($1) {
             return '-' + $1.toLowerCase();
         });
     };
+
     /**
      * Convert camel-case string to underscore-case string.
      * Example: `bobKhin` to `bob_khin`
      * @param {String} string
      * @returns {String}
      */
-    $.form.camelToUnderscore = function (string) {
+    $.form2.camelToUnderscore = function (string) {
         return string.replace(/([A-Z])/g, function ($1) {
             return '_' + $1.toLowerCase();
         });
     };
+
+    /**
+     * Replace all `-` to space
+     * Example: `bob-khin` to `bob khin`
+     * @param {String} string
+     * @returns {String}
+     */
+    $.form2.dashToSpace = function (string) {
+        return string.replace(/\-/g, ' ')
+    };
+
+    /**
+     * Replace all `_` to space
+     * Example: `bob_khin` to `bob khin`
+     * @param {String} string
+     * @returns {String}
+     */
+    $.form2.underscoreToSpace = function (string) {
+        return string.replace(/\_/g, ' ')
+    }
 
     /**
      * Capitalise a string
@@ -142,7 +162,7 @@
      * @param {Boolean} all Is capitalise first letter of all words or not
      * @returns {String}
      */
-    $.form.capitalise = function (string, all) {
+    $.form2.capitalise = function (string, all) {
         if (all) {
             return string.replace(/(^|\s)([a-z])/g , function (m, p1, p2) {
                 return p1 + p2.toUpperCase();
@@ -162,7 +182,7 @@
      * @param {Number} uppercaseLength Number of required uppercase character in password
      * @param {Number} numberLength Number of digit character in password *
      */
-    $.form.generatePasswordRegex = function (options) {
+    $.form2.generatePasswordRegex = function (options) {
         var regexString = '(?=(?:.*[a-z]){1})';
 
         if (options.uppercaseLength > 0) {
@@ -183,210 +203,19 @@
     };
 
     /**
-     * Required rule: Control value must be not blank
+     * Format strings
+     * @method format
+     * @param {String} string The template string
+     * @param {String[]} args Zero or more objects to format, supplied either in a comma-delimited list or as an array
      */
-    $.form.addRule('required', {
-        validate: function (control, value, options) {
-            return !!value;
-        },
-        message: function (controlName) {
-            return controlName + ' must be not blank!';
-        }
-    });
+    $.form2.formatString = function (string) {
+        var args = arguments;
+        var pattern = new RegExp('{([0-' + arguments.length + '])}', 'g');
 
-    /**
-     * Password rule: Control value must be passed the password regex
-     */
-    $.form.addRule('password', {
-        validate: function (control, value, options) {
-            var regex = $.form.generatePasswordRegex(options.password);
-
-            return !!value && regex.test(value);
-        },
-        message: function (control, controlName) {
-            return controlName + ' must be between 8 and 32 characters long; contain a number, an uppercase letter and one of following special characters <b>!@#$%^&*-</b> !';
-        }
-    });
-
-    /**
-     * Repassword rule: Control value must be same with password control
-     */
-    $.form.addRule('repassword', {
-        validate: function (control, value, options) {
-            var password = control.closest('form').find(':password').not(control);
-
-            return value === password.val();
-        },
-        message: function (control, controlName) {
-            return 'Confirm password must be matched with password!';
-        }
-    });
-
-    /**
-     * Limited rule: Control value length must be between min and max characters long
-     */
-    $.form.addRule('limited', {
-        validate: function (control, value, options) {
-            var min = +control.attr('data-min');
-            var max = +control.attr('data-max');
-
-            return !!value && value.length < max && value.length > min;
-        },
-        message: function (control, controlName) {
-            return controlName + ' must be between ' + control.attr('data-min') + ' and ' + control.attr('data-max') + ' characters long!';
-        }
-    });
-
-    /**
-     * Exact rule: Control value length must be matched the specified long
-     */
-     $.form.addRule('exact', {
-        validate: function (control, value, options) {
-            var length = +control.attr('data-length');
-
-            return value.length === length;
-        },
-        message: function (control, controlName) {
-            return controlName + ' length must be ' + control.attr('data-length') + ' characters long!';
-        }
-     });
-
-    /**
-     * Integer rule: Control value must be digits. Min and max value are optional.
-     */
-    $.form.addRule('integer', {
-        validate: function (control, value, options) {
-            var min = control.attr('data-min');
-            var max = control.attr('data-max');
-
-            return !isNaN(value) && (!!min ? +value >= +min : true) && (!!max ? +value <= +max : true);
-        },
-        message: function (control, controlName) {
-            var min = control.attr('data-min');
-            var max = control.attr('data-max');
-
-            return controlName + ' must be digits' + (!!min ? ', minimum is ' + min : '') + (!!max ? ', maximum is ' + max : '') + '!';
-        }
-    });
-
-    /**
-     * Email rule: Control value must be valid email
-     */
-    $.form.addRule('email', {
-        validate: function (control, value, options) {
-            return options.regex.email.test(value);
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-    /**
-     * Regexp rule: Control value must be passed with regex
-     */
-    $.form.addRule('regex', {
-        validate: function (control, value, options) {
-            var regex = new RegExp(control.attr('data-regex'));
-
-            return regex.test(value);
-        },
-        message: function (control, controlName) {
-            return control.attr('data-message');
-        }
-    });
-
-    /**
-     * Url rule: Control value must be url
-     */
-    $.form.addRule('url', {
-        validate: function (control, value, options) {
-            return options.regex.url.test(value);
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-    /**
-     * IP rule: Control value must be IP address
-     */
-    $.form.addRule('ip', {
-        validate: function (control, value, options) {
-            return options.regex.ip.test(value);
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-    /**
-     * Hex rule: Control value must be hexa value such as #f00 or #ff0000
-     */
-    $.form.addRule('hex', {
-        validate: function (control, value, options) {
-            return options.regex.hex.test(value);
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-    /**
-     * Date rule: Control value must be date format (options.format.date)
-     */
-     $.form.addRule('date', {
-        validate: function (control, value, options) {
-            if (moment === undefined) {
-                $.error('Require MomentJs for validating Date');
-                return false;
-            }
-
-            return moment(value, options.format.date, true).isValid();
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-    /**
-     * Time rule: Control value must be time format (options.format.time)
-     */
-     $.form.addRule('time', {
-        validate: function (control, value, options) {
-            if (moment === undefined) {
-                $.error('Require MomentJs for validating Time');
-                return false;
-            }
-
-            return moment(value, options.format.time, true).isValid();
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-    /**
-     * DateTime rule: Control value must be date format (options.format.datetime)
-     */
-     $.form.addRule('datetime', {
-        validate: function (control, value, options) {
-            if (moment === undefined) {
-                $.error('Require MomentJs for validating DateTime');
-                return false;
-            }
-
-            return moment(value, options.format.datetime, true).isValid();
-        },
-        message: function (control, controlName) {
-            return controlName + ' is invalid!';
-        }
-    });
-
-})(jQuery);
-
-(function ($, undefined) {
-    // Shortcut of log functions
-    var log = $.form.log;
+        return string.replace(pattern, function (match, index) {
+            return args[+index + 1];
+        });
+    };
 
     // Default configuration of form plugin
     var DEFAULT = {
@@ -418,7 +247,8 @@
             specialCharacter: '!@#$%^&*-',
             specialLength: 1,
             uppercaseLength: 1,
-            numberLength: 1
+            numberLength: 1,
+            errorMessage: 'must be between 8 and 32 characters long; contain a number, an uppercase letter and one of following special characters <b>!@#$%^&*-</b>'
         },
         regex: {
             email: /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/,
@@ -427,7 +257,6 @@
             ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:\d{2,5}){0,1}$/
         },
         getControlName: function (control, form) {
-            console.log(control);
             var label = form.find('label[for=' + control.attr('id') + ']');
 
             if (label[0]) {
@@ -439,17 +268,17 @@
 
             if(name.indexOf('-') > 0) {
                 log('Name attribute is dash-case');
-                return $.form.capitalise(name.replace(/\-/g, ' '), true);
+                return $.form2.capitalise($.form2.dashToSpace(name), true);
             }
 
             if(name.indexOf('_') > 0) {
                 log('Name attribute is underscore-case');
-                return $.form.capitalise(name.replace(/\_/g, ' '), true);
+                return $.form2.capitalise($.form2.underscoreToSpace(name), true);
             }
 
             if (name) {
                 log('Name attribute is camel-case');
-                return $.form.capitalise($.form.camelToDash(name).replace(/\_/g, ' '), true);
+                return $.form2.capitalise($.form2.dashToSpace($.form2.camelToDash(name)), true);
             }
 
             var attrName = control.attr('data-name');
@@ -461,31 +290,16 @@
             log('Can\'t get name of control', control);
             return '';
         },
-        summaryMessage: {
+        errorHandler: function (control, message) {
+
+        },
+        succussHandler: function (control, message) {
+
+        },
+        message: {
             enable: false,
             selector: '.jq-form-msg-summary',
-            template: 
-                '<div class="jq-form-msg-summary">' +
-                    'Form is not valid:' +
-                    '<ul>' +
-                        '<# for (var i = 0, msg; msg = msgs[i]; i++) { #>' +
-                            '<li><#= msg #></li>' +
-                        '<# } #>' +
-                    '</ul>' +
-                '</div>'
-        },
-        inlineMessage: {
-            enable: true,
-            selector: '.help-block',
-            template: '<span class="help-block"><#= msg #></span>',
-            wrapperSelector: '.form-group',
-            addMethod: 'append',
-            classForWrapper: true,
-            errorClass: 'has-error',
-            successClass: 'has-success'
-        },
-        templateProcessor: function (template, data) {
-            return $.tmpl(template, data);
+            message: 'Form is not valid!'
         }
     };
 
@@ -579,9 +393,9 @@
                 }
 
                 var name = options.getControlName(textbox, form);
-                var validType = textbox.attr('data-valid-type');
-                var isRequiredIf = validType.indexOf('requiredIf') !== -1;
-                var rule =  $.form.rules[validType];
+                var validType = textbox.attr('data-valid');
+                var isRequiredIf = !!textbox.attr('data-required-if');
+                var rule =  $.form2.rules[validType];
 
                 if (rule) {
                     var isOk = rule.validate(textbox, value, options);
@@ -597,7 +411,7 @@
                     }
                 } else {
                     if (validType === undefined) {
-                        $.error('data-valid-type is undefined!', textbox);
+                        $.error('data-valid is undefined!', textbox);
                     } else {
                         $.error(validType + ' is not existed in rules!');
                     }
@@ -662,7 +476,7 @@
         }
     };
 
-    $.fn.form = function (method) {
+    $.fn.form2 = function (method) {
         if (methods[method]) {
             return methods[ method ].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
