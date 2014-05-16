@@ -47,8 +47,16 @@
 
     form2.addRule('limited', {
         validate: function (control, value, options, groupType) {
-            var min = +control.attr('data-min');
-            var max = +control.attr('data-max');
+            var min;
+            var max;
+            if (groupType) {
+                var chooseOne = control.filter('[data-form2]');
+                min = +chooseOne.attr('data-min');
+                max = +chooseOne.attr('data-max');
+            } else {
+                min = +control.attr('data-min');
+                max = +control.attr('data-max');
+            }
 
             if (groupType) {
                 return value.length > min && value.length < max;
@@ -57,8 +65,16 @@
             }
         },
         message: function (control, controlName, options, groupType) {
-            var min = control.attr('data-min');
-            var max = control.attr('data-max');
+            var min;
+            var max;
+            if (groupType) {
+                var chooseOne = control.filter('[data-form2]');
+                min = chooseOne.attr('data-min');
+                max = chooseOne.attr('data-max');
+            } else {
+                min = control.attr('data-min');
+                max = control.attr('data-max');
+            }
 
             if (groupType) {
                 return form2.formatString('You can select {0}-{1} {2}', min, max, controlName);
@@ -70,7 +86,13 @@
 
     form2.addRule('minimum', {
         validate: function (control, value, options, groupType) {
-            var min = +control.attr('data-min');
+            var min;
+            if (groupType) {
+                var chooseOne = control.filter('[data-form2]');
+                min = +chooseOne.attr('data-min');
+            } else {
+                min = +control.attr('data-min');
+            }
 
             if (groupType) {
                 return value.length > min;
@@ -79,7 +101,13 @@
             }
         },
         message: function (control, controlName, options, groupType) {
-            var min = control.attr('data-min');
+            var min;
+            if (groupType) {
+                var chooseOne = control.filter('[data-form2]');
+                min = chooseOne.attr('data-min');
+            } else {
+                min = control.attr('data-min');
+            }
 
             if (groupType) {
                 return form2.formatString('You must be select at least {0} {1}', min, controlName);
@@ -91,7 +119,13 @@
 
     form2.addRule('maximum', {
         validate: function (control, value, options, groupType) {
-            var max = +control.attr('data-max');
+            var max;
+            if (groupType) {
+                var chooseOne = control.filter('[data-form2]');
+                max = +chooseOne.attr('data-max');
+            } else {
+                max = +control.attr('data-max');
+            }
 
             if (groupType) {
                 return value.length < max;
@@ -100,7 +134,13 @@
             }
         },
         message: function (control, controlName, options, groupType) {
-            var max = control.attr('data-max');
+            var max;
+            if (groupType) {
+                var chooseOne = control.filter('[data-form2]');
+                max = chooseOne.attr('data-max');
+            } else {
+                max = control.attr('data-max');
+            }
 
             if (groupType) {
                 return form2.formatString('Please only select {0} {1} at max', max, controlName);

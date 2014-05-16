@@ -25,8 +25,10 @@
                     console.log(arguments[0]);
                 } else if (arguments.length == 2) {
                     console.log(arguments[0], arguments[1]);
-                } else if (arguments.length > 2) {
+                } else if (arguments.length === 3) {
                     console.log(arguments[0], arguments[1], arguments[2]);
+                } else {                    
+                    console.log(arguments[0], arguments[1], arguments[2], arguments[3]);
                 }
             } else {
                 console.log(arguments);
@@ -79,7 +81,7 @@
             delete options.requiredIf;
         }
 
-        targets.attr('data-valid', name);
+        targets.attr('data-form2', name);
 
         for (optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
@@ -257,38 +259,28 @@
             ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:\d{2,5}){0,1}$/
         },
         getControlName: function (control, form) {
-            var label = form.find('label[for=' + control.attr('id') + ']');
+            var id = control.attr('id') || control.attr('name');
+            var label = form.find('label[for=' + id + ']');
 
             if (label[0]) {
-                log('Get control name from label');
-                return label.html();
+                return label.html().replace(':', '');
             }
 
             var name = control.attr('name');
 
             if(name.indexOf('-') > 0) {
-                log('Name attribute is dash-case');
                 return $.form2.capitalise($.form2.dashToSpace(name), true);
             }
 
             if(name.indexOf('_') > 0) {
-                log('Name attribute is underscore-case');
                 return $.form2.capitalise($.form2.underscoreToSpace(name), true);
             }
 
             if (name) {
-                log('Name attribute is camel-case');
                 return $.form2.capitalise($.form2.dashToSpace($.form2.camelToDash(name)), true);
             }
 
-            var attrName = control.attr('data-name');
-            if(attrName) {
-                log('Get control name from data-name');
-                return attrName;
-            }
-
-            log('Can\'t get name of control', control);
-            return '';
+            return control.attr('data-name') || '';
         },
         errorHandler: function (control, message) {
 
@@ -312,9 +304,13 @@
             form.data('options', options);
 
             form.on('submit', function (e) {
-                e.preventDefault();
-
                 var results = methods.validate.call(this, options);
+                var data = results[0];
+                var errorControls = results[1];
+                var errorMessages = results[2];
+                var successControls = results[3];
+
+                if (errorMessages.length)
 
                 if (options.preventDefault) {
                     e.preventDefault();
@@ -367,10 +363,47 @@
             var data = {};
             var errorControls = [];
             var errorMessages = [];
+            var succesControls = [];
             var ignoreHidden = options.ignoreHidden;
 
+            log('Validate form: ', form)
+
             var isIgnored = function (control) {
-                return control.is(':disabled') || (options.ignoreHidden && control.is(':hidden'));
+                var isIgnored = control.is(':disabled') || (options.ignoreHidden && control.is(':hidden'));
+
+                if (isIgnored) {
+                    log('Is ignored', control);
+                }
+
+                return isIgnored;
+            };
+
+            var logInfo = function (name, value, ruleName, control) {
+                log('Name is: ' + name, 'Value is: ' + ($.isArray(value) ? value.join(', ') : value), 'Rule name is: ' + ruleName, control);
+            };
+
+            var checkRule = function (ruleName, control, controlName, value, isRequiredIf, groupType) {
+                var rule = $.form2.rules[ruleName];
+
+                if (rule) {
+                    var isOk = rule.validate(control, value, options, groupType);
+                    if (isRequiredIf) {
+                        isOk = !!value ? isOk : true;
+                    }
+
+                    if (isOk) {
+                        succesControls.push(control);
+                    } else {
+                        errorControls.push(control);
+                        errorMessages.push(rule.message(control, controlName, options, groupType));
+                    }
+                } else {
+                    if (ruleName !== undefined) {
+                        log(ruleName + ' is not existed in rules!', control);
+                    }
+                }
+
+                data[control.attr('name')] = value;
             };
 
             // Validate textboxes
@@ -393,41 +426,76 @@
                 }
 
                 var name = options.getControlName(textbox, form);
-                var validType = textbox.attr('data-valid');
+                var ruleName = textbox.attr('data-form2');
                 var isRequiredIf = !!textbox.attr('data-required-if');
-                var rule =  $.form2.rules[validType];
 
-                if (rule) {
-                    var isOk = rule.validate(textbox, value, options);
-                    if (isRequiredIf) {
-                        isOk = !!value ? isOk : true;
-                    }
+                logInfo(name, value, ruleName, textbox);
 
-                    if (isOk) {
-                        data[name] = value;
-                    } else {
-                        errorControls.push(textbox);
-                        errorMessages.push(rule.message(textbox, name));
-                    }
-                } else {
-                    if (validType === undefined) {
-                        $.error('data-valid is undefined!', textbox);
-                    } else {
-                        $.error(validType + ' is not existed in rules!');
-                    }
-                }
+                checkRule(ruleName, textbox, name, value, isRequiredIf);
             });
 
             // Validate checkboxes
             var checkboxes = controls.checkboxes;
-            var groupName;
-            for (groupName in checkboxes) {
+            for (var groupName in checkboxes) {
                 var group = checkboxes[groupName];
-                var first = group.get(0);
-                var name = options.getControlName(first, form);
+                var choosenOne = group.filter('[data-form2]');
+                choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
+
+                var name = options.getControlName(choosenOne, form);
+                var ruleName = choosenOne.attr('data-form2');
+                var isRequiredIf = !!choosenOne.attr('data-required-if');
+                var value = [];
+
+                group.filter(':checked').each(function () {
+                    value.push(this.value)
+                });
+
+                logInfo(name, value, ruleName, group);
+
+                checkRule(ruleName, group, name, value, isRequiredIf, 'checkbox');
             }
 
-            return [data, errorControls, errorMessages];
+            // Validate radios
+            var radios = controls.radios;
+            for (var groupName in radios) {
+                var group = radios[groupName];
+                var choosenOne = group.filter('[data-form2]');
+                choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
+
+                var name = options.getControlName(choosenOne, form);
+                var ruleName = choosenOne.attr('data-form2');
+                var isRequiredIf = !!choosenOne.attr('data-required-if');
+                var value = group.filter(':checked').val() || '';
+
+                logInfo(name, value, ruleName, group);
+
+                checkRule(ruleName, group, name, value, isRequiredIf, 'radio');
+            }
+
+            // Validate selects
+            var selects = controls.selects;
+            selects.each(function () {
+                var select = $(this);
+                var isMultilple = select.is('[multiple]');
+                var value = select.val();
+                if (isMultilple) {
+                    value = value || [];
+                }
+
+                if (isIgnored(select)) {
+                    return;
+                }
+
+                var name = options.getControlName(select, form);
+                var ruleName = select.attr('data-form2');
+                var isRequiredIf = !!select.attr('data-required-if');
+
+                logInfo(name, value, ruleName, select);
+
+                checkRule(ruleName, select, name, value, isRequiredIf, isMultilple ? 'select' : '');
+            });
+
+            return [data, errorControls, errorMessages, succesControls];
         },
         getControls: function (groupByName) {
             var form = $(this);
@@ -445,9 +513,9 @@
                     var name = checkbox.attr('name');
 
                     if (name in newCheckboxes) {
-                        newCheckboxes[name].push(checkbox);
+                        newCheckboxes[name] = newCheckboxes[name].add(checkbox);
                     } else {
-                        newCheckboxes[name] = [checkbox];
+                        newCheckboxes[name] = checkbox;
                     }
                 });
                 checkboxes = newCheckboxes;
@@ -458,9 +526,9 @@
                     var name = radio.attr('name');
 
                     if (name in newRadios) {
-                        newRadios[name].push(radio);
+                        newRadios[name] = newRadios[name].add(radio);
                     } else {
-                        newRadios[name] = [radio];
+                        newRadios[name] = radio;
                     }
                 });
                 radios = newRadios;
