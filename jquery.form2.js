@@ -39,13 +39,6 @@
     // List of validation rules
     $.form2.rules = {};
 
-    // Default for rule
-    var DEFAULT = {
-        validate: null,
-        message: null,
-        forGroup: false
-    };
-
     /**
      * Add a validation rule
      * @param {String} name Rule name
@@ -54,7 +47,7 @@
     $.form2.addRule = function (name, options) {
         var old = $.form2.rules[name] || {};
 
-        $.form2.rules[name] = $.extend({}, DEFAULT, old, options);
+        $.form2.rules[name] = $.extend({}, old, options);
     };
 
     /**
@@ -220,7 +213,7 @@
     };
 
     // Default configuration of form plugin
-    var DEFAULT = {
+    var DEFAULTS = {
         preventDefault: true,
         whenInvalid: null,
         whenValid: null,
@@ -231,8 +224,6 @@
             enable: true,
             ignorePassword: true
         },
-        disableFormBeforeSubmit: true,
-        clearFormAfterSubmit: true,
         ajaxOptions: {
             type: 'POST',
             dataType: 'JSON',
@@ -282,45 +273,83 @@
 
             return control.attr('data-name') || '';
         },
-        errorHandler: function (control, message) {
+        errorHandler: function (control, message, form) {
 
         },
-        succussHandler: function (control, message) {
-
-        },
-        message: {
-            enable: false,
-            selector: '.jq-form-msg-summary',
-            message: 'Form is not valid!'
-        }
+        successHandler: null
     };
 
     var methods = {
         init: function (options) {
             var form = $(this);
 
+            if ($.isPlainObject(form.data('options'))) {
+                return;
+            }
+
             // Options
-            options = $.extend({}, DEFAULT, options);
+            options = $.extend(true, {}, DEFAULTS, options);
             form.data('options', options);
 
             form.on('submit', function (e) {
+                // Callback beforeValidate
+                if (typeof options.beforeValidate === 'function') {
+                    options.beforeValidate.call(this, form, options);
+                }
+
                 var results = methods.validate.call(this, options);
                 var data = results[0];
                 var errorControls = results[1];
                 var errorMessages = results[2];
                 var successControls = results[3];
 
-                if (errorMessages.length)
+                if (typeof options.successHandler === 'function') {
+                    for (var i = 0, successControl; successControl = successControls[i]; i++) {
+                        options.successHandler.call(successControl, successControl, form, options);
+                    }
+                }
 
+                // When valid
+                if (errorMessages.length === 0) {
+                    if (typeof options.whenValid === 'function') {
+                        options.whenValid.call(this, options);
+                    }
+
+                    // Callback beforeSubmit
+                    if (typeof options.beforeSubmit === 'function') {
+                        options.beforeSubmit.call(this, form, options);
+                    }
                     if (options.preventDefault) {
                         e.preventDefault();
+
+                        var ajaxOptions = options.ajaxOptions;
+                        ajaxOptions.data = $.extend({}, data, options.ajaxOptions.data || {});
+
+                        $.ajax(ajaxOptions);
                     }
+                } else {
+                    e.preventDefault();
+
+                    if (typeof options.errorHandler === 'function') {
+                        for (var i = 0, errorControl; errorControl = errorControls[i]; i++) {
+                            options.errorHandler.call(errorControl, errorControl, errorMessages[i], form, options);
+                        }
+                    }
+
+                    if (typeof options.whenInvalid === 'function') {
+                        options.whenInvalid.call(this, options);
+                    }
+                }
             });
+
+            return form;
         },
         reset: function () {
-            this.get(0).reset();
+            var form = $(this);
 
-            return this;
+            form.get(0).reset();
+
+            return form;
         },
         clear: function (controlSelectors) {
             var form = $(this);
@@ -350,10 +379,19 @@
 
             return form;
         },
-        enable: function (isEnable) {
+        disable: function (isDisable) {
             var form = $(this);
+            log('Disable form: ', form, 'Is diable: ' + isDisable);
 
-            form.find('input, button, textarea, select').attr('disabled', isEnable === undefined ? false : !isEnable);
+            form.find('input, button, textarea, select').attr('disabled', isDisable === undefined ? true : isDisable);
+
+            return form;
+        },
+        enable: function () {
+            var form = $(this);
+            log('Enable form: ' + form);
+
+            methods.disable.call(this, false);
 
             return form;
         },
@@ -366,7 +404,7 @@
             var succesControls = [];
             var ignoreHidden = options.ignoreHidden;
 
-            log('Validate form: ', form)
+            log('Validate form: ', form);
 
             var isIgnored = function (control) {
                 var isIgnored = control.is(':disabled') || (options.ignoreHidden && control.is(':hidden'));
@@ -500,6 +538,8 @@
         getControls: function (groupByName) {
             var form = $(this);
 
+            log('Get controls of form: ', form);
+
             var selects = form.find('select');
             var buttons = form.find('button, input[type=button], input[type=reset], input[type=submit]');
             var checkboxes = form.find(':checkbox');
@@ -541,6 +581,13 @@
                 checkboxes: checkboxes,
                 radios: radios
             }
+        },
+        applyData: function (data, disableList, disableHandler) {
+            var form = $(this);
+
+            log('Apply data for form', data, disableList, disableHandler);
+
+            return form;
         }
     };
 
