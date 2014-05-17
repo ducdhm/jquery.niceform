@@ -27,7 +27,7 @@
                     console.log(arguments[0], arguments[1]);
                 } else if (arguments.length === 3) {
                     console.log(arguments[0], arguments[1], arguments[2]);
-                } else {                    
+                } else {
                     console.log(arguments[0], arguments[1], arguments[2], arguments[3]);
                 }
             } else {
@@ -110,7 +110,7 @@
      */
     $.form2.underscoreToCamel = function (string) {
         return string.replace(/(\_[a-z])/g, function ($1) {
-            return $1.toUpperCase().replace('_','');
+            return $1.toUpperCase().replace('_', '');
         });
     };
 
@@ -166,7 +166,7 @@
      */
     $.form2.capitalise = function (string, all) {
         if (all) {
-            return string.replace(/(^|\s)([a-z])/g , function (m, p1, p2) {
+            return string.replace(/(^|\s)([a-z])/g, function (m, p1, p2) {
                 return p1 + p2.toUpperCase();
             });
         } else {
@@ -268,11 +268,11 @@
 
             var name = control.attr('name');
 
-            if(name.indexOf('-') > 0) {
+            if (name.indexOf('-') > 0) {
                 return $.form2.capitalise($.form2.dashToSpace(name), true);
             }
 
-            if(name.indexOf('_') > 0) {
+            if (name.indexOf('_') > 0) {
                 return $.form2.capitalise($.form2.underscoreToSpace(name), true);
             }
 
@@ -312,9 +312,9 @@
 
                 if (errorMessages.length)
 
-                if (options.preventDefault) {
-                    e.preventDefault();
-                }
+                    if (options.preventDefault) {
+                        e.preventDefault();
+                    }
             });
         },
         reset: function () {
@@ -550,7 +550,7 @@
         } else if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error('Method ' + method + ' does not exist on jquery.form');
+            $.error('Method ' + method + ' does not exist on jquery.form2');
         }
     };
 

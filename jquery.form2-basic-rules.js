@@ -19,7 +19,7 @@
             } else {
                 return controlName + ' must be not blank';
             }
-            
+
         }
     });
 
