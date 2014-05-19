@@ -1,3 +1,11 @@
+/**
+ * jQuery plugin for validate and get/post form data to server (jquery.form2) plugin v0.1
+ * Copyright (c) 2014 Duc Doan Hoang Minh
+ *
+ * @license https://github.com/bobkhin/jquery.form2/blob/master/LICENSE
+ *
+ * Date: Mon, May 19th, 2014 (GTM+7)
+ */
 (function ($, undefined) {
     /**
      * Init form plugin
@@ -252,7 +260,6 @@
         getControlName: function (control, form) {
             var id = control.attr('id') || control.attr('name');
             var label = form.find('label[for=' + id + ']');
-
             if (label[0]) {
                 return label.html().replace(':', '');
             }
@@ -324,6 +331,9 @@
 
                         var ajaxOptions = options.ajaxOptions;
                         ajaxOptions.data = $.extend({}, data, options.ajaxOptions.data || {});
+                        if (!ajaxOptions.url) {
+                            ajaxOptions.url = form.attr('action');
+                        }
 
                         $.ajax(ajaxOptions);
                     }
@@ -582,10 +592,27 @@
                 radios: radios
             }
         },
-        applyData: function (data, disableList, disableHandler) {
+        applyData: function (data) {
             var form = $(this);
+            var name;
 
-            log('Apply data for form', data, disableList, disableHandler);
+            log('Apply data for form', data);
+            for (name in data) {
+                var control = form.find('[name=' + name + ']');
+                var value = data[name];
+
+                if (control.length === 1) {
+                    control.val(value);
+                } else if (control.length > 1) {
+                    if ($.isArray(value)) {
+                        for (var i = 0; i < value.length; i++) {
+                            control.filter('[value=' + value[i] + ']').prop('checked', true);
+                        }
+                    } else {
+                        control.filter('[value=' + value + ']').prop('checked', true);
+                    }
+                }
+            }
 
             return form;
         }
