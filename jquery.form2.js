@@ -1,4 +1,4 @@
-/**
+/*!*
  * jQuery plugin for validate and get/post form data to server (jquery.form2) plugin v0.1
  * Copyright (c) 2014 Duc Doan Hoang Minh
  *
@@ -75,8 +75,7 @@
      */
     $.form2.applyRule = function (selector, name, options) {
         var targets = $(selector);
-        var optionName;
-
+        
         if (options.requiredIf === true) {
             targets.attr('data-required-if', true);
             delete options.requiredIf;
@@ -84,7 +83,7 @@
 
         targets.attr('data-form2', name);
 
-        for (optionName in options) {
+        for (var optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
         }
 
@@ -146,7 +145,7 @@
      * @returns {String}
      */
     $.form2.dashToSpace = function (string) {
-        return string.replace(/\-/g, ' ')
+        return string.replace(/\-/g, ' ');
     };
 
     /**
@@ -156,8 +155,8 @@
      * @returns {String}
      */
     $.form2.underscoreToSpace = function (string) {
-        return string.replace(/\_/g, ' ')
-    }
+        return string.replace(/\_/g, ' ');
+    };
 
     /**
      * Capitalise a string
@@ -233,6 +232,7 @@
             ignorePassword: true
         },
         ajaxOptions: {
+            enable: true,
             type: 'POST',
             dataType: 'JSON',
             data: null
@@ -257,6 +257,11 @@
             hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/,
             ip: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:\d{2,5}){0,1}$/
         },
+        /**
+         * Get control name
+         * @param {jQuery} control
+         * @param {jQUery} form
+         */
         getControlName: function (control, form) {
             var id = control.attr('id') || control.attr('name');
             var label = form.find('label[for=' + id + ']');
@@ -265,25 +270,44 @@
             }
 
             var name = control.attr('name');
+            
+            if(name) {
+                if (name.indexOf('-') > 0) {
+                    return $.form2.capitalise($.form2.dashToSpace(name), true);
+                }
 
-            if (name.indexOf('-') > 0) {
-                return $.form2.capitalise($.form2.dashToSpace(name), true);
-            }
+                if (name.indexOf('_') > 0) {
+                    return $.form2.capitalise($.form2.underscoreToSpace(name), true);
+                }
 
-            if (name.indexOf('_') > 0) {
-                return $.form2.capitalise($.form2.underscoreToSpace(name), true);
-            }
-
-            if (name) {
-                return $.form2.capitalise($.form2.dashToSpace($.form2.camelToDash(name)), true);
+                if (name) {
+                    return $.form2.capitalise($.form2.dashToSpace($.form2.camelToDash(name)), true);
+                }
             }
 
             return control.attr('data-name') || '';
         },
-        errorHandler: function (control, message, form) {
+        errorHandler: function (control, message, form, options) {
+            log('Error control', control, message);
 
+            var formGroup = control.closest('.form-group');
+            var helpBlock = control.next('.help-block');
+
+            if (helpBlock[0]) {
+                helpBlock.show();
+            } else {
+                control.after(
+                    $.form2.formatString('<span class="help-block">{0}</span>', message)
+                );
+            }
         },
-        successHandler: null
+        successHandler: function (control, form, options) {
+            log('Success control', control);
+
+            var formGroup = control.closest('.form-group');
+            formGroup.removeClass('has-error');
+            formGroup.find('.help-block').hide();
+        }
     };
 
     var methods = {
@@ -324,18 +348,22 @@
 
                     // Callback beforeSubmit
                     if (typeof options.beforeSubmit === 'function') {
-                        options.beforeSubmit.call(this, form, options);
+                        options.beforeSubmit.call(this, data, form, options);
                     }
+                    
                     if (options.preventDefault) {
                         e.preventDefault();
 
                         var ajaxOptions = options.ajaxOptions;
-                        ajaxOptions.data = $.extend({}, data, options.ajaxOptions.data || {});
-                        if (!ajaxOptions.url) {
-                            ajaxOptions.url = form.attr('action');
-                        }
+                        
+                        if (ajaxOptions.enable) {
+                            ajaxOptions.data = $.extend({}, data, options.ajaxOptions.data || {});
+                            if (!ajaxOptions.url) {
+                                ajaxOptions.url = form.attr('action');
+                            }
 
-                        $.ajax(ajaxOptions);
+                            $.ajax(ajaxOptions);
+                        }
                     }
                 } else {
                     e.preventDefault();
@@ -378,7 +406,7 @@
                 var isCheckbox = control.is(':checkbox');
                 var isRadio = control.is(':radio');
 
-                if (isCheckbox) {
+                if (isSelect) {
                     this.selectedIndex = -1;
                 } else if (isCheckbox || isRadio) {
                     control.attr('checked', false);
@@ -389,19 +417,19 @@
 
             return form;
         },
-        disable: function (isDisable) {
+        disable: function () {
             var form = $(this);
-            log('Disable form: ', form, 'Is diable: ' + isDisable);
+            log('Disable form: ', form);
 
-            form.find('input, button, textarea, select').attr('disabled', isDisable === undefined ? true : isDisable);
+            form.find('input, button, textarea, select').attr('disabled', true);
 
             return form;
         },
         enable: function () {
             var form = $(this);
-            log('Enable form: ' + form);
+            log('Enable form: ', form);
 
-            methods.disable.call(this, false);
+            form.find('input, button, textarea, select').attr('disabled', false);
 
             return form;
         },
@@ -412,7 +440,6 @@
             var errorControls = [];
             var errorMessages = [];
             var succesControls = [];
-            var ignoreHidden = options.ignoreHidden;
 
             log('Validate form: ', form);
 
@@ -430,26 +457,36 @@
                 log('Name is: ' + name, 'Value is: ' + ($.isArray(value) ? value.join(', ') : value), 'Rule name is: ' + ruleName, control);
             };
 
-            var checkRule = function (ruleName, control, controlName, value, isRequiredIf, groupType) {
-                var rule = $.form2.rules[ruleName];
-
-                if (rule) {
-                    var isOk = rule.validate(control, value, options, groupType);
-                    if (isRequiredIf) {
-                        isOk = !!value ? isOk : true;
+            var checkRule = function (ruleName, control, controlName, value, groupType) {
+                if (ruleName !== undefined) {
+                    var isRequiredIf = false;
+                    if (ruleName.indexOf('|') !== -1) {
+                        ruleName = ruleName.split('|');
+                        isRequiredIf = ruleName[1] === 'requiredIf';
+                        ruleName = ruleName[0];
                     }
 
-                    if (isOk) {
-                        succesControls.push(control);
+                    var rule = $.form2.rules[ruleName];
+                    
+                    if (rule) {
+                        var isOk = rule.validate(control, value, options, groupType);
+                        if (isRequiredIf) {
+                            isOk = !!value ? isOk : true;
+                        }
+
+                        if (isOk) {
+                            succesControls.push(control);
+                            control.attr('data-success', true);
+                        } else {
+                            control.attr('data-success', false);
+                            errorControls.push(control);
+                            errorMessages.push(rule.message(control, controlName, options, groupType));
+                        }
                     } else {
-                        errorControls.push(control);
-                        errorMessages.push(rule.message(control, controlName, options, groupType));
-                    }
-                } else {
-                    if (ruleName !== undefined) {
                         log(ruleName + ' is not existed in rules!', control);
                     }
                 }
+                
 
                 data[control.attr('name')] = value;
             };
@@ -475,49 +512,58 @@
 
                 var name = options.getControlName(textbox, form);
                 var ruleName = textbox.attr('data-form2');
-                var isRequiredIf = !!textbox.attr('data-required-if');
 
                 logInfo(name, value, ruleName, textbox);
 
-                checkRule(ruleName, textbox, name, value, isRequiredIf);
+                checkRule(ruleName, textbox, name, value);
             });
 
             // Validate checkboxes
             var checkboxes = controls.checkboxes;
             for (var groupName in checkboxes) {
                 var group = checkboxes[groupName];
-                var choosenOne = group.filter('[data-form2]');
-                choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
+                if (options.ignoreHidden) {
+                    group = group.not(':hidden');
+                }
+                
+                if (group.length > 0) {
+                    var choosenOne = group.filter('[data-form2]');
+                    choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
 
-                var name = options.getControlName(choosenOne, form);
-                var ruleName = choosenOne.attr('data-form2');
-                var isRequiredIf = !!choosenOne.attr('data-required-if');
-                var value = [];
+                    var name = options.getControlName(choosenOne, form);
+                    var ruleName = choosenOne.attr('data-form2');
+                    var value = [];
 
-                group.filter(':checked').each(function () {
-                    value.push(this.value)
-                });
+                    group.filter(':checked').each(function () {
+                        value.push(this.value);
+                    });
 
-                logInfo(name, value, ruleName, group);
+                    logInfo(name, value, ruleName, group);
 
-                checkRule(ruleName, group, name, value, isRequiredIf, 'checkbox');
+                    checkRule(ruleName, group, name, value, 'checkbox');
+                }
             }
 
             // Validate radios
             var radios = controls.radios;
             for (var groupName in radios) {
                 var group = radios[groupName];
-                var choosenOne = group.filter('[data-form2]');
-                choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
-
-                var name = options.getControlName(choosenOne, form);
-                var ruleName = choosenOne.attr('data-form2');
-                var isRequiredIf = !!choosenOne.attr('data-required-if');
-                var value = group.filter(':checked').val() || '';
-
-                logInfo(name, value, ruleName, group);
-
-                checkRule(ruleName, group, name, value, isRequiredIf, 'radio');
+                if (options.ignoreHidden) {
+                    group = group.not(':hidden');
+                }
+                
+                if (group.length > 0) {
+                    var choosenOne = group.filter('[data-form2]');
+                    choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
+    
+                    var name = options.getControlName(choosenOne, form);
+                    var ruleName = choosenOne.attr('data-form2');
+                    var value = group.filter(':checked').val() || '';
+    
+                    logInfo(name, value, ruleName, group);
+    
+                    checkRule(ruleName, group, name, value, 'radio');
+                }
             }
 
             // Validate selects
@@ -536,11 +582,10 @@
 
                 var name = options.getControlName(select, form);
                 var ruleName = select.attr('data-form2');
-                var isRequiredIf = !!select.attr('data-required-if');
 
                 logInfo(name, value, ruleName, select);
 
-                checkRule(ruleName, select, name, value, isRequiredIf, isMultilple ? 'select' : '');
+                checkRule(ruleName, select, name, value, isMultilple ? 'select' : '');
             });
 
             return [data, errorControls, errorMessages, succesControls];
@@ -590,19 +635,24 @@
                 selects: selects,
                 checkboxes: checkboxes,
                 radios: radios
-            }
+            };
         },
         applyData: function (data) {
             var form = $(this);
-            var name;
 
             log('Apply data for form', data);
-            for (name in data) {
+            for (var name in data) {
                 var control = form.find('[name=' + name + ']');
                 var value = data[name];
 
                 if (control.length === 1) {
-                    control.val(value);
+                    if (control.is(':checkbox')) {
+                        if (value === control.val()) {
+                            control.prop('checked', true);
+                        }
+                    } else {
+                        control.val(value);
+                    }
                 } else if (control.length > 1) {
                     if ($.isArray(value)) {
                         for (var i = 0; i < value.length; i++) {

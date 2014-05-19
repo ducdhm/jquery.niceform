@@ -1,3 +1,11 @@
+/*!*
+ * Basic rules for jquery.form2
+ * Copyright (c) 2014 Duc Doan Hoang Minh
+ *
+ * @license https://github.com/bobkhin/jquery.form2/blob/master/LICENSE
+ *
+ * Date: Mon, May 19th, 2014 (GTM+7)
+ */
 (function ($) {
     var form2 = $.form2;
 
@@ -36,9 +44,25 @@
 
     form2.addRule('repassword', {
         validate: function (control, value, options, groupType) {
-            var password = control.closest('form').find(':password').not(control);
-
-            return value === password.val();
+            var txtPassword = control.closest('form').find(':password').not(control);
+            var password = txtPassword.val();
+            var isRequiredIf = txtPassword.is('[data-required-if=true]');
+            
+            if (isRequiredIf) {
+                if (password) {
+                    return !!value && value === password;
+                } else {
+                    return true;
+                }
+            } else {
+                if (txtPassword.attr('data-success') === 'false') {
+                    return false;
+                } else {
+                    if (password) {
+                        return !!value && value === password;
+                    }
+                }
+            }
         },
         message: function (control, controlName, options, groupType) {
             return 'Please re-enter your password for confirmation';
@@ -166,7 +190,7 @@
             var min = control.attr('data-min');
             var max = control.attr('data-max');
 
-            return !isNaN(value) && (!!min ? +value >= +min : true) && (!!max ? +value <= +max : true);
+            return !!value && !isNaN(value) && (!!min ? +value >= +min : true) && (!!max ? +value <= +max : true);
         },
         message: function (control, controlName, options, groupType) {
             var min = control.attr('data-min');
