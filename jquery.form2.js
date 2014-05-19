@@ -290,7 +290,6 @@
         errorHandler: function (control, message, form, options) {
             log('Error control', control, message);
 
-            var formGroup = control.closest('.form-group');
             var helpBlock = control.next('.help-block');
 
             if (helpBlock[0]) {
@@ -382,6 +381,11 @@
 
             return form;
         },
+
+        /**
+         * Reset form using native event
+         * @returns {jQuery} form
+         */
         reset: function () {
             var form = $(this);
 
@@ -389,6 +393,13 @@
 
             return form;
         },
+
+        /**
+         * Clear value of textbox, textarea. Uncheck all radio button and checkbox. And set selected
+         * index of select is -1
+         * @param {String} controlSelectors
+         * @returns {jQuery} form
+         */
         clear: function (controlSelectors) {
             var form = $(this);
 
@@ -417,6 +428,11 @@
 
             return form;
         },
+
+        /**
+         * Disable all control of form
+         * @returns {jQuery} form
+         */
         disable: function () {
             var form = $(this);
             log('Disable form: ', form);
@@ -425,6 +441,11 @@
 
             return form;
         },
+
+        /**
+         * Enable all control of form
+         * @returns {jQuery} form
+         */
         enable: function () {
             var form = $(this);
             log('Enable form: ', form);
@@ -433,6 +454,12 @@
 
             return form;
         },
+
+        /**
+         * Validate the form
+         * @param options
+         * @returns {Array} The data of form, the error controls, the error messages and the success controls
+         */
         validate: function (options) {
             var form = $(this);
             var controls = methods.getControls.call(form, true);
@@ -590,6 +617,12 @@
 
             return [data, errorControls, errorMessages, succesControls];
         },
+
+        /**
+         * Get all controls of form with 5 main types is button, textbox, select, checkbox and radio button
+         * @param {Boolean} groupByName Will group checkbox, radio button have same name or not.
+         * @returns {Object}
+         */
         getControls: function (groupByName) {
             var form = $(this);
 
@@ -637,6 +670,12 @@
                 radios: radios
             };
         },
+
+        /**
+         * Apply data for form
+         * @param {Object} data
+         * @returns {jQuery} form
+         */
         applyData: function (data) {
             var form = $(this);
 
