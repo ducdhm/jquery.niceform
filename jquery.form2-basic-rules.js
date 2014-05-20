@@ -46,7 +46,7 @@
         validate: function (control, value, options, groupType) {
             var txtPassword = control.closest('form').find(':password').not(control);
             var password = txtPassword.val();
-            var isRequiredIf = txtPassword.is('[data-required-if=true]');
+            var isRequiredIf = txtPassword.is('[data-form2$=requiredIf]');
             
             if (isRequiredIf) {
                 if (password) {
