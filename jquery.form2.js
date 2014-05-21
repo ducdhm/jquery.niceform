@@ -471,7 +471,7 @@
             log('Validate form: ', form);
 
             var isIgnored = function (control) {
-                var isIgnored = control.is(':disabled') || (options.ignoreHidden && control.is(':hidden'));
+                var isIgnored = control.is(':disabled');
 
                 if (isIgnored) {
                     log('Is ignored', control);
@@ -486,31 +486,38 @@
 
             var checkRule = function (ruleName, control, controlName, value, groupType) {
                 if (ruleName !== undefined) {
-                    var isRequiredIf = false;
-                    if (ruleName.indexOf('|') !== -1) {
-                        ruleName = ruleName.split('|');
-                        isRequiredIf = ruleName[1] === 'requiredIf';
-                        ruleName = ruleName[0];
-                    }
-
-                    var rule = $.form2.rules[ruleName];
-                    
-                    if (rule) {
-                        var isOk = rule.validate(control, value, options, groupType);
-                        if (isRequiredIf) {
-                            isOk = !!value ? isOk : true;
-                        }
-
-                        if (isOk) {
-                            succesControls.push(control);
-                            control.attr('data-success', true);
-                        } else {
-                            control.attr('data-success', false);
-                            errorControls.push(control);
-                            errorMessages.push(rule.message(control, controlName, options, groupType));
-                        }
+                    if (options.ignoreHidden && control.is(':hidden')) {
+                        log('Control is hidden and will be not validated', control);
+                        
+                        succesControls.push(control);
+                        control.attr('data-success', true);
                     } else {
-                        log(ruleName + ' is not existed in rules!', control);
+                        var isRequiredIf = false;
+                        if (ruleName.indexOf('|') !== -1) {
+                            ruleName = ruleName.split('|');
+                            isRequiredIf = ruleName[1] === 'requiredIf';
+                            ruleName = ruleName[0];
+                        }
+
+                        var rule = $.form2.rules[ruleName];
+                        
+                        if (rule) {
+                            var isOk = rule.validate(control, value, options, groupType);
+                            if (isRequiredIf) {
+                                isOk = !!value ? isOk : true;
+                            }
+
+                            if (isOk) {
+                                succesControls.push(control);
+                                control.attr('data-success', true);
+                            } else {
+                                control.attr('data-success', false);
+                                errorControls.push(control);
+                                errorMessages.push(rule.message(control, controlName, options, groupType));
+                            }
+                        } else {
+                            log(ruleName + ' is not existed in rules!', control);
+                        }
                     }
                 }
                 
