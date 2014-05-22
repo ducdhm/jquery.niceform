@@ -1,7 +1,7 @@
 {
   "name": "jquery.form2",
   "version": "0.1.0",
-  "description": "Jquery Form2 - plugin for validate and get/post data form to server",
+  "description": "jQuery plugin for validate and get/post data form to server",
   "main": "jquery.form2.js",
   "directories": {
     "doc": "doc"
