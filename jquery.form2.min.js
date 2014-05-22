@@ -1,5 +1,5 @@
 /*!*
- * jQuery plugin for validate and get/post form data to server (jquery.form2) plugin v0.1
+ * The jQuery plugin for validate and get/post form data to server (jquery.form2) plugin v0.1
  * Copyright (c) 2014 Duc Doan Hoang Minh
  *
  * @license https://github.com/bobkhin/jquery.form2/blob/master/LICENSE
