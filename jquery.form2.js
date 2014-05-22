@@ -361,6 +361,10 @@
                                 ajaxOptions.url = form.attr('action');
                             }
 
+                            if(!ajaxOptions.type) {
+                                ajaxOptions.type = form.attr('method');
+                            }
+
                             $.ajax(ajaxOptions);
                         }
                     }
