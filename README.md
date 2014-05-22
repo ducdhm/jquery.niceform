@@ -1,6 +1,6 @@
-Jquery Form2
+jQuery Form2
 ===========
-Jquery plugin for validate and get/post data form to server
+jQuery plugin for validate and get/post data form to server
 
 License
 -----
