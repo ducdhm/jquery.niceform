@@ -206,18 +206,22 @@
 
     /**
      * Format strings
-     * @method format
+     * @method formatString
      * @param {String} string The template string
      * @param {String[]} args Zero or more objects to format, supplied either in a comma-delimited list or as an array
      */
-    $.niceform.formatString = function (string) {
-        var args = arguments;
-        var pattern = new RegExp('{([0-' + arguments.length + '])}', 'g');
+    if (!String.format) {
+        String.format = function (string) {            
+            var args = Array.prototype.slice.call(arguments, 1);
 
-        return string.replace(pattern, function (match, index) {
-            return args[+index + 1];
-        });
-    };
+            return string.replace(/{(\d+)}/g, function(match, number) { 
+              return typeof args[number] != 'undefined'
+                ? args[number] 
+                : match
+              ;
+            });
+        }
+    }
 
     // Default configuration of form plugin
     var DEFAULTS = {

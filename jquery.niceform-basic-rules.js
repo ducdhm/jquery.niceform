@@ -20,9 +20,9 @@
         message: function (control, controlName, options, groupType) {
             if (groupType) {
                 if (groupType === 'radio') {
-                    return niceform.formatString('Please select {0}', controlName);
+                    return String.format('Please select {0}', controlName);
                 } else {
-                    return niceform.formatString('Please select at least one of {0}', controlName);
+                    return String.format('Please select at least one of {0}', controlName);
                 }
             } else {
                 return controlName + ' must be not blank';
@@ -38,7 +38,7 @@
             return !!value && regex.test(value);
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} {1}', controlName, options.password.errorMessage);
+            return String.format('{0} {1}', controlName, options.password.errorMessage);
         }
     });
 
@@ -101,9 +101,9 @@
             }
 
             if (groupType) {
-                return niceform.formatString('You can select {0}-{1} {2}', min, max, controlName);
+                return String.format('You can select {0}-{1} {2}', min, max, controlName);
             } else {
-                return niceform.formatString('{0} must be between {1} and {2} characters long', controlName, min, max);
+                return String.format('{0} must be between {1} and {2} characters long', controlName, min, max);
             }
         }
     });
@@ -134,9 +134,9 @@
             }
 
             if (groupType) {
-                return niceform.formatString('You must be select at least {0} {1}', min, controlName);
+                return String.format('You must be select at least {0} {1}', min, controlName);
             } else {
-                return niceform.formatString('Must be at least {0} characters long', min);
+                return String.format('Must be at least {0} characters long', min);
             }
         }
     });
@@ -167,9 +167,9 @@
             }
 
             if (groupType) {
-                return niceform.formatString('Please only select {0} {1} at max', max, controlName);
+                return String.format('Please only select {0} {1} at max', max, controlName);
             } else {
-                return niceform.formatString('Maximum length of {0} is {1} characters long', controlName, max);
+                return String.format('Maximum length of {0} is {1} characters long', controlName, max);
             }
         }
     });
@@ -181,7 +181,7 @@
             return value.length === length;
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} length must be {1} characters long', controlName, control.attr('data-length'));
+            return String.format('{0} length must be {1} characters long', controlName, control.attr('data-length'));
         }
     });
 
@@ -196,7 +196,7 @@
             var min = control.attr('data-min');
             var max = control.attr('data-max');
 
-            return niceform.formatString('{0} must be digits{1}{2}', controlName, (!!min ? ', minimum is ' + min : ''), (!!max ? ', maximum is ' + max : ''));
+            return String.format('{0} must be digits{1}{2}', controlName, (!!min ? ', minimum is ' + min : ''), (!!max ? ', maximum is ' + max : ''));
         }
     });
 
@@ -205,7 +205,7 @@
             return options.regex.email.test(value);
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
@@ -225,7 +225,7 @@
             return options.regex.url.test(value);
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
@@ -234,7 +234,7 @@
             return options.regex.ip.test(value);
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
@@ -243,7 +243,7 @@
             return options.regex.hex.test(value);
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
@@ -257,7 +257,7 @@
             return moment(value, options.format.date, true).isValid();
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
@@ -271,7 +271,7 @@
             return moment(value, options.format.time, true).isValid();
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
@@ -285,7 +285,7 @@
             return moment(value, options.format.datetime, true).isValid();
         },
         message: function (control, controlName, options, groupType) {
-            return niceform.formatString('{0} is invalid', controlName);
+            return String.format('{0} is invalid', controlName);
         }
     });
 
