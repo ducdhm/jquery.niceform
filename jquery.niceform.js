@@ -12,18 +12,18 @@
      * @param {String|HTMLElement|jQuery} selector Selector, HTMLElement or jQuery object of form
      * @param {String|Object} options Method name or configuration of form plugin
      */
-    $.niceForm = function (selector, options) {
+    $.niceform = function (selector, options) {
         return $(selector).form(options);
     };
 
     // Set debug mode of form plugin
-    $.niceForm.debug = true;
+    $.niceform.debug = true;
 
     /**
      * Log message list
      */
-    var log = $.niceForm.log = function () {
-        if (!$.niceForm.debug) {
+    var log = $.niceform.log = function () {
+        if (!$.niceform.debug) {
             return;
         }
 
@@ -45,25 +45,25 @@
     };
 
     // List of validation rules
-    $.niceForm.rules = {};
+    $.niceform.rules = {};
 
     /**
      * Add a validation rule
      * @param {String} name Rule name
      * @param {Object} options The configuration of rule
      */
-    $.niceForm.addRule = function (name, options) {
-        var old = $.niceForm.rules[name] || {};
+    $.niceform.addRule = function (name, options) {
+        var old = $.niceform.rules[name] || {};
 
-        $.niceForm.rules[name] = $.extend({}, old, options);
+        $.niceform.rules[name] = $.extend({}, old, options);
     };
 
     /**
      * Remove a validation rule
      * @param {String} name Name of removed rule
      */
-    $.niceForm.removeRule = function (name) {
-        delete $.niceForm.rules[name];
+    $.niceform.removeRule = function (name) {
+        delete $.niceform.rules[name];
     };
 
     /**
@@ -73,7 +73,7 @@
      * @param {Object} options Addition configuration of rule such as min, max, pattern...
      * @return {jQuery}
      */
-    $.niceForm.applyRule = function (selector, name, options) {
+    $.niceform.applyRule = function (selector, name, options) {
         var targets = $(selector);
         
         if (options.requiredIf === true) {
@@ -81,7 +81,7 @@
             delete options.requiredIf;
         }
 
-        targets.attr('data-niceForm', name);
+        targets.attr('data-niceform', name);
 
         for (var optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
@@ -96,7 +96,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.niceForm.dashToCamel = function (string) {
+    $.niceform.dashToCamel = function (string) {
         return string.replace(/(\-[a-z])/g, function ($1) {
             return $1.toUpperCase().replace('-', '');
         });
@@ -108,7 +108,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.niceForm.underscoreToCamel = function (string) {
+    $.niceform.underscoreToCamel = function (string) {
         return string.replace(/(\_[a-z])/g, function ($1) {
             return $1.toUpperCase().replace('_', '');
         });
@@ -120,7 +120,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.niceForm.camelToDash = function (string) {
+    $.niceform.camelToDash = function (string) {
         return string.replace(/([A-Z])/g, function ($1) {
             return '-' + $1.toLowerCase();
         });
@@ -132,7 +132,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.niceForm.camelToUnderscore = function (string) {
+    $.niceform.camelToUnderscore = function (string) {
         return string.replace(/([A-Z])/g, function ($1) {
             return '_' + $1.toLowerCase();
         });
@@ -144,7 +144,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.niceForm.dashToSpace = function (string) {
+    $.niceform.dashToSpace = function (string) {
         return string.replace(/\-/g, ' ');
     };
 
@@ -154,7 +154,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.niceForm.underscoreToSpace = function (string) {
+    $.niceform.underscoreToSpace = function (string) {
         return string.replace(/\_/g, ' ');
     };
 
@@ -164,7 +164,7 @@
      * @param {Boolean} all Is capitalise first letter of all words or not
      * @returns {String}
      */
-    $.niceForm.capitalise = function (string, all) {
+    $.niceform.capitalise = function (string, all) {
         if (all) {
             return string.replace(/(^|\s)([a-z])/g, function (m, p1, p2) {
                 return p1 + p2.toUpperCase();
@@ -184,7 +184,7 @@
      * @param {Number} uppercaseLength Number of required uppercase character in password
      * @param {Number} numberLength Number of digit character in password *
      */
-    $.niceForm.generatePasswordRegex = function (options) {
+    $.niceform.generatePasswordRegex = function (options) {
         var regexString = '(?=(?:.*[a-z]){1})';
 
         if (options.uppercaseLength > 0) {
@@ -210,7 +210,7 @@
      * @param {String} string The template string
      * @param {String[]} args Zero or more objects to format, supplied either in a comma-delimited list or as an array
      */
-    $.niceForm.formatString = function (string) {
+    $.niceform.formatString = function (string) {
         var args = arguments;
         var pattern = new RegExp('{([0-' + arguments.length + '])}', 'g');
 
@@ -269,15 +269,15 @@
             
             if(name) {
                 if (name.indexOf('-') > 0) {
-                    return $.niceForm.capitalise($.niceForm.dashToSpace(name), true);
+                    return $.niceform.capitalise($.niceform.dashToSpace(name), true);
                 }
 
                 if (name.indexOf('_') > 0) {
-                    return $.niceForm.capitalise($.niceForm.underscoreToSpace(name), true);
+                    return $.niceform.capitalise($.niceform.underscoreToSpace(name), true);
                 }
 
                 if (name) {
-                    return $.niceForm.capitalise($.niceForm.dashToSpace($.niceForm.camelToDash(name)), true);
+                    return $.niceform.capitalise($.niceform.dashToSpace($.niceform.camelToDash(name)), true);
                 }
             }
 
@@ -292,7 +292,7 @@
                 helpBlock.show();
             } else {
                 control.after(
-                    $.niceForm.formatString('<span class="help-block">{0}</span>', message)
+                    $.niceform.formatString('<span class="help-block">{0}</span>', message)
                 );
             }
         },
@@ -319,7 +319,7 @@
 
             form.on('submit', function (e) {
                 // Callback beforeValidate
-                form.trigger('beforeValidate.niceForm', options);
+                form.trigger('beforeValidate.niceform', options);
 
                 var results = methods.validate.call(this, options);
                 var data = results[0];
@@ -335,10 +335,10 @@
 
                 // When valid
                 if (errorMessages.length === 0) {
-                    form.trigger('valid.niceForm', options);
+                    form.trigger('valid.niceform', options);
 
                     // Callback beforeSubmit
-                    form.trigger('beforeSubmit.niceForm', options);
+                    form.trigger('beforeSubmit.niceform', options);
                     
                     if (options.preventDefault) {
                         e.preventDefault();
@@ -367,7 +367,7 @@
                         }
                     }
 
-                    form.trigger('invalid.niceForm', options);
+                    form.trigger('invalid.niceform', options);
                 }
             });
 
@@ -491,7 +491,7 @@
                             ruleName = ruleName[0];
                         }
 
-                        var rule = $.niceForm.rules[ruleName];
+                        var rule = $.niceform.rules[ruleName];
                         
                         if (rule) {
                             var isOk = rule.validate(control, value, options, groupType);
@@ -537,7 +537,7 @@
                 }
 
                 var name = options.getControlName(textbox, form);
-                var ruleName = textbox.attr('data-niceForm');
+                var ruleName = textbox.attr('data-niceform');
 
                 logInfo(name, value, ruleName, textbox);
 
@@ -553,11 +553,11 @@
                 }
                 
                 if (group.length > 0) {
-                    var choosenOne = group.filter('[data-niceForm]');
+                    var choosenOne = group.filter('[data-niceform]');
                     choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
 
                     var name = options.getControlName(choosenOne, form);
-                    var ruleName = choosenOne.attr('data-niceForm');
+                    var ruleName = choosenOne.attr('data-niceform');
                     var value = [];
 
                     group.filter(':checked').each(function () {
@@ -579,11 +579,11 @@
                 }
                 
                 if (group.length > 0) {
-                    var choosenOne = group.filter('[data-niceForm]');
+                    var choosenOne = group.filter('[data-niceform]');
                     choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
     
                     var name = options.getControlName(choosenOne, form);
-                    var ruleName = choosenOne.attr('data-niceForm');
+                    var ruleName = choosenOne.attr('data-niceform');
                     var value = group.filter(':checked').val() || '';
     
                     logInfo(name, value, ruleName, group);
@@ -607,7 +607,7 @@
                 }
 
                 var name = options.getControlName(select, form);
-                var ruleName = select.attr('data-niceForm');
+                var ruleName = select.attr('data-niceform');
 
                 logInfo(name, value, ruleName, select);
 
@@ -706,7 +706,7 @@
         }
     };
 
-    $.fn.niceForm = function (method) {
+    $.fn.niceform = function (method) {
         if (methods[method]) {
             return methods[ method ].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
