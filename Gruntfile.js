@@ -5,12 +5,12 @@ module.exports = function(grunt) {
                 preserveComments: 'some'
             },
             main: {
-                src: 'jquery.form2.js',
-                dest: 'jquery.form2.min.js'
+                src: 'jquery.niceform.js',
+                dest: 'jquery.niceform.min.js'
             },
             basicRules: {
-                src: 'jquery.form2-basic-rules.js',
-                dest: 'jquery.form2-basic-rules.min.js'
+                src: 'jquery.niceform-basic-rules.js',
+                dest: 'jquery.niceform-basic-rules.min.js'
             }
         }
     });

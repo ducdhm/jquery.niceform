@@ -1,4 +1,4 @@
-jQuery Form2
+jQuery Niceform
 ===========
 The jQuery plugin for validate and get/post data form to server
 

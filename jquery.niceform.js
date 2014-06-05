@@ -1,8 +1,8 @@
 /*!*
- * The jQuery plugin for validate and get/post form data to server (jquery.form2) plugin v0.1
+ * The jQuery plugin for validate and get/post form data to server (jquery.niceform) plugin v0.1
  * Copyright (c) 2014 Duc Doan Hoang Minh
  *
- * @license https://github.com/bobkhin/jquery.form2/blob/master/LICENSE
+ * @license https://github.com/bobkhin/jquery.niceform/blob/master/LICENSE
  *
  * Date: Mon, May 19th, 2014 (GTM+7)
  */
@@ -12,18 +12,18 @@
      * @param {String|HTMLElement|jQuery} selector Selector, HTMLElement or jQuery object of form
      * @param {String|Object} options Method name or configuration of form plugin
      */
-    $.form2 = function (selector, options) {
+    $.niceForm = function (selector, options) {
         return $(selector).form(options);
     };
 
     // Set debug mode of form plugin
-    $.form2.debug = true;
+    $.niceForm.debug = true;
 
     /**
      * Log message list
      */
-    var log = $.form2.logArray = function () {
-        if (!$.form2.debug) {
+    var log = $.niceForm.log = function () {
+        if (!$.niceForm.debug) {
             return;
         }
 
@@ -45,25 +45,25 @@
     };
 
     // List of validation rules
-    $.form2.rules = {};
+    $.niceForm.rules = {};
 
     /**
      * Add a validation rule
      * @param {String} name Rule name
      * @param {Object} options The configuration of rule
      */
-    $.form2.addRule = function (name, options) {
-        var old = $.form2.rules[name] || {};
+    $.niceForm.addRule = function (name, options) {
+        var old = $.niceForm.rules[name] || {};
 
-        $.form2.rules[name] = $.extend({}, old, options);
+        $.niceForm.rules[name] = $.extend({}, old, options);
     };
 
     /**
      * Remove a validation rule
      * @param {String} name Name of removed rule
      */
-    $.form2.removeRule = function (name) {
-        delete $.form2.rules[name];
+    $.niceForm.removeRule = function (name) {
+        delete $.niceForm.rules[name];
     };
 
     /**
@@ -73,7 +73,7 @@
      * @param {Object} options Addition configuration of rule such as min, max, pattern...
      * @return {jQuery}
      */
-    $.form2.applyRule = function (selector, name, options) {
+    $.niceForm.applyRule = function (selector, name, options) {
         var targets = $(selector);
         
         if (options.requiredIf === true) {
@@ -81,7 +81,7 @@
             delete options.requiredIf;
         }
 
-        targets.attr('data-form2', name);
+        targets.attr('data-niceForm', name);
 
         for (var optionName in options) {
             targets.attr('data-' + optionsName, options[optionName]);
@@ -96,7 +96,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form2.dashToCamel = function (string) {
+    $.niceForm.dashToCamel = function (string) {
         return string.replace(/(\-[a-z])/g, function ($1) {
             return $1.toUpperCase().replace('-', '');
         });
@@ -108,7 +108,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form2.underscoreToCamel = function (string) {
+    $.niceForm.underscoreToCamel = function (string) {
         return string.replace(/(\_[a-z])/g, function ($1) {
             return $1.toUpperCase().replace('_', '');
         });
@@ -120,7 +120,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form2.camelToDash = function (string) {
+    $.niceForm.camelToDash = function (string) {
         return string.replace(/([A-Z])/g, function ($1) {
             return '-' + $1.toLowerCase();
         });
@@ -132,7 +132,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form2.camelToUnderscore = function (string) {
+    $.niceForm.camelToUnderscore = function (string) {
         return string.replace(/([A-Z])/g, function ($1) {
             return '_' + $1.toLowerCase();
         });
@@ -144,7 +144,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form2.dashToSpace = function (string) {
+    $.niceForm.dashToSpace = function (string) {
         return string.replace(/\-/g, ' ');
     };
 
@@ -154,7 +154,7 @@
      * @param {String} string
      * @returns {String}
      */
-    $.form2.underscoreToSpace = function (string) {
+    $.niceForm.underscoreToSpace = function (string) {
         return string.replace(/\_/g, ' ');
     };
 
@@ -164,7 +164,7 @@
      * @param {Boolean} all Is capitalise first letter of all words or not
      * @returns {String}
      */
-    $.form2.capitalise = function (string, all) {
+    $.niceForm.capitalise = function (string, all) {
         if (all) {
             return string.replace(/(^|\s)([a-z])/g, function (m, p1, p2) {
                 return p1 + p2.toUpperCase();
@@ -184,7 +184,7 @@
      * @param {Number} uppercaseLength Number of required uppercase character in password
      * @param {Number} numberLength Number of digit character in password *
      */
-    $.form2.generatePasswordRegex = function (options) {
+    $.niceForm.generatePasswordRegex = function (options) {
         var regexString = '(?=(?:.*[a-z]){1})';
 
         if (options.uppercaseLength > 0) {
@@ -210,7 +210,7 @@
      * @param {String} string The template string
      * @param {String[]} args Zero or more objects to format, supplied either in a comma-delimited list or as an array
      */
-    $.form2.formatString = function (string) {
+    $.niceForm.formatString = function (string) {
         var args = arguments;
         var pattern = new RegExp('{([0-' + arguments.length + '])}', 'g');
 
@@ -222,10 +222,6 @@
     // Default configuration of form plugin
     var DEFAULTS = {
         preventDefault: true,
-        whenInvalid: null,
-        whenValid: null,
-        beforeValidate: null,
-        beforeSubmit: null,
         ignoreHidden: false,
         trimValue: {
             enable: true,
@@ -273,15 +269,15 @@
             
             if(name) {
                 if (name.indexOf('-') > 0) {
-                    return $.form2.capitalise($.form2.dashToSpace(name), true);
+                    return $.niceForm.capitalise($.niceForm.dashToSpace(name), true);
                 }
 
                 if (name.indexOf('_') > 0) {
-                    return $.form2.capitalise($.form2.underscoreToSpace(name), true);
+                    return $.niceForm.capitalise($.niceForm.underscoreToSpace(name), true);
                 }
 
                 if (name) {
-                    return $.form2.capitalise($.form2.dashToSpace($.form2.camelToDash(name)), true);
+                    return $.niceForm.capitalise($.niceForm.dashToSpace($.niceForm.camelToDash(name)), true);
                 }
             }
 
@@ -296,7 +292,7 @@
                 helpBlock.show();
             } else {
                 control.after(
-                    $.form2.formatString('<span class="help-block">{0}</span>', message)
+                    $.niceForm.formatString('<span class="help-block">{0}</span>', message)
                 );
             }
         },
@@ -323,9 +319,7 @@
 
             form.on('submit', function (e) {
                 // Callback beforeValidate
-                if (typeof options.beforeValidate === 'function') {
-                    options.beforeValidate.call(this, form, options);
-                }
+                form.trigger('beforeValidate.niceForm', options);
 
                 var results = methods.validate.call(this, options);
                 var data = results[0];
@@ -341,14 +335,10 @@
 
                 // When valid
                 if (errorMessages.length === 0) {
-                    if (typeof options.whenValid === 'function') {
-                        options.whenValid.call(this, options);
-                    }
+                    form.trigger('valid.niceForm', options);
 
                     // Callback beforeSubmit
-                    if (typeof options.beforeSubmit === 'function') {
-                        options.beforeSubmit.call(this, data, form, options);
-                    }
+                    form.trigger('beforeSubmit.niceForm', options);
                     
                     if (options.preventDefault) {
                         e.preventDefault();
@@ -377,9 +367,7 @@
                         }
                     }
 
-                    if (typeof options.whenInvalid === 'function') {
-                        options.whenInvalid.call(this, options);
-                    }
+                    form.trigger('invalid.niceForm', options);
                 }
             });
 
@@ -503,7 +491,7 @@
                             ruleName = ruleName[0];
                         }
 
-                        var rule = $.form2.rules[ruleName];
+                        var rule = $.niceForm.rules[ruleName];
                         
                         if (rule) {
                             var isOk = rule.validate(control, value, options, groupType);
@@ -549,7 +537,7 @@
                 }
 
                 var name = options.getControlName(textbox, form);
-                var ruleName = textbox.attr('data-form2');
+                var ruleName = textbox.attr('data-niceForm');
 
                 logInfo(name, value, ruleName, textbox);
 
@@ -565,11 +553,11 @@
                 }
                 
                 if (group.length > 0) {
-                    var choosenOne = group.filter('[data-form2]');
+                    var choosenOne = group.filter('[data-niceForm]');
                     choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
 
                     var name = options.getControlName(choosenOne, form);
-                    var ruleName = choosenOne.attr('data-form2');
+                    var ruleName = choosenOne.attr('data-niceForm');
                     var value = [];
 
                     group.filter(':checked').each(function () {
@@ -591,11 +579,11 @@
                 }
                 
                 if (group.length > 0) {
-                    var choosenOne = group.filter('[data-form2]');
+                    var choosenOne = group.filter('[data-niceForm]');
                     choosenOne = choosenOne[0] ? choosenOne.eq(0) : group.eq(0);
     
                     var name = options.getControlName(choosenOne, form);
-                    var ruleName = choosenOne.attr('data-form2');
+                    var ruleName = choosenOne.attr('data-niceForm');
                     var value = group.filter(':checked').val() || '';
     
                     logInfo(name, value, ruleName, group);
@@ -619,7 +607,7 @@
                 }
 
                 var name = options.getControlName(select, form);
-                var ruleName = select.attr('data-form2');
+                var ruleName = select.attr('data-niceForm');
 
                 logInfo(name, value, ruleName, select);
 
@@ -718,13 +706,13 @@
         }
     };
 
-    $.fn.form2 = function (method) {
+    $.fn.niceForm = function (method) {
         if (methods[method]) {
             return methods[ method ].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof method === 'object' || !method) {
             return methods.init.apply(this, arguments);
         } else {
-            $.error('Method ' + method + ' does not exist on jquery.form2');
+            $.error('Method ' + method + ' does not exist on jquery.niceform');
         }
     };
 
