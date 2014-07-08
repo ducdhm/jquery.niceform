@@ -42,30 +42,31 @@
         }
     });
 
-    niceform.addRule('repassword', {
+    niceform.addRule('equalTo', {
         validate: function (control, value, options, groupType) {
-            var txtPassword = control.closest('form').find(':password').not(control);
-            var password = txtPassword.val();
-            var isRequiredIf = txtPassword.is('[data-niceform$=requiredIf]');
+            var targetSelector = control.attr('data-target');
+            var target = $(targetSelector);
+            var targetValue = target.val();
+            var isRequiredIf = target.is('[data-niceform$=requiredIf]');
             
             if (isRequiredIf) {
-                if (password) {
-                    return !!value && value === password;
+                if (targetValue) {
+                    return !!value && value === targetValue;
                 } else {
                     return true;
                 }
             } else {
-                if (txtPassword.attr('data-success') === 'false') {
+                if (target.attr('data-success') === 'false') {
                     return false;
                 } else {
-                    if (password) {
-                        return !!value && value === password;
+                    if (targetValue) {
+                        return !!value && value === targetValue;
                     }
                 }
             }
         },
         message: function (control, controlName, options, groupType) {
-            return 'Please re-enter your password for confirmation';
+            return control.attr('data-message');
         }
     });
 

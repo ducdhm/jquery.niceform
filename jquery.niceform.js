@@ -392,7 +392,7 @@
 
         /**
          * Clear value of textbox, textarea. Uncheck all radio button and checkbox. And set selected
-         * index of select is -1
+         * index of select is -1. NOTE: Not effect with element data-ignore=`clear`
          * @param {String} controlSelectors
          * @returns {jQuery} form
          */
@@ -407,7 +407,7 @@
                 controls = form.find(controlSelectors);
             }
 
-            controls.each(function () {
+            controls.not('[data-ignore=clear]').each(function () {
                 var control = $(this);
                 var isSelect = control.is('select');
                 var isCheckbox = control.is(':checkbox');
