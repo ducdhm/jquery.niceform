@@ -1,0 +1,7 @@
+ /**!
+  * NiceForm - The jQuery plugin for validation and post form data to server
+  * @copyright: Duc Doan (ducdhm@gmail.com)
+  * @author: Duc Doan (ducdhm@gmail.com)
+  * @version: <%= packageJson.version %>
+  * @dependencies: $, Bootstrap (optional)
+  */

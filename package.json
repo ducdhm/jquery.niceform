@@ -1,23 +1,34 @@
 {
-  "name": "jquery.niceform",
-  "version": "0.1.0",
-  "description": "The jQuery plugin for validate and get/post data form to server",
-  "main": "jquery.niceform.js",
-  "directories": {
-    "doc": "doc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/bobkhin/jquery.niceform"
-  },
-  "author": "Duc Doan Hoang Minh",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bobkhin/jquery.niceform/issues"
-  },
-  "homepage": "https://github.com/bobkhin/jquery.niceform",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "^0.4.0"
-  }
+    "name": "jquery.niceform",
+    "version": "1.0.0",
+    "description": "The jQuery plugin for validate and get/post data form to server",
+    "main": "jquery.niceform.js",
+    "directories": {
+        "doc": "doc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/bobkhin/jquery.niceform"
+    },
+    "author": "Duc Doan",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/bobkhin/jquery.niceform/issues"
+    },
+    "homepage": "https://github.com/bobkhin/jquery.niceform",
+    "devDependencies": {
+        "@babel/core": "^7.4.0",
+        "@babel/plugin-transform-modules-umd": "^7.2.0",
+        "@babel/preset-env": "^7.4.2",
+        "gulp": "^4.0.0",
+        "gulp-babel": "^8.0.0",
+        "gulp-concat-util": "^0.5.5",
+        "gulp-header": "^2.0.7",
+        "gulp-rename": "^1.4.0",
+        "gulp-replace": "^1.0.0",
+        "gulp-rimraf": "^0.2.2",
+        "gulp-sourcemaps": "^2.6.5",
+        "gulp-uglify": "^3.0.2",
+        "gulp-watch": "^5.0.1"
+    }
 }
