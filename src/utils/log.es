@@ -1,5 +1,5 @@
 export default (...args) => {
-    if (console && typeof console.log === 'function') {
+    if (window.__NICEFORM_DEBUG__ && console && typeof console.log === 'function') {
         console.log.apply(console, ['[ NiceForm ] ', ...args]);
     }
 };

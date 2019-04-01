@@ -3,5 +3,5 @@
   * @copyright: Duc Doan (ducdhm@gmail.com)
   * @author: Duc Doan (ducdhm@gmail.com)
   * @version: <%= packageJson.version %>
-  * @dependencies: $, Bootstrap (optional)
+  * @dependencies: $, Bootstrap (optional), moment (optional)
   */
