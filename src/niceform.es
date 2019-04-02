@@ -1,7 +1,6 @@
 import $ from 'jquery';
-import defaults from './defaults.es';
-import checkRequired from './rules/checkRequired.es';
-import validateForm from './form/validateForm.es';
+import defaults from './defaults';
+import validateForm from './form/validateForm';
 
 const makeNiceForm = (form, config) => {
     const options = $.extend({}, defaults, config);

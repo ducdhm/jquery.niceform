@@ -1,16 +1,16 @@
-import shouldBeCheck from '../utils/shouldBeCheck.es';
-import validatePassword from '../validate/validatePassword.es';
+import shouldBeCheck from '../utils/shouldBeCheck';
+import validatePassword from '../validate/validatePassword';
 
-export default (form, passwordConfig, errorMessage) => {
+export default (form, passwordOptions, errorMessage) => {
     let errorFields = [];
     let isValid = (value) => {
         return validatePassword(value, {
             lower: 1,
-            upper: passwordConfig.uppercaseLength,
+            upper: passwordOptions.uppercaseLength,
             alpha: 0,
-            numeric: passwordConfig.numberLength,
-            special: passwordConfig.specialLength,
-            length: [passwordConfig.min, passwordConfig.max],
+            numeric: passwordOptions.numberLength,
+            special: passwordOptions.specialLength,
+            length: [passwordOptions.min, passwordOptions.max],
             badWords: [],
             badSequenceLength: 0,
             noQwertySequences: false,

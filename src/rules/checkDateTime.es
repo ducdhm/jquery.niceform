@@ -1,4 +1,4 @@
-import shouldBeCheck from '../utils/shouldBeCheck.es';
+import shouldBeCheck from '../utils/shouldBeCheck';
 
 export default (form, format, errorMessage) => {
     let errorFields = [];

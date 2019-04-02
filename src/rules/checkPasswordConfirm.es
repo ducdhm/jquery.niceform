@@ -1,5 +1,6 @@
-export default (form, passwordInputs, errorMessage) => {
+export default (form, errorMessage) => {
     let errorFields = [];
+    let passwordInputs = form.find('.password');
     
     form.find('.confirm-password, .re-password, .repassword').each(function () {
         const input = $(this);

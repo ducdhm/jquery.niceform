@@ -1,5 +1,5 @@
-import shouldBeCheck from '../utils/shouldBeCheck.es';
-import isValidEmail from '../validate/isValidEmail.es';
+import shouldBeCheck from '../utils/shouldBeCheck';
+import isValidEmail from '../validate/isValidEmail';
 
 export default (form, errorMessage) => {
     let errorFields = [];
