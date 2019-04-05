@@ -10,7 +10,7 @@ import checkUrl from '../rules/checkUrl';
 export default (form, options) => {
     let resultRequired = checkRequired(form, options.requiredErrorFieldMessage);
     if (resultRequired.length > 0) {
-        typeof options.showErrorMessage === 'function' && options.showErrorMessage(form, options, options.requiredErrorMessage);
+        typeof options.showError === 'function' && options.showError(form, resultRequired, [options.requiredErrorMessage]);
         
         return false;
     } else {

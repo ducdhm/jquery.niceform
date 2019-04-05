@@ -1,16 +1,16 @@
+import showError from './form/showError';
+import hideError from './form/hideError';
+
 export default {
-    allowPostForm: true,
-    ignoreHidden: false,
-    ajaxOptions: {
-        type: 'POST',
-        dataType: 'JSON',
-        data: null
-    },
+    postFormEnabled: true,
+    postUrl: null,
+    
     format: {
         date: 'DD-MM-YYYY',
         time: 'HH:mm',
         datetime: 'DD-MM-YYYY HH:mm'
     },
+    
     password: {
         min: 6,
         max: 32,
@@ -38,5 +38,14 @@ export default {
     passwordErrorFieldMessage: 'Your password must be at least 6 characters and it must contain numbers and letters',
     
     confirmPasswordErrorMessage: 'Please confirm your password',
-    confirmPasswordErrorFieldMessage: 'Please confirm your password'
+    confirmPasswordErrorFieldMessage: 'Please confirm your password',
+    
+    showError,
+    hideError,
+    
+    onValid: null,
+    onInvalid: null,
+    
+    onSuccess: null,
+    onError: null
 };
