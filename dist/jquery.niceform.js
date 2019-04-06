@@ -60,6 +60,90 @@
 });
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports);
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports);
+    global.isNumber = mod.exports;
+  }
+})(this, function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = function _default(value) {
+    return !isNaN(value) && typeof value !== 'boolean';
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "./testRegex"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("./testRegex"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.testRegex);
+    global.isValidEmail = mod.exports;
+  }
+})(this, function (_exports, _testRegex) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _testRegex = _interopRequireDefault(_testRegex);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(value) {
+    return (0, _testRegex.default)(value, /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/);
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "./testRegex"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("./testRegex"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.testRegex);
+    global.isValidUrl = mod.exports;
+  }
+})(this, function (_exports, _testRegex) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _testRegex = _interopRequireDefault(_testRegex);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(value) {
+    return (0, _testRegex.default)(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, value);
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
     define([], factory);
   } else if (typeof exports !== "undefined") {
     factory();
@@ -134,116 +218,6 @@
       exports: {}
     };
     factory(mod.exports);
-    global.isNumber = mod.exports;
-  }
-})(this, function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = function _default(value) {
-    return !isNaN(value) && typeof value !== 'boolean';
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports);
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports);
-    global.isTime = mod.exports;
-  }
-})(this, function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = function _default(value, timeFormat) {
-    return moment(value, timeFormat, true).isValid();
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "./testRegex"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("./testRegex"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.testRegex);
-    global.isValidEmail = mod.exports;
-  }
-})(this, function (_exports, _testRegex) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _testRegex = _interopRequireDefault(_testRegex);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(value) {
-    return (0, _testRegex.default)(value, /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/);
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "./testRegex"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("./testRegex"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.testRegex);
-    global.isValidUrl = mod.exports;
-  }
-})(this, function (_exports, _testRegex) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _testRegex = _interopRequireDefault(_testRegex);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(value) {
-    return (0, _testRegex.default)(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, value);
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports);
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports);
     global.testRegex = mod.exports;
   }
 })(this, function (_exports) {
@@ -262,18 +236,23 @@
 });
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
-    define([], factory);
+    define(["exports"], factory);
   } else if (typeof exports !== "undefined") {
-    factory();
+    factory(exports);
   } else {
     var mod = {
       exports: {}
     };
-    factory();
+    factory(mod.exports);
     global.validatePassword = mod.exports;
   }
-})(this, function () {
+})(this, function (_exports) {
   "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
 
   /*
    Password Validator 0.1
@@ -373,6 +352,367 @@
 
     return true;
   }
+
+  var _default = validatePassword;
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "../utils/shouldBeCheck"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("../utils/shouldBeCheck"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.shouldBeCheck);
+    global.checkDateTime = mod.exports;
+  }
+})(this, function (_exports, _shouldBeCheck) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form, format, errorMessage) {
+    var errorFields = [];
+
+    if (typeof window.moment === 'undefined') {
+      throw new Error('Require moment to validate date time fields');
+    }
+
+    form.find('.date').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && moment(this.value, format.date, true).isValid()) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    form.find('.time').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && moment(this.value, format.time, true).isValid()) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    form.find('.datetime').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && moment(this.value, format.datetime, true).isValid()) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "../utils/shouldBeCheck", "../utils/isValidEmail"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("../utils/shouldBeCheck"), require("../utils/isValidEmail"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.shouldBeCheck, global.isValidEmail);
+    global.checkEmail = mod.exports;
+  }
+})(this, function (_exports, _shouldBeCheck, _isValidEmail) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
+  _isValidEmail = _interopRequireDefault(_isValidEmail);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form, errorMessage) {
+    var errorFields = [];
+    form.find('.email').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && !(0, _isValidEmail.default)(this.value)) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "../utils/shouldBeCheck", "../utils/isNumber"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("../utils/shouldBeCheck"), require("../utils/isNumber"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.shouldBeCheck, global.isNumber);
+    global.checkNumber = mod.exports;
+  }
+})(this, function (_exports, _shouldBeCheck, _isNumber) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
+  _isNumber = _interopRequireDefault(_isNumber);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form, errorMessage) {
+    var errorFields = [];
+    form.find('.number, .digit, .numeric').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && !(0, _isNumber.default)(this.value)) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "../utils/shouldBeCheck", "../utils/validatePassword"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("../utils/shouldBeCheck"), require("../utils/validatePassword"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.shouldBeCheck, global.validatePassword);
+    global.checkPassword = mod.exports;
+  }
+})(this, function (_exports, _shouldBeCheck, _validatePassword) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
+  _validatePassword = _interopRequireDefault(_validatePassword);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form, passwordOptions, errorMessage) {
+    var errorFields = [];
+
+    var isValid = function isValid(value) {
+      return (0, _validatePassword.default)(value, {
+        lower: 1,
+        upper: passwordOptions.uppercaseLength,
+        alpha: 0,
+        numeric: passwordOptions.numberLength,
+        special: passwordOptions.specialLength,
+        length: [passwordOptions.min, passwordOptions.max],
+        badWords: [],
+        badSequenceLength: 0,
+        noQwertySequences: false,
+        noSequential: false
+      });
+    };
+
+    form.find('.password').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && !isValid(this.value)) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports);
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports);
+    global.checkPasswordConfirm = mod.exports;
+  }
+})(this, function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = function _default(form, errorMessage) {
+    var errorFields = [];
+    var passwordInputs = form.find('.password');
+    form.find('.confirm-password, .re-password, .repassword').each(function () {
+      var input = $(this);
+
+      if (input.val() !== passwordInputs.val()) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "../utils/shouldBeCheck", "../utils/testRegex"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("../utils/shouldBeCheck"), require("../utils/testRegex"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.shouldBeCheck, global.testRegex);
+    global.checkRegex = mod.exports;
+  }
+})(this, function (_exports, _shouldBeCheck, _testRegex) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
+  _testRegex = _interopRequireDefault(_testRegex);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form) {
+    var errorFields = [];
+    form.find('.number, .digit, .numeric').each(function () {
+      var input = $(this);
+      var regex = input.attr('data-regex');
+
+      if ((0, _shouldBeCheck.default)(input) && !(0, _testRegex.default)(regex, this.value)) {
+        input.attr('data-error-message', input.attr('data-message'));
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports);
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports);
+    global.checkRequired = mod.exports;
+  }
+})(this, function (_exports) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+
+  var _default = function _default(form, errorMessage) {
+    var errorFields = [];
+    var names = {};
+    form.find('.required:radio, .required:checkbox').each(function () {
+      if (!this.name in names) {
+        var input = form.find("input[name=\"".concat(this.name, "\"]"));
+        var checked = input.filter(':checked');
+
+        if (checked.length === 0) {
+          errorFields.attr('data-error-message', errorMessage);
+          errorFields.push(input);
+        }
+
+        names[this.name] = true;
+      }
+    });
+    form.find('.required').filter('input, select, textarea').not('.tt-hint, :radio, :checkbox').each(function () {
+      var input = $(this);
+      var val = input.val() || '';
+      var placeholder = input.attr('placeholder');
+
+      if (val.length === 0 || val === placeholder) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "../utils/shouldBeCheck", "../utils/isValidUrl"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("../utils/shouldBeCheck"), require("../utils/isValidUrl"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.shouldBeCheck, global.isValidUrl);
+    global.checkUrl = mod.exports;
+  }
+})(this, function (_exports, _shouldBeCheck, _isValidUrl) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
+  _isValidUrl = _interopRequireDefault(_isValidUrl);
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form, errorMessage) {
+    var errorFields = [];
+    form.find('.url, .href').each(function () {
+      var input = $(this);
+
+      if ((0, _shouldBeCheck.default)(input) && !(0, _isValidUrl.default)(this.value)) {
+        input.attr('data-error-message', errorMessage);
+        errorFields.push(input);
+      }
+    });
+    return errorFields;
+  };
+
+  _exports.default = _default;
 });
 (function (global, factory) {
   if (typeof define === "function" && define.amd) {
@@ -455,109 +795,6 @@
 
       this.disabled = true;
     });
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "./disableForm", "./enableForm"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("./disableForm"), require("./enableForm"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.disableForm, global.enableForm);
-    global.doPostForm = mod.exports;
-  }
-})(this, function (_exports, _disableForm, _enableForm) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _disableForm = _interopRequireDefault(_disableForm);
-  _enableForm = _interopRequireDefault(_enableForm);
-
-  var _this = void 0;
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form, options) {
-    var isFormData = form.attr('enctype') === 'multipart/form-data';
-    var data = isFormData ? form.serializeWithFiles() : form.serialize();
-    var postUrl = options.postUrl || form.attr('action') || window.location.pathname;
-
-    if (typeof options.onBeforePostForm === 'function') {
-      data = options.onBeforePostForm.call(_this, form, options, data) || data;
-    }
-
-    try {
-      (0, _disableForm.default)(form);
-      var ajaxOptions = {
-        type: 'POST',
-        url: postUrl,
-        data: data,
-        dataType: 'JSON',
-        success: function success(resp, textStatus, jqXhr) {
-          (0, _enableForm.default)(form);
-          var isSuccess = false;
-
-          if (typeof options.processResponse === 'function') {
-            isSuccess = options.processResponse(resp, form, options);
-          }
-
-          if (isSuccess) {
-            if (typeof options.onSuccess === 'function') {
-              options.onSuccess.call(this, resp, form, options);
-            }
-          } else {
-            if (typeof options.onError === 'function') {
-              options.onError.call(this, jqXhr, form, options);
-            }
-          }
-        },
-        error: function error(jqXhr) {
-          (0, _enableForm.default)(form);
-
-          if (typeof options.onError === 'function') {
-            options.onError.call(this, jqXhr, form, options);
-          }
-        }
-      };
-
-      if (isFormData) {
-        ajaxOptions.processData = false;
-        ajaxOptions.contentType = false;
-      }
-
-      ajaxOptions.beforeSend = function (xhr, options) {
-        // et toc !
-        options.data = data;
-        /**
-         * You can use https://github.com/francois2metz/html5-formdata for a fake FormData object
-         * Only work with Firefox 3.6
-         */
-
-        if (data.fake) {
-          xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + data.boundary); // with fake FormData object, we must use sendAsBinary
-
-          xhr.send = function (data) {
-            xhr.sendAsBinary(data.toString());
-          };
-        }
-      };
-
-      $.ajax(ajaxOptions);
-    } catch (e) {
-      if (typeof options.onError === 'function') {
-        options.onError.call(_this, null, form, options);
-      } else {
-        alert('Sorry, an error occurred attempting to submit the form. Please contact the site administrator to resolve!');
-      }
-    }
   };
 
   _exports.default = _default;
@@ -703,12 +940,12 @@
     var formMessage = form.find('.form-error-msg');
 
     if (formMessage.length === 0) {
-      formMessage = (0, _jquery.default)("<div class=\"alert alert-error form-error-msg fade\" style=\"display: none;\">\n                <a class=\"close\" data-dismiss=\"alert\">&times;</a>\n            </div>");
-      form.append(formMessage);
+      formMessage = (0, _jquery.default)("<div class=\"alert alert-danger form-error-msg fade\" style=\"display: none;\"></div>");
+      form.prepend(formMessage);
     } // Generate error title and details
 
 
-    var errorHtml = '';
+    var errorHtml = '<a class="close" data-dismiss="alert">&times;</a>';
     errorHtml += "<p class=\"form-error-title\"><b>Error</b></p>";
     errorHtml += "<ul class=\"form-error-details\">";
     errorMessages.forEach(function (msg) {
@@ -733,6 +970,109 @@
     (0, _jquery.default)('body, html').stop().animate({
       scrollTop: formMessage.offset().top - 140
     }, 200);
+  };
+
+  _exports.default = _default;
+});
+(function (global, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(["exports", "./disableForm", "./enableForm"], factory);
+  } else if (typeof exports !== "undefined") {
+    factory(exports, require("./disableForm"), require("./enableForm"));
+  } else {
+    var mod = {
+      exports: {}
+    };
+    factory(mod.exports, global.disableForm, global.enableForm);
+    global.doPostForm = mod.exports;
+  }
+})(this, function (_exports, _disableForm, _enableForm) {
+  "use strict";
+
+  Object.defineProperty(_exports, "__esModule", {
+    value: true
+  });
+  _exports.default = void 0;
+  _disableForm = _interopRequireDefault(_disableForm);
+  _enableForm = _interopRequireDefault(_enableForm);
+
+  var _this = void 0;
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+  var _default = function _default(form, options) {
+    var isFormData = form.attr('enctype') === 'multipart/form-data';
+    var data = isFormData ? form.serializeWithFiles() : form.serialize();
+    var postUrl = options.postUrl || form.attr('action') || window.location.pathname;
+
+    if (typeof options.onBeforePostForm === 'function') {
+      data = options.onBeforePostForm.call(_this, form, options, data) || data;
+    }
+
+    try {
+      (0, _disableForm.default)(form);
+      var ajaxOptions = {
+        type: 'POST',
+        url: postUrl,
+        data: data,
+        dataType: 'JSON',
+        success: function success(resp, textStatus, jqXhr) {
+          (0, _enableForm.default)(form);
+          var isSuccess = false;
+
+          if (typeof options.processResponse === 'function') {
+            isSuccess = options.processResponse(resp, form, options);
+          }
+
+          if (isSuccess) {
+            if (typeof options.onSuccess === 'function') {
+              options.onSuccess.call(this, resp, form, options);
+            }
+          } else {
+            if (typeof options.onError === 'function') {
+              options.onError.call(this, jqXhr, form, options);
+            }
+          }
+        },
+        error: function error(jqXhr) {
+          (0, _enableForm.default)(form);
+
+          if (typeof options.onError === 'function') {
+            options.onError.call(this, jqXhr, form, options);
+          }
+        }
+      };
+
+      if (isFormData) {
+        ajaxOptions.processData = false;
+        ajaxOptions.contentType = false;
+      }
+
+      ajaxOptions.beforeSend = function (xhr, options) {
+        // et toc !
+        options.data = data;
+        /**
+         * You can use https://github.com/francois2metz/html5-formdata for a fake FormData object
+         * Only work with Firefox 3.6
+         */
+
+        if (data.fake) {
+          xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + data.boundary); // with fake FormData object, we must use sendAsBinary
+
+          xhr.send = function (data) {
+            xhr.sendAsBinary(data.toString());
+          };
+        }
+      };
+
+      $.ajax(ajaxOptions);
+    } catch (e) {
+      if (typeof options.onError === 'function') {
+        options.onError.call(_this, null, form, options);
+      } else {
+        alert('Sorry, an error occurred attempting to submit the form. Please contact the site administrator to resolve!');
+      }
+    }
   };
 
   _exports.default = _default;
@@ -779,49 +1119,49 @@
       var resultDateTime = (0, _checkDateTime.default)(form, options.format, options.dateTimeErrorFieldMessage);
 
       if (resultDateTime.length > 0) {
-        errorFields.push(resultDateTime);
+        errorFields = errorFields.concat(resultDateTime);
         errorMessages.push(options.dateTimeErrorMessage);
       }
 
       var resultEmail = (0, _checkEmail.default)(form, options.emailErrorFieldMessage);
 
       if (resultEmail.length > 0) {
-        errorFields.push(resultEmail);
+        errorFields = errorFields.concat(resultEmail);
         errorMessages.push(options.emailErrorMessage);
       }
 
       var resultNumber = (0, _checkNumber.default)(form, options.numberErrorFieldMessage);
 
       if (resultNumber.length > 0) {
-        errorFields.push(resultNumber);
+        errorFields = errorFields.concat(resultNumber);
         errorMessages.push(options.numberErrorMessage);
       }
 
       var resultUrl = (0, _checkUrl.default)(form, options.urlErrorFieldMessage);
 
       if (resultUrl.length > 0) {
-        errorFields.push(resultUrl);
+        errorFields = errorFields.concat(resultUrl);
         errorMessages.push(options.urlErrorMessage);
       }
 
       var resultPassword = (0, _checkPassword.default)(form, options.password, options.passwordErrorFieldMessage);
 
       if (resultPassword.length > 0) {
-        errorFields.push(resultPassword);
+        errorFields = errorFields.concat(resultPassword);
         errorMessages.push(options.passwordErrorMessage);
       }
 
       var resultPasswordConfirm = (0, _checkPasswordConfirm.default)(form, options.confirmPasswordErrorFieldMessage);
 
       if (resultPasswordConfirm.length > 0) {
-        errorFields.push(resultPasswordConfirm);
+        errorFields = errorFields.concat(resultPasswordConfirm);
         errorMessages.push(options.confirmPasswordErrorMessage);
       }
 
       var resultRegex = (0, _checkRegex.default)(form);
 
       if (resultRegex.length > 0) {
-        errorFields.push(resultRegex);
+        errorFields = errorFields.concat(resultRegex);
         resultRegex.forEach(function (field) {
           errorMessages.push(field.attr('data-error-message'));
         });
@@ -831,8 +1171,8 @@
         var resultCustom = options.validate(form, options);
 
         if (resultCustom && resultCustom.errorFields && resultCustom.errorFields.length > 0) {
-          errorFields.push(resultCustom.errorFields);
-          errorMessages.push(resultCustom.errorMessages);
+          errorFields = errorFields.concat(resultCustom.errorFields);
+          errorMessages.concat(resultCustom.errorMessages);
         }
       }
 
@@ -843,364 +1183,6 @@
         return true;
       }
     }
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "../utils/shouldBeCheck"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("../utils/shouldBeCheck"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.shouldBeCheck);
-    global.checkDateTime = mod.exports;
-  }
-})(this, function (_exports, _shouldBeCheck) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form, format, errorMessage) {
-    var errorFields = [];
-
-    if (typeof window.moment === 'undefined') {
-      throw new Error('Require moment to validate date time fields');
-    }
-
-    form.find('.date').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && moment(this.value, format.date, true).isValid()) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    form.find('.time').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && moment(this.value, format.time, true).isValid()) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    form.find('.datetime').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && moment(this.value, format.datetime, true).isValid()) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "../utils/shouldBeCheck", "../validate/isValidEmail"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("../utils/shouldBeCheck"), require("../validate/isValidEmail"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.shouldBeCheck, global.isValidEmail);
-    global.checkEmail = mod.exports;
-  }
-})(this, function (_exports, _shouldBeCheck, _isValidEmail) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
-  _isValidEmail = _interopRequireDefault(_isValidEmail);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form, errorMessage) {
-    var errorFields = [];
-    form.find('.email').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && !(0, _isValidEmail.default)(this.value)) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "../utils/shouldBeCheck", "../validate/isNumber"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("../utils/shouldBeCheck"), require("../validate/isNumber"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.shouldBeCheck, global.isNumber);
-    global.checkNumber = mod.exports;
-  }
-})(this, function (_exports, _shouldBeCheck, _isNumber) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
-  _isNumber = _interopRequireDefault(_isNumber);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form, errorMessage) {
-    var errorFields = [];
-    form.find('.number, .digit, .numeric').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && !(0, _isNumber.default)(this.value)) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "../utils/shouldBeCheck", "../validate/validatePassword"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("../utils/shouldBeCheck"), require("../validate/validatePassword"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.shouldBeCheck, global.validatePassword);
-    global.checkPassword = mod.exports;
-  }
-})(this, function (_exports, _shouldBeCheck, _validatePassword) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
-  _validatePassword = _interopRequireDefault(_validatePassword);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form, passwordOptions, errorMessage) {
-    var errorFields = [];
-
-    var isValid = function isValid(value) {
-      return (0, _validatePassword.default)(value, {
-        lower: 1,
-        upper: passwordOptions.uppercaseLength,
-        alpha: 0,
-        numeric: passwordOptions.numberLength,
-        special: passwordOptions.specialLength,
-        length: [passwordOptions.min, passwordOptions.max],
-        badWords: [],
-        badSequenceLength: 0,
-        noQwertySequences: false,
-        noSequential: false
-      });
-    };
-
-    form.find('.password').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && !isValid(this.value)) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports);
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports);
-    global.checkPasswordConfirm = mod.exports;
-  }
-})(this, function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = function _default(form, errorMessage) {
-    var errorFields = [];
-    var passwordInputs = form.find('.password');
-    form.find('.confirm-password, .re-password, .repassword').each(function () {
-      var input = $(this);
-
-      if (input.val() !== passwordInputs.val()) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "../utils/shouldBeCheck", "../validate/testRegex"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("../utils/shouldBeCheck"), require("../validate/testRegex"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.shouldBeCheck, global.testRegex);
-    global.checkRegex = mod.exports;
-  }
-})(this, function (_exports, _shouldBeCheck, _testRegex) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
-  _testRegex = _interopRequireDefault(_testRegex);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form) {
-    var errorFields = [];
-    form.find('.number, .digit, .numeric').each(function () {
-      var input = $(this);
-      var regex = input.attr('data-regex');
-
-      if ((0, _shouldBeCheck.default)(input) && !(0, _testRegex.default)(regex, this.value)) {
-        input.attr('data-error-message', input.attr('data-message'));
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports);
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports);
-    global.checkRequired = mod.exports;
-  }
-})(this, function (_exports) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-
-  var _default = function _default(form, errorMessage) {
-    var errorFields = [];
-    var names = {};
-    form.find('.required:radio, .required:checkbox').each(function () {
-      if (!this.name in names) {
-        var input = form.find("input[name=\"".concat(this.name, "\"]"));
-        var checked = input.filter(':checked');
-
-        if (checked.length === 0) {
-          errorFields.attr('data-error-message', errorMessage);
-          errorFields.push(input);
-        }
-
-        names[this.name] = true;
-      }
-    });
-    form.find('.required').filter('input, select, textarea').not('.tt-hint, :radio, :checkbox').each(function () {
-      var input = $(this);
-      var val = input.val() || '';
-      var placeholder = input.attr('placeholder');
-
-      if (val.length === 0 || val === placeholder) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
-  };
-
-  _exports.default = _default;
-});
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["exports", "../utils/shouldBeCheck", "../validate/isValidUrl"], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require("../utils/shouldBeCheck"), require("../validate/isValidUrl"));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.shouldBeCheck, global.isValidUrl);
-    global.checkUrl = mod.exports;
-  }
-})(this, function (_exports, _shouldBeCheck, _isValidUrl) {
-  "use strict";
-
-  Object.defineProperty(_exports, "__esModule", {
-    value: true
-  });
-  _exports.default = void 0;
-  _shouldBeCheck = _interopRequireDefault(_shouldBeCheck);
-  _isValidUrl = _interopRequireDefault(_isValidUrl);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var _default = function _default(form, errorMessage) {
-    var errorFields = [];
-    form.find('.url, .href').each(function () {
-      var input = $(this);
-
-      if ((0, _shouldBeCheck.default)(input) && !(0, _isValidUrl.default)(this.value)) {
-        input.attr('data-error-message', errorMessage);
-        errorFields.push(input);
-      }
-    });
-    return errorFields;
   };
 
   _exports.default = _default;
@@ -1321,6 +1303,8 @@
       var options = _jquery.default.extend({}, _defaults.default, config);
 
       form.off('submit').on('submit', function (e) {
+        e.preventDefault();
+
         if (typeof options.hideError === 'function') {
           options.hideError(form, options);
         }
@@ -1331,12 +1315,9 @@
           }
 
           if (options.postFormEnabled === true) {
-            e.preventDefault();
             (0, _doPostForm.default)(form, options);
           }
         } else {
-          e.preventDefault();
-
           if (typeof options.onInvalid === 'function') {
             options.onInvalid(form, options);
           }

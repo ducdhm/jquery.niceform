@@ -96,3 +96,5 @@ function validatePassword(pw, options) {
     // great success!
     return true;
 }
+
+export default validatePassword;

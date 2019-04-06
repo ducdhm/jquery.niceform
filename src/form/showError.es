@@ -4,16 +4,12 @@ export default (form, errorFields, errorMessages) => {
     // Find existing `div.form-error-msg` and create if not
     let formMessage = form.find('.form-error-msg');
     if (formMessage.length === 0) {
-        formMessage = $(
-            `<div class="alert alert-error form-error-msg fade" style="display: none;">
-                <a class="close" data-dismiss="alert">&times;</a>
-            </div>`
-        );
-        form.append(formMessage);
+        formMessage = $(`<div class="alert alert-danger form-error-msg fade" style="display: none;"></div>`);
+        form.prepend(formMessage);
     }
     
     // Generate error title and details
-    let errorHtml = '';
+    let errorHtml = '<a class="close" data-dismiss="alert">&times;</a>';
     errorHtml += `<p class="form-error-title"><b>Error</b></p>`;
     errorHtml += `<ul class="form-error-details">`;
     errorMessages.forEach(function (msg) {

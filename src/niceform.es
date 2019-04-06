@@ -18,6 +18,8 @@ export default class NiceForm {
         const options = $.extend({}, defaults, config);
     
         form.off('submit').on('submit', function (e) {
+            e.preventDefault();
+            
             if (typeof options.hideError === 'function') {
                 options.hideError(form, options);
             }
@@ -29,13 +31,9 @@ export default class NiceForm {
             
             
                 if (options.postFormEnabled === true) {
-                    e.preventDefault();
-                
                     doPostForm(form, options);
                 }
             } else {
-                e.preventDefault();
-            
                 if (typeof options.onInvalid === 'function') {
                     options.onInvalid(form, options);
                 }

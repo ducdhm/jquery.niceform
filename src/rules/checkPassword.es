@@ -1,5 +1,5 @@
 import shouldBeCheck from '../utils/shouldBeCheck';
-import validatePassword from '../validate/validatePassword';
+import validatePassword from '../utils/validatePassword';
 
 export default (form, passwordOptions, errorMessage) => {
     let errorFields = [];

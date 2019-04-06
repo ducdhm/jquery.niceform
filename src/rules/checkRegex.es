@@ -1,5 +1,5 @@
 import shouldBeCheck from '../utils/shouldBeCheck';
-import testRegex from '../validate/testRegex';
+import testRegex from '../utils/testRegex';
 
 export default (form) => {
     let errorFields = [];
