@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>NiceForm - The jQuery plugin for validation and post form data to server</title>
+        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/examples.css" />
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://github.com/Kademi/keditor">NiceForm</a>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="navbar-top">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/ducdhm" target="_blank"><i class="fa fa-user-circle"></i> Duc Doan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <form class="form-horizontal" action="." id="form1">
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="username">Username</label>
+                    <div class="col-md-6">
+                        <input type="text" name="username" id="username" class="form-control required" />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+        <script type="text/javascript" src="vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../dist/jquery.niceform.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#form1').niceform();
+            });
+        </script>
+    </body>
+</html>

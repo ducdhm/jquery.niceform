@@ -1,5 +1,6 @@
 import showError from './form/showError';
 import hideError from './form/hideError';
+import processResponse from './form/processResponse';
 
 export default {
     postFormEnabled: true,
@@ -43,8 +44,12 @@ export default {
     showError,
     hideError,
     
+    processResponse,
+    
     onValid: null,
     onInvalid: null,
+    
+    onBeforePostForm: null,
     
     onSuccess: null,
     onError: null
