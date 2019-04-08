@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import NiceForm from './niceform.es';
+import $ from "jquery";
+import NiceForm from './niceform';
 
 $.fn.niceform = function (config) {
     return this.each(function () {

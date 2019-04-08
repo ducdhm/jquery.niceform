@@ -3,9 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>NiceForm - The jQuery plugin for validation and post form data to server</title>
-        <link rel="stylesheet" type="text/css" href="vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/examples.css" />
+        <link rel="stylesheet" type="text/css" href="../examples/vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../examples/vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
     </head>
     
     <body>
@@ -42,7 +41,25 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3" for="password">Password</label>
                     <div class="col-sm-6">
-                        <input type="text" name="password" id="password" class="form-control password required" />
+                        <input type="password" name="password" id="password" class="form-control password required" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="confirm-password">Confirm Password</label>
+                    <div class="col-sm-6">
+                        <input type="password" name="confirm-password" id="confirm-password" class="form-control confirm-password required" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="email">Email</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="email" id="email" class="form-control email required" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="quantity">Quantity</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="quantity" id="quantity" class="form-control number required" />
                     </div>
                 </div>
                 
@@ -55,9 +72,9 @@
             </form>
         </div>
     
-        <script type="text/javascript" src="vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="vendors/moment-2.24.0/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="../examples/vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../examples/vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../examples/vendors/moment-2.24.0/moment-with-locales.min.js"></script>
         <script type="text/javascript" src="../dist/jquery.niceform.js"></script>
         <script type="text/javascript">
             $(function () {

@@ -35,8 +35,8 @@ export default {
     urlErrorMessage: 'Please enter valid website address',
     urlErrorFieldMessage: 'Please enter valid website address',
     
-    passwordErrorMessage: 'Your password must be at least 6 characters and it must contain numbers and letters',
-    passwordErrorFieldMessage: 'Your password must be at least 6 characters and it must contain numbers and letters',
+    passwordErrorMessage: 'Your password must be at least 6 characters and it must contain numbers, letters and at least 1 special character',
+    passwordErrorFieldMessage: 'Your password must be at least 6 characters and it must contain numbers, letters and at least 1 special character',
     
     confirmPasswordErrorMessage: 'Please confirm your password',
     confirmPasswordErrorFieldMessage: 'Please confirm your password',

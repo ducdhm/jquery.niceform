@@ -4,7 +4,7 @@ import testRegex from '../utils/testRegex';
 export default (form) => {
     let errorFields = [];
     
-    form.find('.number, .digit, .numeric').each(function () {
+    form.find('.regex').each(function () {
         const input = $(this);
         const regex = input.attr('data-regex');
         
