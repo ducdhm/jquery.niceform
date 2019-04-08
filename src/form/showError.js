@@ -28,7 +28,7 @@ export default (form, errorFields, errorMessages) => {
     
     // Show error state
     errorFields.forEach(function (field) {
-        field.addClass('error-field');
+        field.addClass('is-invalid');
         field.closest('.form-group').addClass('has-error');
     });
     
