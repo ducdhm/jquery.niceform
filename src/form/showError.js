@@ -1,37 +1,23 @@
 import $ from 'jquery';
 
 export default (form, errorFields) => {
-    // Find existing `div.form-error-msg` and create if not
-    let formMessage = form.find('.form-error-msg');
-    if (formMessage.length === 0) {
-        formMessage = $(`<div class="alert alert-danger form-error-msg fade" style="display: none;"></div>`);
-        form.prepend(formMessage);
-    }
-    
-    // Generate error title and details
-    let errorHtml = '<a class="close" data-dismiss="alert">&times;</a>';
-    errorHtml += `<p class="form-error-title"><b>Error</b></p>`;
-    errorHtml += `<ul class="form-error-details">`;
-    errorHtml += `</ul>`;
-    formMessage.html(errorHtml);
-    
-    // Animate if hidden
-    if (formMessage.is(':hidden')) {
-        formMessage.stop().animate({
+    // Show error state
+    errorFields.forEach(function (field) {
+        let formGroup = field.closest('.form-group');
+        
+        field.addClass('is-invalid');
+        formGroup.addClass('has-error');
+        
+        let errorMessage = formGroup.find('.nf-error-message');
+        if (errorMessage.length === 0) {
+            errorMessage = $(`<span class="nf-error-message help-block text-danger small"></span>`);
+            field.after(errorMessage);
+        }
+        
+        errorMessage.html(field.attr('data-error-message'));
+        errorMessage.stop().animate({
             opacity: 1,
             height: 'show'
         }, 200);
-    }
-    
-    // Show error state
-    errorFields.forEach(function (field) {
-        field.addClass('is-invalid');
-        field.closest('.form-group').addClass('has-error');
     });
-    
-    
-    // Scroll to error messages
-    $('body, html').stop().animate({
-        scrollTop: formMessage.offset().top - 140
-    }, 200);
 };
