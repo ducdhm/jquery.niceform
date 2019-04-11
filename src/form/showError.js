@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export default (form, errorFields, errorMessages) => {
+export default (form, errorFields) => {
     // Find existing `div.form-error-msg` and create if not
     let formMessage = form.find('.form-error-msg');
     if (formMessage.length === 0) {
@@ -12,9 +12,6 @@ export default (form, errorFields, errorMessages) => {
     let errorHtml = '<a class="close" data-dismiss="alert">&times;</a>';
     errorHtml += `<p class="form-error-title"><b>Error</b></p>`;
     errorHtml += `<ul class="form-error-details">`;
-    errorMessages.forEach(function (msg) {
-        errorHtml += `<li>${msg}</li>`;
-    });
     errorHtml += `</ul>`;
     formMessage.html(errorHtml);
     

@@ -20,26 +20,13 @@ export default {
         numberLength: 1
     },
     
-    requiredErrorMessage: 'Please enter all required fields',
-    requiredErrorFieldMessage: 'This field is required',
-    
+    requiredErrorMessage: 'This field is required',
     dateTimeErrorMessage: 'Please enter valid date time',
-    dateTimeErrorFieldMessage: 'Please enter valid date time',
-    
     emailErrorMessage: 'Please check the format of your email address, it should read like ben@somewhere.com',
-    emailErrorFieldMessage: 'Please check the format of your email address, it should read like ben@somewhere.com',
-    
     numberErrorMessage: 'Please enter digits only',
-    numberErrorFieldMessage: 'Please enter digits only',
-    
     urlErrorMessage: 'Please enter valid website address',
-    urlErrorFieldMessage: 'Please enter valid website address',
-    
     passwordErrorMessage: 'Your password must be at least 6 characters and it must contain numbers, letters and at least 1 special character',
-    passwordErrorFieldMessage: 'Your password must be at least 6 characters and it must contain numbers, letters and at least 1 special character',
-    
-    confirmPasswordErrorMessage: 'Please confirm your password',
-    confirmPasswordErrorFieldMessage: 'Please confirm your password',
+    repasswordErrorMessage: 'Please confirm your password',
     
     showError,
     hideError,

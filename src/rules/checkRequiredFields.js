@@ -8,7 +8,7 @@ export default (form, errorMessage) => {
             const checked = input.filter(':checked');
     
             if (checked.length === 0) {
-                errorFields.attr('data-error-message', errorMessage);
+                errorFields.attr('data-error-message', input.attr('data-required-message') || errorMessage);
                 errorFields.push(input);
             }
             names[this.name] = true;
@@ -21,7 +21,7 @@ export default (form, errorMessage) => {
         const placeholder = input.attr('placeholder');
         
         if (val.length === 0 || val === placeholder) {
-            input.attr('data-error-message', errorMessage);
+            input.attr('data-error-message', input.attr('data-required-message') || errorMessage);
             errorFields.push(input);
         }
     });

@@ -1,5 +1,5 @@
 import shouldBeCheck from '../utils/shouldBeCheck';
-import testRegex from '../utils/testRegex';
+import testRegex from '../validators/testRegex';
 
 export default (form) => {
     let errorFields = [];
@@ -9,7 +9,7 @@ export default (form) => {
         const regex = input.attr('data-regex');
         
         if (shouldBeCheck(input) && !testRegex(regex, this.value)) {
-            input.attr('data-error-message', input.attr('data-message'));
+            input.attr('data-error-message', input.attr('data-message') || input.attr('data-regex-message'));
             errorFields.push(input);
         }
     });

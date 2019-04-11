@@ -1,14 +1,14 @@
 import shouldBeCheck from '../utils/shouldBeCheck';
-import isValidEmail from '../utils/isValidEmail';
+import testUrl from '../validators/testUrl';
 
 export default (form, errorMessage) => {
     let errorFields = [];
     
-    form.find('.email').each(function () {
+    form.find('.url').each(function () {
         const input = $(this);
         
-        if (shouldBeCheck(input) && !isValidEmail(this.value)) {
-            input.attr('data-error-message', errorMessage);
+        if (shouldBeCheck(input) && !testUrl(this.value)) {
+            input.attr('data-error-message', input.attr('data-url-message') || errorMessage);
             errorFields.push(input);
         }
     });

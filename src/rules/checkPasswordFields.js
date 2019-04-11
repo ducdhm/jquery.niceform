@@ -1,5 +1,5 @@
 import shouldBeCheck from '../utils/shouldBeCheck';
-import validatePassword from '../utils/validatePassword';
+import validatePassword from '../validators/validatePassword';
 
 export default (form, passwordOptions, errorMessage) => {
     let errorFields = [];
@@ -21,7 +21,7 @@ export default (form, passwordOptions, errorMessage) => {
     form.find('.password').each(function () {
         const input = $(this);
         if (shouldBeCheck(input) && !isValid(this.value)) {
-            input.attr('data-error-message', errorMessage);
+            input.attr('data-error-message', input.attr('data-password-message') || errorMessage);
             errorFields.push(input);
         }
     });

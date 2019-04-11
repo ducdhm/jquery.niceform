@@ -1,4 +1,7 @@
 import $ from 'jquery';
+require('./utils/emulateFormData');
+require('./utils/serializeWithFiles');
+
 import defaults from './defaults';
 import validateForm from './form/validateForm';
 import doPostForm from './form/doPostForm';

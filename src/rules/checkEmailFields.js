@@ -1,14 +1,14 @@
 import shouldBeCheck from '../utils/shouldBeCheck';
-import isNumber from '../utils/isNumber';
+import testEmail from '../validators/testEmail';
 
 export default (form, errorMessage) => {
     let errorFields = [];
     
-    form.find('.number, .digit, .numeric').each(function () {
+    form.find('.email').each(function () {
         const input = $(this);
         
-        if (shouldBeCheck(input) && !isNumber(this.value)) {
-            input.attr('data-error-message', errorMessage);
+        if (shouldBeCheck(input) && !testEmail(this.value)) {
+            input.attr('data-error-message', input.attr('data-email-message') || errorMessage);
             errorFields.push(input);
         }
     });

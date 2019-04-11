@@ -10,7 +10,7 @@ export default (form, format, errorMessage) => {
     form.find('.date').each(function () {
         let input = $(this);
         if (shouldBeCheck(input) && moment(this.value, format.date, true).isValid()) {
-            input.attr('data-error-message', errorMessage);
+            input.attr('data-error-message', input.attr('data-date-message') || errorMessage);
             errorFields.push(input);
         }
     });
@@ -18,7 +18,7 @@ export default (form, format, errorMessage) => {
     form.find('.time').each(function () {
         let input = $(this);
         if (shouldBeCheck(input) && moment(this.value, format.time, true).isValid()) {
-            input.attr('data-error-message', errorMessage);
+            input.attr('data-error-message', input.attr('data-time-message') || errorMessage);
             errorFields.push(input);
         }
     });
@@ -26,7 +26,7 @@ export default (form, format, errorMessage) => {
     form.find('.datetime').each(function () {
         let input = $(this);
         if (shouldBeCheck(input) && moment(this.value, format.datetime, true).isValid()) {
-            input.attr('data-error-message', errorMessage);
+            input.attr('data-error-message', input.attr('data-datetime-message') || errorMessage);
             errorFields.push(input);
         }
     });
