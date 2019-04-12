@@ -2,14 +2,16 @@ import showError from './form/showError';
 import hideError from './form/hideError';
 import processResponse from './form/processResponse';
 
+window.__NICEFORM_DEBUG__ = true;
+
 export default {
     postFormEnabled: true,
     postUrl: null,
     
     format: {
-        date: 'DD-MM-YYYY',
+        date: 'DD/MM/YYYY',
         time: 'HH:mm',
-        datetime: 'DD-MM-YYYY HH:mm'
+        datetime: 'DD/MM/YYYY HH:mm'
     },
     
     password: {
@@ -21,8 +23,10 @@ export default {
     },
     
     requiredErrorMessage: 'This field is required',
-    dateTimeErrorMessage: 'Please enter valid date time',
-    emailErrorMessage: 'Please check the format of your email address, it should read like ben@somewhere.com',
+    dateErrorMessage: 'Please check the format of your date, it should be like 14/02/2000',
+    timeErrorMessage: 'Please check the format of your time, it should be like 14:02',
+    datetimeErrorMessage: 'Please check the format of your date, it should be like 14/02/2000 14:02',
+    emailErrorMessage: 'Please check the format of your email address, it should read like someone@somewhere.com',
     numberErrorMessage: 'Please enter digits only',
     urlErrorMessage: 'Please enter valid website address',
     passwordErrorMessage: 'Your password must be at least 6 characters and it must contain numbers, letters and at least 1 special character',

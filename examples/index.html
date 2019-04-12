@@ -31,55 +31,20 @@
         </nav>
         
         <div class="container">
-            <form class="form-horizontal" action="." id="form1">
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="username">Username</label>
-                    <div class="col-sm-6">
-                        <input type="text" name="username" id="username" class="form-control required" />
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><strong>Examples list</strong></h3>
+                        </div>
+                        <div class="list-group">
+                            <a class="list-group-item" href="all_fields_required.html">All fields are required</a>
+                            <a class="list-group-item" href="all_fields_non_required.html">All fields are not required</a>
+                            <a class="list-group-item" href="custom_message.html">Custom message</a>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="password">Password</label>
-                    <div class="col-sm-6">
-                        <input type="password" name="password" id="password" class="form-control password required" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="repassword">Confirm Password</label>
-                    <div class="col-sm-6">
-                        <input type="password" name="repassword" id="repassword" class="form-control repassword required" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="email">Email</label>
-                    <div class="col-sm-6">
-                        <input type="text" name="email" id="email" class="form-control email required" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3" for="quantity">Quantity</label>
-                    <div class="col-sm-6">
-                        <input type="text" name="quantity" id="quantity" class="form-control number required" />
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
-    
-        <script type="text/javascript" src="../examples/vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="../examples/vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../examples/vendors/moment-2.24.0/moment-with-locales.min.js"></script>
-        <script type="text/javascript" src="../dist/jquery.niceform.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                $('#form1').niceform();
-            });
-        </script>
     </body>
 </html>

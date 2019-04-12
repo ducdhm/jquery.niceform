@@ -1,50 +1,67 @@
-import checkRequired from '../rules/checkRequiredFields';
-import checkDateTime from '../rules/checkDateTimeFields';
-import checkEmail from '../rules/checkEmailFields';
-import checkNumber from '../rules/checkNumberFields';
-import checkPassword from '../rules/checkPasswordFields';
-import checkPasswordConfirm from '../rules/checkRePasswordFields';
-import checkRegex from '../rules/checkRegexFields';
-import checkUrl from '../rules/checkUrlFields';
+import checkRequiredFields from '../rules/checkRequiredFields';
+import checkDateTimeFields from '../rules/checkDateTimeFields';
+import checkDateFields from '../rules/checkDateFields';
+import checkTimeFields from '../rules/checkTimeFields';
+import checkEmailFields from '../rules/checkEmailFields';
+import checkNumberFields from '../rules/checkNumberFields';
+import checkPasswordFields from '../rules/checkPasswordFields';
+import checkRePasswordFields from '../rules/checkRePasswordFields';
+import checkRegexFields from '../rules/checkRegexFields';
+import checkUrlFields from '../rules/checkUrlFields';
+import log from '../utils/log';
 
 export default (form, options) => {
     let errorFields = [];
-    let resultRequired = checkRequired(form, options.requiredErrorMessage);
+    let resultRequired = checkRequiredFields(form, options.requiredErrorMessage);
     if (resultRequired.length > 0) {
         errorFields = errorFields.concat(resultRequired);
     }
     
-    let resultDateTime = checkDateTime(form, options.format, options.dateTimeErrorMessage);
-    if (resultDateTime.length > 0) {
-        errorFields = errorFields.concat(resultDateTime);
+    if (typeof window.moment === 'undefined') {
+        log(`WARN :: Can not find "moment", ignore ".date", ".datetime", ".time" fields`);
+    } else {
+        let resultDateTime = checkDateTimeFields(form, options.format, options.datetimeErrorMessage);
+        if (resultDateTime.length > 0) {
+            errorFields = errorFields.concat(resultDateTime);
+        }
+    
+        let resultDate = checkDateFields(form, options.format, options.dateErrorMessage);
+        if (resultDate.length > 0) {
+            errorFields = errorFields.concat(resultDate);
+        }
+    
+        let resultTime = checkTimeFields(form, options.format, options.timeErrorMessage);
+        if (resultTime.length > 0) {
+            errorFields = errorFields.concat(resultTime);
+        }
     }
     
-    let resultEmail = checkEmail(form, options.emailErrorMessage);
+    let resultEmail = checkEmailFields(form, options.emailErrorMessage);
     if (resultEmail.length > 0) {
         errorFields = errorFields.concat(resultEmail);
     }
     
-    let resultNumber = checkNumber(form, options.numberErrorMessage);
+    let resultNumber = checkNumberFields(form, options.numberErrorMessage);
     if (resultNumber.length > 0) {
         errorFields = errorFields.concat(resultNumber);
     }
     
-    let resultUrl = checkUrl(form, options.urlErrorMessage);
+    let resultUrl = checkUrlFields(form, options.urlErrorMessage);
     if (resultUrl.length > 0) {
         errorFields = errorFields.concat(resultUrl);
     }
     
-    let resultPassword = checkPassword(form, options.password, options.passwordErrorMessage);
+    let resultPassword = checkPasswordFields(form, options.password, options.passwordErrorMessage);
     if (resultPassword.length > 0) {
         errorFields = errorFields.concat(resultPassword);
     }
     
-    let resultPasswordConfirm = checkPasswordConfirm(form, options.repasswordErrorMessage);
+    let resultPasswordConfirm = checkRePasswordFields(form, options.repasswordErrorMessage);
     if (resultPasswordConfirm.length > 0) {
         errorFields = errorFields.concat(resultPasswordConfirm);
     }
     
-    let resultRegex = checkRegex(form);
+    let resultRegex = checkRegexFields(form);
     if (resultRegex.length > 0) {
         errorFields = errorFields.concat(resultRegex);
     }
