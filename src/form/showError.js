@@ -10,7 +10,7 @@ export default (form, errorFields) => {
         
         let errorMessage = formGroup.find('.nf-error-message');
         if (errorMessage.length === 0) {
-            errorMessage = $(`<span class="nf-error-message help-block text-danger small"></span>`);
+            errorMessage = $(`<span class="nf-error-message help-block text-danger small" style="display: none;"></span>`);
             field.after(errorMessage);
         }
         

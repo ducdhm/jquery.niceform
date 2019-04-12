@@ -1,4 +1,8 @@
 export default (control) => {
+    if (control.attr('data-error-message')) {
+        return false;
+    }
+    
     if (control.hasClass('required')) {
         return true;
     } else {
