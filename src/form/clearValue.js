@@ -4,10 +4,8 @@
  * @param {jQuery} form jQuery object of form
  * @param {String} controlSelector Selector of controls will be clear
  */
-export default (form, controlSelector) => {
-    const controls = form.find(controlSelector || 'input, textarea, select').filter('[data-ignore=clear]');
-    
-    controls.each(function () {
+export default (form, controlSelector = 'input, textarea, select') => {
+    form.find(controlSelector).not('[data-ignore="clear"]').each(function () {
         const control = $(this);
         const isSelect = control.is('select');
         const isCheckbox = control.is(':checkbox');

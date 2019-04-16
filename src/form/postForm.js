@@ -3,8 +3,12 @@ import enableForm from './enableForm';
 
 export default (form, options) => {
     let isFormData = form.attr('enctype') === 'multipart/form-data';
-    let data = isFormData ? form.serializeWithFiles() : form.serialize();
     let postUrl = options.postUrl || form.attr('action') || window.location.pathname;
+    
+    if (typeof options.onBeforeSerializeForm === 'function') {
+        options.onBeforeSerializeForm.call(this, form, options);
+    }
+    let data = isFormData ? form.serializeWithFiles() : form.serialize();
     
     if (typeof options.onBeforePostForm === 'function') {
         data = options.onBeforePostForm.call(this, form, options, data) || data;
@@ -14,33 +18,32 @@ export default (form, options) => {
         disableForm(form);
         
         let ajaxOptions = {
-            type: 'POST',
+            ...options.ajaxOptions,
             url: postUrl,
             data: data,
-            dataType: 'JSON',
             success: function (resp, textStatus, jqXhr) {
                 enableForm(form);
                 
                 let isSuccess = false;
-                if (typeof options.processResponse === 'function') {
-                    isSuccess = options.processResponse(resp, form, options);
+                if (typeof options.processAjaxResponse === 'function') {
+                    isSuccess = options.processAjaxResponse(resp, form, options);
                 }
                 
                 if (isSuccess) {
-                    if (typeof options.onSuccess === 'function') {
-                        options.onSuccess.call(this, resp, form, options);
+                    if (typeof options.onAjaxSuccess === 'function') {
+                        options.onAjaxSuccess.call(this, resp, form, options);
                     }
                 } else {
-                    if (typeof options.onError === 'function') {
-                        options.onError.call(this, jqXhr, form, options);
+                    if (typeof options.onAjaxError === 'function') {
+                        options.onAjaxError.call(this, jqXhr, form, options);
                     }
                 }
             },
             error: function (jqXhr) {
                 enableForm(form);
                 
-                if (typeof options.onError === 'function') {
-                    options.onError.call(this, jqXhr, form, options);
+                if (typeof options.onAjaxError === 'function') {
+                    options.onAjaxError.call(this, jqXhr, form, options);
                 }
             }
         };
@@ -67,8 +70,8 @@ export default (form, options) => {
         
         $.ajax(ajaxOptions);
     } catch (e) {
-        if (typeof options.onError === 'function') {
-            options.onError.call(this, null, form, options);
+        if (typeof options.onAjaxError === 'function') {
+            options.onAjaxError.call(this, null, form, options);
         } else {
             alert('Sorry, an error occurred attempting to submit the form. Please contact the site administrator to resolve!');
         }

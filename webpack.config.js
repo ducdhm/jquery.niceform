@@ -25,9 +25,11 @@ module.exports = {
     },
     
     plugins: PROD ? [
-        new webpack.BannerPlugin(BANNER)
+        new webpack.BannerPlugin(BANNER),
+        new webpack.DefinePlugin({
+            '__VERSION__': JSON.stringify(packageJson.version)
+        })
     ] : [
-    
     ],
     module: {
         rules: [

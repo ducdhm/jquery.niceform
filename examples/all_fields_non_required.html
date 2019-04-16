@@ -5,6 +5,7 @@
         <title>NiceForm - The jQuery plugin for validation and post form data to server</title>
         <link rel="stylesheet" type="text/css" href="../examples/vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="../examples/vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="./css/examples.css" />
     </head>
     
     <body>
@@ -22,6 +23,7 @@
                 
                 <div class="collapse navbar-collapse" id="navbar-top">
                     <ul class="nav navbar-nav">
+                        <li><a href="./"><i class="fa fa-file-text-o"></i> Examples list</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="https://github.com/ducdhm" target="_blank"><i class="fa fa-user-circle"></i> Duc Doan</a></li>
@@ -41,51 +43,52 @@
                             
                             <form class="form-horizontal" action="." id="form1">
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="username">Username</label>
+                                    <label class="control-label col-md-12" for="username">Username</label>
                                     <div class="col-sm-12">
                                         <input type="text" name="username" id="username" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="password">Password</label>
+                                    <label class="control-label col-md-12" for="password">Password</label>
                                     <div class="col-sm-12">
                                         <input type="password" name="password" id="password" class="form-control password" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="repassword">Confirm Password</label>
+                                    <label class="control-label col-md-12" for="repassword">Confirm Password</label>
                                     <div class="col-sm-12">
                                         <input type="password" name="repassword" id="repassword" class="form-control repassword" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="email">Email</label>
+                                    <label class="control-label col-md-12" for="email">Email</label>
                                     <div class="col-sm-12">
                                         <input type="text" name="email" id="email" class="form-control email" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="age">Age</label>
+                                    <label class="control-label col-md-12" for="age">Age</label>
                                     <div class="col-sm-12">
                                         <input type="text" name="age" id="age" class="form-control number" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="dob">DOB</label>
+                                    <label class="control-label col-md-12" for="dob">DOB</label>
                                     <div class="col-sm-12">
                                         <input type="text" name="dob" id="dob" class="form-control date" />
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="strong col-sm-12" for="website">Your website</label>
+                                    <label class="control-label col-md-12" for="website">Your website</label>
                                     <div class="col-sm-12">
                                         <input type="text" name="website" id="website" class="form-control url" />
                                     </div>
                                 </div>
                                 
                                 <hr />
-                                
-                                <button type="submit" class="btn btn-primary">Submit</button>
+    
+                                <div class="form-action">
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -97,10 +100,6 @@
         <script type="text/javascript" src="../examples/vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../examples/vendors/moment-2.24.0/moment-with-locales.min.js"></script>
         <script type="text/javascript" src="../dist/jquery.niceform.js"></script>
-        <script type="text/javascript">
-            $(function () {
-                $('#form1').niceform();
-            });
-        </script>
+        <script type="text/javascript" src="./js/examples.js"></script>
     </body>
 </html>

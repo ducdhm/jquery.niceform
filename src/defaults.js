@@ -1,12 +1,19 @@
 import showError from './form/showError';
+import showErrorField from './form/showErrorField';
 import hideError from './form/hideError';
-import processResponse from './form/processResponse';
+import hideErrorField from './form/hideErrorField';
+import processAjaxResponse from './form/processAjaxResponse';
 
 window.__NICEFORM_DEBUG__ = true;
 
 export default {
     postFormEnabled: true,
     postUrl: null,
+    
+    ajaxOptions: {
+        type: 'POST',
+        dataType: 'JSON'
+    },
     
     format: {
         date: 'DD/MM/YYYY',
@@ -25,7 +32,7 @@ export default {
     requiredErrorMessage: 'This field is required',
     dateErrorMessage: 'Please check the format of your date, it should be like 14/02/2000',
     timeErrorMessage: 'Please check the format of your time, it should be like 14:02',
-    datetimeErrorMessage: 'Please check the format of your date, it should be like 14/02/2000 14:02',
+    datetimeErrorMessage: 'Please check the format of your date time, it should be like 14/02/2000 14:02',
     emailErrorMessage: 'Please check the format of your email address, it should read like someone@somewhere.com',
     numberErrorMessage: 'Please enter digits only',
     urlErrorMessage: 'Please enter valid website address',
@@ -35,13 +42,17 @@ export default {
     showError,
     hideError,
     
-    processResponse,
+    showErrorField,
+    hideErrorField,
+    
+    processAjaxResponse,
     
     onValid: null,
     onInvalid: null,
     
+    onBeforeSerializeForm: null,
     onBeforePostForm: null,
     
-    onSuccess: null,
-    onError: null
+    onAjaxSuccess: null,
+    onAjaxError: null
 };

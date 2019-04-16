@@ -1,4 +1,8 @@
 export default (control) => {
+    if (control.is('[data-ignore="validate"]')) {
+        return false;
+    }
+    
     if (control.attr('data-error-message')) {
         return false;
     }

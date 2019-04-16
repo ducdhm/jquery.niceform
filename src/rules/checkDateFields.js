@@ -5,7 +5,6 @@ export default (form, format, errorMessage) => {
     
     form.find('.date').each(function () {
         let input = $(this);
-        console.log('=======', shouldBeCheck(input), !moment(this.value, format.date, true).isValid())
         if (shouldBeCheck(input) && !moment(this.value, format.date, true).isValid()) {
             input.attr('data-error-message', input.attr('data-date-message') || errorMessage);
             errorFields.push(input);
