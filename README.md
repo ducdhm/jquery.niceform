@@ -1,18 +1,42 @@
 # NiceForm
-The jQuery plugin for validation and post form data to server
-Live examples: http://ducdhm.github.io/jquery.niceform/
+The jQuery plugin for validation and post form data to server (http://ducdhm.github.io/jquery.niceform/)
+
 
 ## Shortcuts
  * [Dependencies](#dependencies)
+ * [Rules](#rules)
  * [Configuration](#configuration)
  * [Methods](#methods)
+ * [Custom message](#custom-message)
  * [License](#license)
+
 
 ## Dependencies
  * [jQuery](http://jquery.com/)
+ * [MomentJS](https://momentjs.com/)
  * [HTML5 FormData](https://github.com/francois2metz/html5-formdata)
  * [jQuery serializeWithFiles](https://stackoverflow.com/a/12426630/1330990)
  * [Password Validator](http://blog.stevenlevithan.com/archives/javascript-password-validator) 
+ 
+ 
+## Rules
+| Name       | Selector      | Description                                                                                                                                                                             |
+|------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Required   | `.required`   | Invalid when value of field is blank or same as `placeholder` attribute                                                                                                                 |
+| Date       | `.date`       | Invalid when value of field is not matched with `locale.date` format from configuration                                                                                                 |
+| Time       | `.time`       | Invalid when value of field is not matched with `locale.time` format from configuration                                                                                                 |
+| DateTime   | `.datetime`   | Invalid when value of field is not matched with `locale.datetime` format from configuration                                                                                             |
+| Email      | `.email`      | Invalid when value of field is not matched with `regex.email` regular expression from configuration                                                                                     |
+| Number     | `.number`     | Invalid when value of field is not number/digit/numeric                                                                                                                                 |
+| Url        | `.url`        | Invalid when value of field is not matched with `regex.url` regular expression from configuration                                                                                       |
+| Password   | `.password`   | Invalid when value of field is not matched with `password` from configuration                                                                                                           |
+| Repassword | `.repassword` | Invalid when value of field is not matched with `.password` field                                                                                                                       |
+| Regex      | `.regex`      | Invalid when value of field is not matched with `data-regex` regular expression from attribute of field. Error message of this rule will be specified in `data-regex-message` attribute |
+
+*Note*:
+ * You can combined *Required* rule with other rules
+ * All rules except *Required* will be validated if value of field is not blank
+
  
 ## Configuration
 | Option                        | Type     | Description                                                                                                                                                                                                                        |
@@ -20,6 +44,16 @@ Live examples: http://ducdhm.github.io/jquery.niceform/
 | postFormEnabled               | Boolean  | Allow NiceForm post form data to server by using AJAX or not. Default: `true`                                                                                                                                                      |
 | postUrl                       | String   | URL to post form data. Default: `null`                                                                                                                                                                                             |
 | ajax                          | Object   | AJAX options to post form data Default: `{ type: 'POST', dataType: 'JSON' }`                                                                                                                                                       |
+| password                      | Object   | Password validator options                                                                                                                                                                                                         |
+| password.min                  | Number   | Minimum length for password field. Default: `6`                                                                                                                                                                                    |
+| password.max                  | Number   | Maximum length for password field. Default: `32`                                                                                                                                                                                   |
+| password.specialLength        | Number   | Number of required special character for password field. Default: `1`                                                                                                                                                              |
+| password.uppercaseLength      | Number   | Number of required uppercase letter for password field. Default: `1`                                                                                                                                                               |
+| password.numberLength         | Number   | Number of required number for password field. Default: `1`                                                                                                                                                                         |
+| regex                         | Object   | Regular expression options                                                                                                                                                                                                         |
+| regex.email                   | RegExp   | Regular expression for email field                                                                                                                                                                                                 |
+| regex.url                     | RegExp   | Regular expression for url field                                                                                                                                                                                                   |
+| animationDuration             | Number   | Animation duration in milisecond                                                                                                                                                                                                   |
 | locale                        | Object   | Locale options                                                                                                                                                                                                                     |
 | locale.date                   | String   | Date format. Default: `DD/MM/YYYY`                                                                                                                                                                                                 |
 | locale.time                   | String   | Time format. Default: `HH:mm`                                                                                                                                                                                                      |
@@ -44,9 +78,18 @@ Live examples: http://ducdhm.github.io/jquery.niceform/
 | onBeforeSerializeForm         | Function | Callback will be called before serializing form. Default: `null`. Params: `form` and `options`                                                                                                                                     |
 | onBeforePostForm              | Function | Callback will be called before posting form. Default: `null`. Params: `form` and `options`                                                                                                                                         |
 | onAjaxSuccess                 | Function | Callback will be call if `processAjaxResponse` return `true`. Default: [source code](./src/defaults/onAjaxSuccess.js). Params: `resp`, `form` and `options`                                                                        |
-| onAjaxError                   | Function | Callback will be call if `processAjaxError` return `false` or `$.ajax` gets error or an unknown issue occurs. Default: [source code](./src/defaults/onAjaxError.js). Params: `jqXhr`, `form` and `options`                           |
+| onAjaxError                   | Function | Callback will be call if `processAjaxError` return `false` or `$.ajax` gets error or an unknown issue occurs. Default: [source code](./src/defaults/onAjaxError.js). Params: `jqXhr`, `form` and `options`                         |
+
 
 ## Methods
+
+
+## Custom message
+To custom message for a specified field, just need `data-${rule}-message` attribute. Example:
+
+```
+<input type="text" class="required email" name="email" data-required-message="Email address is mandatory!" data-email-message="Email address is invalid!" /> 
+```
 
 ## License
 Please read at https://github.com/ducdhm/jquery.niceform/blob/master/LICENSE.md

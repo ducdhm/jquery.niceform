@@ -24,19 +24,19 @@ export default (form, options) => {
         if (resultDateTime.length > 0) {
             errorFields = errorFields.concat(resultDateTime);
         }
-    
+        
         let resultDate = checkDateFields(form, options.locale.date, options.locale.dateErrorMessage);
         if (resultDate.length > 0) {
             errorFields = errorFields.concat(resultDate);
         }
-    
+        
         let resultTime = checkTimeFields(form, options.locale.time, options.locale.timeErrorMessage);
         if (resultTime.length > 0) {
             errorFields = errorFields.concat(resultTime);
         }
     }
     
-    let resultEmail = checkEmailFields(form, options.locale.emailErrorMessage);
+    let resultEmail = checkEmailFields(form, options.regex.email, options.locale.emailErrorMessage);
     if (resultEmail.length > 0) {
         errorFields = errorFields.concat(resultEmail);
     }
@@ -46,7 +46,7 @@ export default (form, options) => {
         errorFields = errorFields.concat(resultNumber);
     }
     
-    let resultUrl = checkUrlFields(form, options.locale.urlErrorMessage);
+    let resultUrl = checkUrlFields(form, options.regex.url, options.locale.urlErrorMessage);
     if (resultUrl.length > 0) {
         errorFields = errorFields.concat(resultUrl);
     }
