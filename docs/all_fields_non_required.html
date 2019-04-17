@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>NiceForm - The jQuery plugin for validation and post form data to server</title>
-        <link rel="stylesheet" type="text/css" href="../examples/vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" type="text/css" href="../examples/vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="/vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" type="text/css" href="./css/examples.css" />
     </head>
     
@@ -45,70 +45,56 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="username">Username</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="username" id="username" class="form-control regex required"
+                                        <input type="text" name="username" id="username" class="form-control regex"
                                                 data-regex="^[a-zA-Z0-9]+$"
-                                                data-required-message="Your username must be not blank"
                                                 data-regex-message="Please enter a valid username, it should contain only letters and numbers, no punctuation, dots, etc" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="name">Name</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="name" id="name" class="form-control required"
-                                                data-required-message="Your name must be not blank" />
+                                        <input type="text" name="name" id="name" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="password">Password</label>
                                     <div class="col-lg-12">
-                                        <input type="password" name="password" id="password" class="form-control password required"
-                                                data-required-message="Your password must be not blank"
-                                                data-password-message="Please enter a valid password, it should contain at least 6 characters with at least 1 number and special character" />
+                                        <input type="password" name="password" id="password" class="form-control password" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="repassword">Confirm Password</label>
                                     <div class="col-lg-12">
-                                        <input type="password" name="repassword" id="repassword" class="form-control repassword required"
-                                                data-required-message="Confirm password must be not blank"
-                                                data-repassword-message="Confirm password is not matched" />
+                                        <input type="password" name="repassword" id="repassword" class="form-control repassword" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="email">Email</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="email" id="email" class="form-control email required"
-                                                data-required-message="Your email must be not blank"
-                                                data-email-message="Your email must be like someone@somewhere.com" />
+                                        <input type="text" name="email" id="email" class="form-control email" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="age">Age</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="age" id="age" class="form-control number required"
-                                                data-required-message="Your age must be not blank"
-                                                data-number-message="Your age must be digits" />
+                                        <input type="text" name="age" id="age" class="form-control number" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="dob">DOB</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="dob" id="dob" class="form-control date required"
-                                                data-required-message="Your DOB must be not blank"
-                                                data-date-message="Your DOB must be like 14/02/2000" />
+                                        <input type="text" name="dob" id="dob" class="form-control date" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="website">Your website</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="website" id="website" class="form-control url required"
-                                                data-required-message="Your website must be not blank"
-                                                data-url-message="Your website must be like www.somewhere.com" />
+                                        <input type="text" name="website" id="website" class="form-control url" />
                                     </div>
                                 </div>
                                 
                                 <hr />
-                                
+    
                                 <div class="form-action">
                                 </div>
                             </form>
@@ -118,9 +104,9 @@
             </div>
         </div>
         
-        <script type="text/javascript" src="../examples/vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="../examples/vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="../examples/vendors/moment-2.24.0/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="/vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/vendors/moment-2.24.0/moment-with-locales.min.js"></script>
         <script type="text/javascript" src="../dist/jquery.niceform.js"></script>
         <script type="text/javascript" src="./js/examples.js"></script>
     </body>
