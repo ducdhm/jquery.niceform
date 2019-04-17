@@ -1,0 +1,11 @@
+{
+    "status": false,
+    "message": "Your information is invalid!",
+    "errorFields": [{
+        "name": "username",
+        "message": "Your username is already taken!"
+    }, {
+        "name": "website",
+        "message": "Your website is in blacklist!"
+    }]
+}

@@ -1,23 +1,32 @@
 {
-  "name": "jquery.niceform",
-  "version": "0.1.0",
-  "description": "The jQuery plugin for validate and get/post data form to server",
-  "main": "jquery.niceform.js",
-  "directories": {
-    "doc": "doc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/bobkhin/jquery.niceform"
-  },
-  "author": "Duc Doan Hoang Minh",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bobkhin/jquery.niceform/issues"
-  },
-  "homepage": "https://github.com/bobkhin/jquery.niceform",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "^0.4.0"
-  }
+    "name": "jquery.niceform",
+    "title": "NiceForm",
+    "version": "1.0.0",
+    "description": "The jQuery plugin for validate and get/post data form to server",
+    "scripts": {
+        "build": "webpack && webpack --prod",
+        "dev": "webpack --progress --color --watch"
+    },
+    "directories": {
+        "doc": "doc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/bobkhin/jquery.niceform"
+    },
+    "author": "Duc Doan (ducdhm@gmail.com)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/bobkhin/jquery.niceform/issues"
+    },
+    "homepage": "https://github.com/bobkhin/jquery.niceform",
+    "devDependencies": {
+        "@babel/core": "^7.4.0",
+        "@babel/plugin-proposal-class-properties": "^7.4.0",
+        "@babel/preset-env": "^7.4.2",
+        "babel-loader": "^8.0.5",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.3.0",
+        "yargs": "^13.2.2"
+    }
 }

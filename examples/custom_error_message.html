@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>NiceForm - The jQuery plugin for validation and post form data to server</title>
+        <link rel="stylesheet" type="text/css" href="../examples/vendors/bootstrap-3.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../examples/vendors/font-awesome-4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="./css/examples.css" />
+    </head>
+    
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="https://github.com/Kademi/keditor">NiceForm</a>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="navbar-top">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./"><i class="fa fa-file-text-o"></i> Examples list</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/ducdhm" target="_blank"><i class="fa fa-user-circle"></i> Duc Doan</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Registration</h3>
+                        </div>
+                        <div class="panel-body">
+                            
+                            <form class="form-horizontal" action="." id="form1">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="username">Username</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="username" id="username" class="form-control regex required"
+                                                data-regex="^[a-zA-Z0-9]+$"
+                                                data-required-message="Your username must be not blank"
+                                                data-regex-message="Please enter a valid username, it should contain only letters and numbers, no punctuation, dots, etc" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="name">Name</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="name" id="name" class="form-control required"
+                                                data-required-message="Your name must be not blank" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="password">Password</label>
+                                    <div class="col-lg-12">
+                                        <input type="password" name="password" id="password" class="form-control password required"
+                                                data-required-message="Your password must be not blank"
+                                                data-password-message="Please enter a valid password, it should contain at least 6 characters with at least 1 number and special character" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="repassword">Confirm Password</label>
+                                    <div class="col-lg-12">
+                                        <input type="password" name="repassword" id="repassword" class="form-control repassword required"
+                                                data-required-message="Confirm password must be not blank"
+                                                data-repassword-message="Confirm password is not matched" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="email">Email</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="email" id="email" class="form-control email required"
+                                                data-required-message="Your email must be not blank"
+                                                data-email-message="Your email must be like someone@somewhere.com" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="age">Age</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="age" id="age" class="form-control number required"
+                                                data-required-message="Your age must be not blank"
+                                                data-number-message="Your age must be digits" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="dob">DOB</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="dob" id="dob" class="form-control date required"
+                                                data-required-message="Your DOB must be not blank"
+                                                data-date-message="Your DOB must be like 14/02/2000" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-lg-12" for="website">Your website</label>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="website" id="website" class="form-control url required"
+                                                data-required-message="Your website must be not blank"
+                                                data-url-message="Your website must be like www.somewhere.com" />
+                                    </div>
+                                </div>
+                                
+                                <hr />
+                                
+                                <div class="form-action">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="../examples/vendors/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../examples/vendors/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../examples/vendors/moment-2.24.0/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="../dist/jquery.niceform.js"></script>
+        <script type="text/javascript" src="./js/examples.js"></script>
+    </body>
+</html>

@@ -1,0 +1,8 @@
+.form-action {
+    letter-spacing: -1em;
+}
+
+.form-action .btn {
+    letter-spacing: normal;
+    margin-bottom: 10px;
+}
