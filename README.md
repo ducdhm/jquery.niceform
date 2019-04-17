@@ -1,8 +1,8 @@
 # NiceForm
 The jQuery plugin for validation and post form data to server
+Live examples: http://ducdhm.github.io/jquery.niceform/
 
 ## Shortcuts
- * [Live examples](#live-examples)
  * [Dependencies](#dependencies)
  * [Configuration](#configuration)
  * [Methods](#methods)
@@ -47,9 +47,6 @@ The jQuery plugin for validation and post form data to server
 | onAjaxError                   | Function | Callback will be call if `processAjaxError` return `false` or `$.ajax` gets error or an unknown issue occurs. Default: [source code](./src/defaults/onAjaxError.js). Params: `jqXhr`, `form` and `options`                           |
 
 ## Methods
-
-## Live examples
-https://rawgit.com/ducdhm/jquery.niceform/master/examples/index.html
 
 ## License
 Please read at https://github.com/ducdhm/jquery.niceform/blob/master/LICENSE.md
