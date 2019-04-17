@@ -9,7 +9,6 @@ import postForm from './form/postForm';
 import clearValue from './form/clearValue';
 import disableForm from './form/disableForm';
 import enableForm from './form/enableForm';
-import resetForm from './form/resetForm';
 import showMessage from './form/showMessage';
 import hideMessage from './form/hideMessage';
 
@@ -67,10 +66,6 @@ export default class NiceForm {
     
     disableForm() {
         disableForm(this.form);
-    }
-    
-    resetForm() {
-        resetForm(this.form);
     }
     
     showMessage(type, title, message) {

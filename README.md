@@ -33,9 +33,9 @@ The jQuery plugin for validation and post form data to server (http://ducdhm.git
 | Repassword | `.repassword` | Invalid when value of field is not matched with `.password` field                                                                                                                       |
 | Regex      | `.regex`      | Invalid when value of field is not matched with `data-regex` regular expression from attribute of field. Error message of this rule will be specified in `data-regex-message` attribute |
 
-*Note*:
- * You can combined *Required* rule with other rules
- * All rules except *Required* will be validated if value of field is not blank
+**Note**:
+ * You can combined `Required` rule with other rules
+ * All rules except `Required` will be validated if value of field is not blank
 
  
 ## Configuration
@@ -82,6 +82,18 @@ The jQuery plugin for validation and post form data to server (http://ducdhm.git
 
 
 ## Methods
+| Name               	| Params                                       	| Description                                                                                                                                                          	|
+|--------------------	|----------------------------------------------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------------	|
+| clearValue         	| String: controlSelector                      	| Clear value of textbox, textarea. Uncheck all radio button and checkbox. And set selected index of select is -1. NOTE: Not effect with element `data-ignore="clear"` 	|
+| enableForm         	|                                              	| Enable all form controls include textbox, textarea, select box, radio button, checkbox and button                                                                    	|
+| disableForm        	|                                              	| Disable all form controls include textbox, textarea, select box, radio button, checkbox and button                                                                   	|
+| showMessage        	| String: type, String: title, String: message 	| Show message                                                                                                                                                         	|
+| showSuccessMessage 	|                                              	|                                                                                                                                                                      	|
+| showErrorMessage   	|                                              	|                                                                                                                                                                      	|
+| hideMessage        	|                                              	| Hide                                                                                                                                                                 	|
+| getOptions         	|                                              	| Get options/configuration of NiceForm                                                                                                                                	|
+| showElement        	| jQuery: element                              	|  Show specified element with fadeIn and slideDown effects                                                                                                            	|
+| hideElement        	| jQuery: element                              	| Hide specified element with fadeOut and slideUp effects                                                                                                              	|
 
 
 ## Custom message
