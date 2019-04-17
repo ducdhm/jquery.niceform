@@ -30,6 +30,9 @@ module.exports = {
             '__VERSION__': JSON.stringify(packageJson.version)
         })
     ] : [
+        new webpack.DefinePlugin({
+            '__VERSION__': JSON.stringify(packageJson.version)
+        })
     ],
     module: {
         rules: [
