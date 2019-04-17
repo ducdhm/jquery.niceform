@@ -2,7 +2,7 @@ export default (form, errorMessage) => {
     let errorFields = [];
     
     let names = {};
-    form.find('.required:radio, .required:checkbox').each(function () {
+    form.find('.required:radio, .required:checkbox').not('[data-ignore="validate"]').each(function () {
         if (!this.name in names) {
             const input = form.find(`input[name="${this.name}"]`);
             const checked = input.filter(':checked');
@@ -15,7 +15,7 @@ export default (form, errorMessage) => {
         }
     });
     
-    form.find('.required').filter('input, select, textarea').not('.tt-hint, :radio, :checkbox').each(function () {
+    form.find('.required').filter('input, select, textarea').not('.tt-hint, :radio, :checkbox, [data-ignore="validate"]').each(function () {
         const input = $(this);
         const val = input.val() || '';
         const placeholder = input.attr('placeholder');

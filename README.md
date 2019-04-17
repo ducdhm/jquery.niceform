@@ -34,6 +34,7 @@ The jQuery plugin for validation and post form data to server (http://ducdhm.git
 | Regex      | `.regex`      | Invalid when value of field is not matched with `data-regex` regular expression from attribute of field. Error message of this rule will be specified in `data-regex-message` attribute |
 
 **Note**:
+ * You can ignore validation rules by using `data-ignore=validate` for your fields
  * You can combined `Required` rule with other rules
  * All rules except `Required` will be validated if value of field is not blank
 
