@@ -92,4 +92,4 @@ To custom message for a specified field, just need `data-${rule}-message` attrib
 ```
 
 ## License
-Please read at https://github.com/ducdhm/jquery.niceform/blob/master/LICENSE.md
+Please read at [here](LICENSE.md)
