@@ -12,7 +12,7 @@ import log from '../utils/log';
 
 export default (form, options) => {
     let errorFields = [];
-    let resultRequired = checkRequiredFields(form, options.requiredErrorMessage);
+    let resultRequired = checkRequiredFields(form, options.locale.requiredErrorMessage);
     if (resultRequired.length > 0) {
         errorFields = errorFields.concat(resultRequired);
     }
@@ -20,43 +20,43 @@ export default (form, options) => {
     if (typeof window.moment === 'undefined') {
         log(`WARN :: Can not find "moment", ignore ".date", ".datetime", ".time" fields`);
     } else {
-        let resultDateTime = checkDateTimeFields(form, options.format, options.datetimeErrorMessage);
+        let resultDateTime = checkDateTimeFields(form, options.locale.datetime, options.locale.datetimeErrorMessage);
         if (resultDateTime.length > 0) {
             errorFields = errorFields.concat(resultDateTime);
         }
     
-        let resultDate = checkDateFields(form, options.format, options.dateErrorMessage);
+        let resultDate = checkDateFields(form, options.locale.date, options.locale.dateErrorMessage);
         if (resultDate.length > 0) {
             errorFields = errorFields.concat(resultDate);
         }
     
-        let resultTime = checkTimeFields(form, options.format, options.timeErrorMessage);
+        let resultTime = checkTimeFields(form, options.locale.time, options.locale.timeErrorMessage);
         if (resultTime.length > 0) {
             errorFields = errorFields.concat(resultTime);
         }
     }
     
-    let resultEmail = checkEmailFields(form, options.emailErrorMessage);
+    let resultEmail = checkEmailFields(form, options.locale.emailErrorMessage);
     if (resultEmail.length > 0) {
         errorFields = errorFields.concat(resultEmail);
     }
     
-    let resultNumber = checkNumberFields(form, options.numberErrorMessage);
+    let resultNumber = checkNumberFields(form, options.locale.numberErrorMessage);
     if (resultNumber.length > 0) {
         errorFields = errorFields.concat(resultNumber);
     }
     
-    let resultUrl = checkUrlFields(form, options.urlErrorMessage);
+    let resultUrl = checkUrlFields(form, options.locale.urlErrorMessage);
     if (resultUrl.length > 0) {
         errorFields = errorFields.concat(resultUrl);
     }
     
-    let resultPassword = checkPasswordFields(form, options.password, options.passwordErrorMessage);
+    let resultPassword = checkPasswordFields(form, options.password, options.locale.passwordErrorMessage);
     if (resultPassword.length > 0) {
         errorFields = errorFields.concat(resultPassword);
     }
     
-    let resultPasswordConfirm = checkRePasswordFields(form, options.repasswordErrorMessage);
+    let resultPasswordConfirm = checkRePasswordFields(form, options.locale.repasswordErrorMessage);
     if (resultPasswordConfirm.length > 0) {
         errorFields = errorFields.concat(resultPasswordConfirm);
     }

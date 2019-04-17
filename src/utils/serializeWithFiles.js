@@ -3,8 +3,6 @@
     $.fn.serializeWithFiles = function () {
         var form = $(this);
         
-        flog('[jquery.forms] Initializing serializeWithFiles...', form);
-        
         // ADD FILE TO PARAM AJAX
         var formData = new FormData();
         form.find('input[type=file]').each(function (index, input) {

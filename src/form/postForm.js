@@ -18,7 +18,7 @@ export default (form, options) => {
         disableForm(form);
         
         let ajaxOptions = {
-            ...options.ajaxOptions,
+            ...options.ajax,
             url: postUrl,
             data: data,
             success: function (resp, textStatus, jqXhr) {

@@ -5,7 +5,7 @@ export default (form, format, errorMessage) => {
     
     form.find('.time').each(function () {
         let input = $(this);
-        if (shouldBeCheck(input) && !moment(this.value, format.time, true).isValid()) {
+        if (shouldBeCheck(input) && !moment(this.value, format, true).isValid()) {
             input.attr('data-error-message', input.attr('data-time-message') || errorMessage);
             errorFields.push(input);
         }
