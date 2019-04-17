@@ -87,7 +87,7 @@ The jQuery plugin for validation and post form data to server (http://ducdhm.git
 ## Custom message
 To custom message for a specified field, just need `data-${rule}-message` attribute. Example:
 
-```
+```html
 <input type="text" class="required email" name="email" data-required-message="Email address is mandatory!" data-email-message="Email address is invalid!" /> 
 ```
 
