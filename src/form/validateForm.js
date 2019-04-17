@@ -74,7 +74,7 @@ export default (form, options) => {
     }
     
     if (errorFields.length > 0) {
-        typeof options.showError === 'function' && options.showError(form, errorFields);
+        typeof options.showError === 'function' && options.showError(form, errorFields, options);
         
         return false;
     } else {

@@ -1,8 +1,8 @@
-import showError from './form/showError';
-import showErrorField from './form/showErrorField';
-import hideError from './form/hideError';
-import hideErrorField from './form/hideErrorField';
-import processAjaxResponse from './form/processAjaxResponse';
+import showError from './showError';
+import hideError from './hideError';
+import processAjaxResponse from './processAjaxResponse';
+import onAjaxSuccess from './onAjaxSuccess';
+import onAjaxError from './onAjaxError';
 
 window.__NICEFORM_DEBUG__ = true;
 
@@ -29,6 +29,10 @@ export default {
         numberLength: 1
     },
     
+    animationDuration: 200,
+    
+    successMessage: 'The form has been successfully submitted',
+    
     requiredErrorMessage: 'This field is required',
     dateErrorMessage: 'Please check the format of your date, it should be like 14/02/2000',
     timeErrorMessage: 'Please check the format of your time, it should be like 14:02',
@@ -38,12 +42,10 @@ export default {
     urlErrorMessage: 'Please enter valid website address',
     passwordErrorMessage: 'Your password must be at least 6 characters and it must contain numbers, letters and at least 1 special character',
     repasswordErrorMessage: 'Please confirm your password',
+    unknownErrorMessage: 'Sorry, an error occurred attempting to submit the form. Please contact the site administrator to resolve!',
     
     showError,
     hideError,
-    
-    showErrorField,
-    hideErrorField,
     
     processAjaxResponse,
     
@@ -53,6 +55,6 @@ export default {
     onBeforeSerializeForm: null,
     onBeforePostForm: null,
     
-    onAjaxSuccess: null,
-    onAjaxError: null
+    onAjaxSuccess,
+    onAjaxError
 };

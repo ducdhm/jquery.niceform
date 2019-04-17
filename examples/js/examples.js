@@ -1,14 +1,11 @@
 $(function () {
+    initForm1();
+    initForm2();
+});
+
+function initForm1() {
     var form = $('#form1');
-    var niceform = form.niceform({
-        onAjaxSuccess: function (resp) {
-            form.niceform('showSuccessMessage', resp.message);
-        },
-        onAjaxError: function (resp) {
-            console.log(resp);
-            form.niceform('showErrorMessage', resp.responseJSON.message);
-        }
-    });
+    form.niceform();
     
     var formAction = form.find('.form-action');
     var formActionHtml = '';
@@ -47,10 +44,43 @@ $(function () {
     btnDataInvalid.on('click', function () {
         showDataInvalid(form);
     });
-});
+}
+
+function initForm2() {
+    var form = $('#form2');
+    form.niceform({
+        postFormEnabled: false
+    });
+    
+    form.find('.btn-show-success').on('click', function (e) {
+        e.preventDefault();
+        
+        form.niceform('showMessage', 'success', 'Success!', 'This is success message!');
+    });
+    
+    form.find('.btn-show-info').on('click', function (e) {
+        e.preventDefault();
+        
+        form.niceform('showMessage', 'info', 'Info!', 'This is info message!');
+    });
+    
+    form.find('.btn-show-warning').on('click', function (e) {
+        e.preventDefault();
+        
+        form.niceform('showMessage', 'warning', 'Warning!', 'This is warning message!');
+    });
+    
+    form.find('.btn-show-danger').on('click', function (e) {
+        e.preventDefault();
+        
+        form.niceform('showMessage', 'danger', 'Danger!', 'This is danger message!');
+    });
+    
+}
 
 function showDataValid(form) {
-    form.find('[name=username]').val('iam');
+    form.find('[name=name]').val('iam');
+    form.find('[name=username]').val('username123');
     form.find('[name=password]').val('Password123!');
     form.find('[name=repassword]').val('Password123!');
     form.find('[name=email]').val('hello@iam.here');
@@ -60,7 +90,9 @@ function showDataValid(form) {
 }
 
 function showDataInvalid(form) {
-    form.find('[name=username]').val('');
+    form.find('[name=name]').val('');
+    form.find('[name=username]').val('I l!ke th!s username');
+    form.find('[name=password]').val('Password');
     form.find('[name=password]').val('Password');
     form.find('[name=repassword]').val('Password123!');
     form.find('[name=email]').val('hello@iam');

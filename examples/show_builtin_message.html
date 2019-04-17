@@ -37,65 +37,39 @@
                 <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Registration</h3>
+                            <h3 class="panel-title">Login</h3>
                         </div>
                         <div class="panel-body">
                             
-                            <form class="form-horizontal" action="." id="form1">
+                            <form class="form-horizontal" action="." id="form2">
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="username">Username</label>
                                     <div class="col-lg-12">
-                                        <input type="text" name="username" id="username" class="form-control regex required"
-                                                data-regex="^[a-zA-Z0-9]+$"
-                                                data-regex-message="Please enter a valid username, it should contain only letters and numbers, no punctuation, dots, etc" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-12" for="name">Name</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="name" id="name" class="form-control required" />
+                                        <input type="text" name="username" id="username" class="form-control required" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-lg-12" for="password">Password</label>
                                     <div class="col-lg-12">
-                                        <input type="password" name="password" id="password" class="form-control password required" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-12" for="repassword">Confirm Password</label>
-                                    <div class="col-lg-12">
-                                        <input type="password" name="repassword" id="repassword" class="form-control repassword required" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-12" for="email">Email</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="email" id="email" class="form-control email required" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-12" for="age">Age</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="age" id="age" class="form-control number required" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-12" for="dob">DOB</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="dob" id="dob" class="form-control date required" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-lg-12" for="website">Your website</label>
-                                    <div class="col-lg-12">
-                                        <input type="text" name="website" id="website" class="form-control url required" />
+                                        <input type="password" name="password" id="password" class="form-control required" />
                                     </div>
                                 </div>
                                 
                                 <hr />
-    
-                                <div class="form-action">
+                                
+                                <div class="row">
+                                    <p class="col-sm-6">
+                                        <button type="button" class="btn btn-block btn-success btn-show-success"><i class="fa fa-check-circle"></i> Show success message</button>
+                                    </p>
+                                    <p class="col-sm-6">
+                                        <button type="button" class="btn btn-block btn-info btn-show-info"><i class="fa fa-info-circle"></i> Show info message</button>
+                                    </p>
+                                    <p class="col-sm-6">
+                                        <button type="button" class="btn btn-block btn-warning btn-show-warning"><i class="fa fa-exclamation-circle"></i> Show warning message</button>
+                                    </p>
+                                    <p class="col-sm-6">
+                                        <button type="button" class="btn btn-block btn-danger btn-show-danger"><i class="fa fa-times-circle"></i> Show error message</button>
+                                    </p>
                                 </div>
                             </form>
                         </div>

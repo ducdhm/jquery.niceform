@@ -73,7 +73,7 @@ export default (form, options) => {
         if (typeof options.onAjaxError === 'function') {
             options.onAjaxError.call(this, null, form, options);
         } else {
-            alert('Sorry, an error occurred attempting to submit the form. Please contact the site administrator to resolve!');
+            alert(options.unknownErrorMessage);
         }
     }
 };
