@@ -5,7 +5,12 @@ $(function () {
 
 function initForm1() {
     var form = $('#form1');
-    form.niceform();
+    form.niceform({
+        ajax: {
+            // Because Github page disallows POST
+            type: 'GET'
+        }
+    });
     
     var formAction = form.find('.form-action');
     var formActionHtml = '';
