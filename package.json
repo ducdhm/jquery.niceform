@@ -7,13 +7,17 @@
         "build": "webpack && webpack --prod",
         "dev": "webpack --progress --color --watch"
     },
-    "directories": {
-        "doc": "doc"
-    },
     "repository": {
         "type": "git",
         "url": "git://github.com/bobkhin/jquery.niceform"
     },
+    "keywords": [
+        "jquery",
+        "jquery-plugin",
+        "form",
+        "form-validation",
+        "form-post"
+    ],
     "author": "Duc Doan (ducdhm@gmail.com)",
     "license": "MIT",
     "bugs": {
