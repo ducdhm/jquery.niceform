@@ -102,12 +102,12 @@ $('#form-id').niceform('methodName', param1, param2, ...);
 ```
 or
 ```javascript
-var niceform = $('#form-id').niceForm(options); // Initialize NiceForm
+var niceform = $('#form-id').niceform(options); // Get NiceForm instance when initializing
 niceform.methodName(param1, param2, ...);
 ```
 or
 ```javascript
-var niceform = $('#form-id').data('niceform');
+var niceform = $('#form-id').data('niceform'); // Get NiceForm instance via `data` attribute
 niceform.methodName(param1, param2, ...);
 ```
 
