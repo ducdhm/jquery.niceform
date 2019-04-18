@@ -96,9 +96,14 @@ The jQuery plugin for validation and post form data to server (http://ducdhm.git
 | showElement        | jQuery: element                                        | Show specified element with fadeIn and slideDown effects                                                                                                                                                          |
 | hideElement        | jQuery: element                                        | Hide specified element with fadeOut and slideUp effects                                                                                                                                                           |
 
-**Note**: There are 2 ways to call method
+**Note**: There are many ways to call method
 ```javascript
 $('#form-id').niceform('methodName', param1, param2, ...);
+```
+or
+```javascript
+var niceform = $('#form-id').niceForm(options); // Initialize NiceForm
+niceform.methodName(param1, param2, ...);
 ```
 or
 ```javascript
