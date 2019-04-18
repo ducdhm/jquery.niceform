@@ -17,7 +17,7 @@ import hideElement from './utils/hideElement';
 
 export default class NiceForm {
     static DEFAULTS = defaults;
-    static version = `${__VERSION__}`;
+    static version = '@{version}';
     
     constructor(form, config) {
         if (!form.jquery || form.length === 0) {

@@ -1,7 +1,8 @@
 {
     "name": "jquery.niceform",
     "title": "NiceForm",
-    "version": "1.0.0",
+    "libraryName": "NiceForm",
+    "version": "1.0.1",
     "description": "The jQuery plugin for validate and get/post data form to server",
     "scripts": {
         "build": "webpack && webpack --prod",
@@ -27,8 +28,10 @@
     "devDependencies": {
         "@babel/core": "^7.4.0",
         "@babel/plugin-proposal-class-properties": "^7.4.0",
+        "@babel/plugin-proposal-export-default-from": "^7.2.0",
         "@babel/preset-env": "^7.4.2",
         "babel-loader": "^8.0.5",
+        "string-replace-loader": "^2.1.1",
         "webpack": "^4.29.6",
         "webpack-cli": "^3.3.0",
         "yargs": "^13.2.2"

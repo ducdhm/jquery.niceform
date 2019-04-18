@@ -17,7 +17,8 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        library: packageJson.name,
+        library: packageJson.libraryName,
+        libraryExport: 'default',
         libraryTarget: 'umd',
         umdNamedDefine: true,
         filename: PROD ? `${packageJson.name}.min.js` : `${packageJson.name}.js`,
@@ -25,21 +26,26 @@ module.exports = {
     },
     
     plugins: PROD ? [
-        new webpack.BannerPlugin(BANNER),
-        new webpack.DefinePlugin({
-            '__VERSION__': JSON.stringify(packageJson.version)
-        })
+        new webpack.BannerPlugin(BANNER)
     ] : [
-        new webpack.DefinePlugin({
-            '__VERSION__': JSON.stringify(packageJson.version)
-        })
     ],
     module: {
         rules: [
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader'
+                use: [
+                    {
+                        loader: 'babel-loader'
+                    },
+                    {
+                        loader: 'string-replace-loader',
+                        options: {
+                            search: '@{version}',
+                            replace: packageJson.version
+                        }
+                    }
+                ]
             }
         ]
     },

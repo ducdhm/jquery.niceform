@@ -96,6 +96,16 @@ The jQuery plugin for validation and post form data to server (http://ducdhm.git
 | showElement        | jQuery: element                                        | Show specified element with fadeIn and slideDown effects                                                                                                                                                          |
 | hideElement        | jQuery: element                                        | Hide specified element with fadeOut and slideUp effects                                                                                                                                                           |
 
+**Note**: There are 2 ways to call method
+```javascript
+$('#form-id').niceform('methodName', param1, param2, ...);
+```
+or
+```javascript
+var niceform = $('#form-id').data('niceform');
+niceform.methodName(param1, param2, ...);
+```
+
 
 ## Custom message
 To custom message for a specified field, just need `data-${rule}-message` attribute. Example:
