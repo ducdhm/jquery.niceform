@@ -16,3 +16,5 @@ $.fn.niceform = function (config, ...rest) {
         }
     }
 };
+
+export default NiceForm;

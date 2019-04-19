@@ -12,16 +12,22 @@ let PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
     mode: PROD ? 'production' : 'development',
-    devtool: PROD ? 'source-map' : 'eval-source-map',
+    devtool: PROD ? 'source-map' : 'inline-source-map',
     
-    entry: './src/index.js',
+    entry: {
+        main: `./src/${packageJson.name}.js`,
+        'vi-VN': './src/locale/vi-VN.js',
+        'en-VN': './src/locale/en-VN.js',
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         library: packageJson.libraryName,
         libraryExport: 'default',
         libraryTarget: 'umd',
         umdNamedDefine: true,
-        filename: PROD ? `${packageJson.name}.min.js` : `${packageJson.name}.js`,
+        filename: (chunkData) => {
+            return chunkData.chunk.name === 'main' ? `${packageJson.name}.js`: 'locale/[name].js';
+        },
         globalObject: `typeof self !== 'undefined' ? self : this`
     },
     
@@ -50,7 +56,8 @@ module.exports = {
         ]
     },
     externals: {
-        jquery: 'jQuery'
+        jquery: 'jQuery',
+        NiceForm: 'NiceForm',
     },
     resolve: {
         modules: [path.resolve('./node_modules'), path.resolve('./src')],

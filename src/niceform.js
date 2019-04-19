@@ -73,11 +73,11 @@ export default class NiceForm {
     }
     
     showSuccessMessage(message) {
-        showMessage(this.form, 'success', 'Success!', message, this.options.animationDuration);
+        showMessage(this.form, 'success', this.options.locale.successTitle, message, this.options.animationDuration);
     }
     
     showErrorMessage(message) {
-        showMessage(this.form, 'danger', 'Error!', message, this.options.animationDuration);
+        showMessage(this.form, 'danger', this.options.locale.errorTitle, message, this.options.animationDuration);
     }
     
     hideMessage() {
