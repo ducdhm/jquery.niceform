@@ -8,6 +8,8 @@ import checkPasswordFields from '../rules/checkPasswordFields';
 import checkRePasswordFields from '../rules/checkRePasswordFields';
 import checkRegexFields from '../rules/checkRegexFields';
 import checkUrlFields from '../rules/checkUrlFields';
+import checkSimpleFields from '../rules/checkSimpleFields';
+import checkReallySimpleFields from '../rules/checkReallySimpleFields';
 import log from '../utils/log';
 
 export default (form, options) => {
@@ -59,6 +61,16 @@ export default (form, options) => {
     let resultPasswordConfirm = checkRePasswordFields(form, options.locale.repasswordErrorMessage);
     if (resultPasswordConfirm.length > 0) {
         errorFields = errorFields.concat(resultPasswordConfirm);
+    }
+    
+    let resultSimple = checkSimpleFields(form, options.regex.simple, options.locale.simpleErrorMessage);
+    if (resultSimple.length > 0) {
+        errorFields = errorFields.concat(resultSimple);
+    }
+    
+    let resultReallySimple = checkReallySimpleFields(form, options.regex.reallySimple, options.locale.reallySimpleErrorMessage);
+    if (resultReallySimple.length > 0) {
+        errorFields = errorFields.concat(resultReallySimple);
     }
     
     let resultRegex = checkRegexFields(form);

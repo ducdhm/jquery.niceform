@@ -36,7 +36,7 @@ export default {
     emailErrorMessage: 'Please check the format of your email address, it should read like someone@somewhere.com',
     
     // Error message for ".number" field
-    numberErrorMessage: 'Please enter digits only',
+    numberErrorMessage: 'Please enter only numbers',
     
     // Error message for ".url" field
     urlErrorMessage: 'Please enter valid website address',
@@ -46,6 +46,12 @@ export default {
     
     // Error message for ".repassword" field
     repasswordErrorMessage: 'Please confirm your password',
+    
+    // Error message for ".simple" field
+    simpleErrorMessage: 'Please enter only letters, numbers, underscores, dashes and spaces',
+    
+    // Error message for ".really-simple" field
+    reallySimpleErrorMessage: 'Please enter only letters and numbers, no punctuation, dots, etc',
     
     // Error message when unknown issue occurs
     unknownErrorMessage: 'Sorry, an error occurred attempting to submit the form. Please contact the site administrator to resolve!',

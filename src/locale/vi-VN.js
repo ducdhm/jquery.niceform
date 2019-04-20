@@ -20,5 +20,7 @@ NiceForm.DEFAULTS.locale = {
     urlErrorMessage: 'Xin vui lòng nhập địa chỉ website hợp lệ',
     passwordErrorMessage: 'Mật khẩu của bạn tối thiểu phải có 6 ký tự bảo gồm chữ cái (hoa và thường), chữ số và tối thiểu 1 kí tự đặc biệt',
     repasswordErrorMessage: 'Xin vui lòng nhập lại mật khẩu',
+    simpleErrorMessage: 'Xin vui lòng chỉ nhập chữ cái, chữ số, gạch ngang, gạch chân và dấu cách',
+    reallySimpleErrorMessage: 'Xin vui lòng chỉ nhập chữ cái và chữ số',
     unknownErrorMessage: 'Rất tiếc, có lỗi xảy ra khi kết với máy chủ. Xin vui lòng liên hệ với quản trị để xử lý!',
 };
