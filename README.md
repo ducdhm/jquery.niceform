@@ -1,5 +1,5 @@
 # NiceForm
-The jQuery plugin for validation and post form data to server (http://ducdhm.github.io/jquery.niceform/)
+The jQuery plugin for validation and post form data to server ([http://ducdhm.github.io/jquery.niceform/](http://ducdhm.github.io/jquery.niceform/))
 
 
 ## Shortcuts
