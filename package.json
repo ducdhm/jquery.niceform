@@ -35,5 +35,10 @@
         "webpack": "^4.29.6",
         "webpack-cli": "^3.3.0",
         "yargs": "^13.2.2"
+    },
+    "dependencies": {
+        "bootstrap": "^3.4.1",
+        "jquery": "^3.4.0",
+        "moment": "^2.24.0"
     }
 }
