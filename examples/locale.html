@@ -84,15 +84,32 @@
                                         <input type="text" name="dob" id="dob" class="form-control date required" />
                                     </div>
                                 </div>
+                                
+                                <hr />
+                                
                                 <div class="form-group">
-                                    <div class="col-lg-12"><label class="control-label" for="website">Your website</label></div>
+                                    <div class="col-lg-12"><label class="control-label" for="website">Website link</label></div>
                                     <div class="col-lg-12">
                                         <input type="text" name="website" id="website" class="form-control url required" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12"><label class="control-label" for="websiteName">Website name</label></div>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="websiteName" id="websiteName" class="form-control simple required" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12"><label class="control-label" for="websiteColor">Website main color</label></div>
+                                    <div class="col-lg-12">
+                                        <input type="text" name="websiteColor" id="websiteColor" class="form-control regex required"
+                                                data-regex="^#?([a-f0-9]{6}|[a-f0-9]{3})$"
+                                                data-regex-message="Xin vui lòng nhập mã màu hợp lệ. Ví dụ: #000 hoặc #000000" />
+                                    </div>
+                                </div>
                                 
                                 <hr />
-    
+                                
                                 <div class="form-action">
                                 </div>
                             </form>

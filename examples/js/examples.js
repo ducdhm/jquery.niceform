@@ -92,6 +92,8 @@ function showDataValid(form) {
     form.find('[name=age]').val('42');
     form.find('[name=dob]').val('14/02/2000');
     form.find('[name=website]').val('http://mywebsite.com');
+    form.find('[name=websiteName]').val('My Website-01');
+    form.find('[name=websiteColor]').val('#f00');
 }
 
 function showDataInvalid(form) {
@@ -104,4 +106,6 @@ function showDataInvalid(form) {
     form.find('[name=age]').val('four');
     form.find('[name=dob]').val('02/14/2000');
     form.find('[name=website]').val('a.a');
+    form.find('[name=websiteName]').val('My Webs!te');
+    form.find('[name=websiteColor]').val('Red');
 }

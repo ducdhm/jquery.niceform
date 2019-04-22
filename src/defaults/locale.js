@@ -48,7 +48,7 @@ export default {
     repasswordErrorMessage: 'Please confirm your password',
     
     // Error message for ".simple" field
-    simpleErrorMessage: 'Please enter only letters, numbers, underscores, dashes and spaces',
+    simpleErrorMessage: 'Please enter only letters, numbers and only 1 underscore or dash or space between letters and numbers',
     
     // Error message for ".really-simple" field
     reallySimpleErrorMessage: 'Please enter only letters and numbers, no punctuation, dots, etc',
