@@ -47,8 +47,17 @@ module.exports = {
                     {
                         loader: 'string-replace-loader',
                         options: {
-                            search: '@{version}',
-                            replace: packageJson.version
+                            multiple: [
+                                {
+                                    search: '@{version}',
+                                    replace: packageJson.version
+                                },
+                                {
+                                    search: '\\n\\s+',
+                                    replace: '',
+                                    flags: 'g'
+                                }
+                            ]
                         }
                     }
                 ]
