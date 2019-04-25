@@ -1,1 +1,1 @@
-module.exports = require('./src/jquery.niceform');
+module.exports = require('./dist/jquery.niceform');
