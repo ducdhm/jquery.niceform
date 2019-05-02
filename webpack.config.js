@@ -26,7 +26,7 @@ module.exports = {
         libraryTarget: 'umd',
         umdNamedDefine: true,
         filename: (chunkData) => {
-            return chunkData.chunk.name === 'main' ? `${packageJson.name}.js`: 'locale/[name].js';
+            return chunkData.chunk.name === 'main' ? `${packageJson.name}.js` : 'locale/[name].js';
         },
         globalObject: `typeof self !== 'undefined' ? self : this`
     },
@@ -65,7 +65,12 @@ module.exports = {
         ]
     },
     externals: {
-        jquery: 'jQuery',
+        jquery: {
+            amd: 'jquery',
+            root: '$',
+            commonjs: 'jquery',
+            commonjs2: 'jquery'
+        },
         NiceForm: 'NiceForm',
     },
     resolve: {
