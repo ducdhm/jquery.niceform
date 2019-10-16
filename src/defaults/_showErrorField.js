@@ -1,5 +1,7 @@
 export default (form, field, message) => {
     let formGroup = field.closest('.form-group');
+    let inputGroup = field.closest('.input-group');
+    let feedback = formGroup.find('.form-control-feedback');
     
     field.addClass('is-invalid');
     formGroup.addClass('has-error');
@@ -7,7 +9,14 @@ export default (form, field, message) => {
     let errorMessageEl = formGroup.find('.nf-error-message');
     if (errorMessageEl.length === 0) {
         errorMessageEl = $(`<div class="nf-error-message text-danger small" style="display: none;"></div>`);
-        field.after(errorMessageEl);
+
+        if (inputGroup.length > 0) {
+            inputGroup.after(errorMessageEl);
+        } else if (feedback.length > 0) {
+            feedback.after(errorMessageEl)
+        } else {
+            field.after(errorMessageEl)
+        }
     }
     
     errorMessageEl.html(message);
