@@ -2,7 +2,7 @@
     "name": "jquery.niceform",
     "title": "NiceForm",
     "libraryName": "NiceForm",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "The jQuery plugin for validate and get/post data form to server",
     "scripts": {
         "build": "webpack --prod",
@@ -17,9 +17,10 @@
         "jquery-plugin",
         "form",
         "form-validation",
-        "form-post"
+        "form-post",
+        "nice-form"
     ],
-    "author": "Duc Doan (ducdhm@gmail.com)",
+    "author": "Duc Doan <ducdhm@gmail.com>",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/bobkhin/jquery.niceform/issues"
