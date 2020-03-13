@@ -4,7 +4,7 @@ import NiceForm from './niceform';
 $.fn.niceform = function (config, ...rest) {
     let form = $(this);
     let niceform = form.data('niceform');
-    
+
     if (typeof config === 'string') {
         if (niceform && config in NiceForm.prototype) {
             return niceform[config].apply(niceform, rest);
@@ -12,8 +12,9 @@ $.fn.niceform = function (config, ...rest) {
     } else {
         if (!niceform) {
             form.data('niceform', niceform = new NiceForm(form, config));
-            return niceform;
         }
+
+        return niceform;
     }
 };
 

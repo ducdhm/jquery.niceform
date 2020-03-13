@@ -1,16 +1,14 @@
-import NiceForm from 'NiceForm';
-
-NiceForm.DEFAULTS.locale = {
+export default {
     date: 'DD/MM/YYYY',
     time: 'HH:mm',
     datetime: 'DD/MM/YYYY HH:mm',
-    
+
     successTitle: 'Thành công!',
     successMessage: 'Gửi lên máy chủ thành công',
-    
+
     errorTitle: 'Lỗi!',
     invalidErrorMessage: 'Xin vui lòng sửa các trường lỗi',
-    
+
     requiredErrorMessage: 'Trường này là bắt buộc',
     dateErrorMessage: 'Xin vui lòng nhập ngày tháng hợp lệ. Ví dụ: 14/02/2000',
     timeErrorMessage: 'Xin vui lòng nhập thời gian hợp lệ. Ví dụ: 14:02',

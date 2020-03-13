@@ -9,9 +9,10 @@ function initForm1() {
         ajax: {
             // Because Github page disallows POST
             type: 'GET'
-        }
+        },
+        locale: form.attr('data-locale'),
     });
-    
+
     var formAction = form.find('.form-action');
     var formActionHtml = '';
     formActionHtml += '<div class="row">';
@@ -29,22 +30,22 @@ function initForm1() {
     formActionHtml += '    </div>';
     formActionHtml += '</div>';
     formAction.html(formActionHtml);
-    
+
     var btnSubmitSuccess = form.find('.btn-submit-success');
     btnSubmitSuccess.on('click', function () {
         form.attr('action', './json/success.json');
     });
-    
+
     var btnSubmitError = form.find('.btn-submit-error');
     btnSubmitError.on('click', function () {
         form.attr('action', './json/error.json');
     });
-    
+
     var btnDataValid = form.find('.btn-data-valid');
     btnDataValid.on('click', function () {
         showDataValid(form);
     });
-    
+
     var btnDataInvalid = form.find('.btn-data-invalid');
     btnDataInvalid.on('click', function () {
         showDataInvalid(form);
@@ -56,31 +57,31 @@ function initForm2() {
     form.niceform({
         postFormEnabled: false
     });
-    
+
     form.find('.btn-show-success').on('click', function (e) {
         e.preventDefault();
-        
+
         form.niceform('showMessage', 'success', 'Success!', 'This is success message!');
     });
-    
+
     form.find('.btn-show-info').on('click', function (e) {
         e.preventDefault();
-        
+
         form.niceform('showMessage', 'info', 'Info!', 'This is info message!');
     });
-    
+
     form.find('.btn-show-warning').on('click', function (e) {
         e.preventDefault();
-        
+
         form.niceform('showMessage', 'warning', 'Warning!', 'This is warning message!');
     });
-    
+
     form.find('.btn-show-danger').on('click', function (e) {
         e.preventDefault();
-        
+
         form.niceform('showMessage', 'danger', 'Danger!', 'This is danger message!');
     });
-    
+
 }
 
 function showDataValid(form) {

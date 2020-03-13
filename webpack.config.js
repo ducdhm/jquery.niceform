@@ -13,11 +13,9 @@ let PROD = process.env.NODE_ENV === 'production';
 module.exports = {
     mode: PROD ? 'production' : 'development',
     devtool: PROD ? 'source-map' : 'inline-source-map',
-    
+
     entry: {
         main: `./src/${packageJson.name}.js`,
-        'vi-VN': './src/locale/vi-VN.js',
-        'en-VN': './src/locale/en-VN.js',
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -28,13 +26,12 @@ module.exports = {
         filename: (chunkData) => {
             return chunkData.chunk.name === 'main' ? `${packageJson.name}.js` : 'locale/[name].js';
         },
-        globalObject: `typeof self !== 'undefined' ? self : this`
+        globalObject: `typeof self !== 'undefined' ? self : this`,
     },
-    
+
     plugins: PROD ? [
-        new webpack.BannerPlugin(BANNER)
-    ] : [
-    ],
+        new webpack.BannerPlugin(BANNER),
+    ] : [],
     module: {
         rules: [
             {
@@ -42,7 +39,7 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 use: [
                     {
-                        loader: 'babel-loader'
+                        loader: 'babel-loader',
                     },
                     {
                         loader: 'string-replace-loader',
@@ -50,31 +47,31 @@ module.exports = {
                             multiple: [
                                 {
                                     search: '@{version}',
-                                    replace: packageJson.version
+                                    replace: packageJson.version,
                                 },
                                 {
                                     search: '\\n\\s+',
                                     replace: '',
-                                    flags: 'g'
-                                }
-                            ]
-                        }
-                    }
-                ]
-            }
-        ]
+                                    flags: 'g',
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+        ],
     },
     externals: {
         jquery: {
             amd: 'jquery',
             root: '$',
             commonjs: 'jquery',
-            commonjs2: 'jquery'
+            commonjs2: 'jquery',
         },
         NiceForm: 'NiceForm',
     },
     resolve: {
         modules: [path.resolve('./node_modules'), path.resolve('./src')],
-        extensions: ['.json', '.js']
-    }
+        extensions: ['.json', '.js'],
+    },
 };
