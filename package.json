@@ -6,7 +6,8 @@
     "description": "The jQuery plugin for validate and get/post data form to server",
     "scripts": {
         "build": "webpack --prod",
-        "dev": "webpack --progress --color --watch"
+        "dev": "webpack --progress --color --watch",
+        "publish": "node tools\\publishNewVersion"
     },
     "repository": {
         "type": "git",
