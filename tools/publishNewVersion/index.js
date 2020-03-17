@@ -1,5 +1,5 @@
 const fs = require('fs');
-const packageJson = require('./package');
+const packageJson = require('../../package');
 const currentVersion = packageJson.version;
 let newVersion = ((+currentVersion.replace(/\./g, '') + 1) + '').replace(/^(\d+)(\d)(\d)$/g, '$1.$2.$3');
 if (newVersion.length < 2) {
