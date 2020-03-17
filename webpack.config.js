@@ -68,7 +68,6 @@ module.exports = {
             commonjs: 'jquery',
             commonjs2: 'jquery',
         },
-        NiceForm: 'NiceForm',
     },
     resolve: {
         modules: [path.resolve('./node_modules'), path.resolve('./src')],
