@@ -21,6 +21,11 @@ const exec = util.promisify(require('child_process').exec);
     console.log(`-> Build source-code`);
     await exec(`npm run build`);
 
+    console.log(`-> Push to github with message "v${newVersion}"`);
+    await exec(`git add .`);
+    await exec(`git commit -m "v${newVersion}"`);
+    await exec(`git push origin master`);
+
     console.log(`-> Create new release with message "Release of version ${newVersion}"`);
     await exec(`git tag -a v${newVersion} -m "Release of v${newVersion}"`);
     await exec('git push --tags');
