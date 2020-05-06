@@ -8,10 +8,9 @@ if (newVersion.length < 2) {
     newVersion = `0.${newVersion}`;
 }
 
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const { execSync} = require('child_process');
 
-(async () => {
+(() => {
     console.log(`-> Current version: "${currentVersion}" - new version: "${newVersion}"`);
 
     console.log(`-> Update version: "${newVersion}" to "package.json"`);
@@ -19,19 +18,19 @@ const exec = util.promisify(require('child_process').exec);
     fs.writeFileSync('./package.json', JSON.stringify(packageJson, ' ', 4), 'utf-8');
 
     console.log(`-> Build source-code`);
-    await exec(`npm run build`);
+    execSync(`npm run build`);
 
     console.log(`-> Push to github with message "v${newVersion}"`);
-    await exec(`git add .`);
-    await exec(`git commit -m "v${newVersion}"`);
-    await exec(`git push origin master`);
+    execSync(`git add .`);
+    execSync(`git commit -m "v${newVersion}"`);
+    execSync(`git push origin master`);
 
     console.log(`-> Create new release with message "Release of version ${newVersion}"`);
-    await exec(`git tag -a v${newVersion} -m "Release of v${newVersion}"`);
-    await exec('git push --tags');
+    execSync(`git tag -a v${newVersion} -m "Release of v${newVersion}"`);
+    execSync('git push --tags');
 
     console.log(`-> Publish version "${newVersion}" to "https://www.npmjs.com/"`);
-    await exec('npm publish');
+    execSync('npm publish');
 
     console.log(`-> "${newVersion}" is published!`);
 })();
