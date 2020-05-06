@@ -7,13 +7,13 @@ export default (form, options) => {
 
     if (typeof options.onBeforeSerializeForm === 'function') {
         options.onBeforeSerializeForm.call(this, form, options);
-        form.trigger('nf:onBeforeSerializeForm', form, options);
+        form.trigger('nf:onBeforeSerializeForm', [form, options]);
     }
     let data = isFormData ? form.serializeWithFiles() : form.serialize();
 
     if (typeof options.onBeforePostForm === 'function') {
         options.onBeforePostForm.call(this, form, options, data);
-        form.trigger('nf:onBeforePostForm', form, options, data);
+        form.trigger('nf:onBeforePostForm', [form, options, data]);
     }
 
     try {
@@ -34,12 +34,12 @@ export default (form, options) => {
                 if (isSuccess) {
                     if (typeof options.onAjaxSuccess === 'function') {
                         options.onAjaxSuccess.call(this, resp, form, options);
-                        form.trigger('nf:onAjaxSuccess', resp, form, options);
+                        form.trigger('nf:onAjaxSuccess', [resp, form, options]);
                     }
                 } else {
                     if (typeof options.onAjaxError === 'function') {
                         options.onAjaxError.call(this, jqXhr, form, options);
-                        form.trigger('nf:onAjaxError', jqXhr, form, options);
+                        form.trigger('nf:onAjaxError', [jqXhr, form, options]);
                     }
                 }
             },
@@ -48,7 +48,7 @@ export default (form, options) => {
 
                 if (typeof options.onAjaxError === 'function') {
                     options.onAjaxError.call(this, jqXhr, form, options);
-                    form.trigger('nf:onAjaxError', jqXhr, form, options);
+                    form.trigger('nf:onAjaxError', [jqXhr, form, options]);
                 }
             }
         };
@@ -77,7 +77,7 @@ export default (form, options) => {
     } catch (e) {
         if (typeof options.onAjaxError === 'function') {
             options.onAjaxError.call(this, null, form, options);
-            form.trigger('nf:onAjaxError', null, form, options);
+            form.trigger('nf:onAjaxError', [null, form, options]);
         } else {
             alert(options.unknownErrorMessage);
         }

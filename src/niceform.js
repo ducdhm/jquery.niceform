@@ -55,7 +55,7 @@ export default class NiceForm {
             if (validateForm(form, options)) {
                 if (typeof options.onValid === 'function') {
                     options.onValid(form, options);
-                    form.trigger('nf:onValid', form, options);
+                    form.trigger('nf:onValid', [form, options]);
                 }
 
                 if (options.postFormEnabled === true) {
@@ -64,7 +64,7 @@ export default class NiceForm {
             } else {
                 if (typeof options.onInvalid === 'function') {
                     options.onInvalid(form, options);
-                    form.trigger('nf:onInvalid', form, options);
+                    form.trigger('nf:onInvalid', [form, options]);
                 }
             }
         });
