@@ -31,6 +31,7 @@
         "@babel/plugin-proposal-class-properties": "^7.5.5",
         "@babel/plugin-proposal-export-default-from": "^7.5.2",
         "@babel/preset-env": "^7.6.3",
+        "@meenjs/utils": "^1.3.1",
         "babel-loader": "^8.0.6",
         "string-replace-loader": "^2.2.0",
         "webpack": "^4.41.2",
