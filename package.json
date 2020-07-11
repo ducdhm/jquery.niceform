@@ -2,7 +2,7 @@
     "name": "jquery.niceform",
     "title": "NiceForm",
     "libraryName": "NiceForm",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "description": "The jQuery plugin for validate and get/post data form to server",
     "scripts": {
         "build": "webpack --prod",
