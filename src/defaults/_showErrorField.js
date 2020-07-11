@@ -1,10 +1,11 @@
 export default (form, field, message) => {
+    field.addClass('is-invalid');
+
     if (!field.attr('data-hide-message')) {
         let formGroup = field.closest('.form-group');
         let inputGroup = field.closest('.input-group');
         let feedback = formGroup.find('.form-control-feedback');
 
-        field.addClass('is-invalid');
         formGroup.addClass('has-error');
 
         let errorMessageEl = formGroup.find('.nf-error-message');
