@@ -3,7 +3,7 @@ export default (form, errorMessage) => {
 
     let names = {};
     form.find('.required:radio, .required:checkbox').not('[data-ignore="validate"]').each(function () {
-        if (!(this.name in name)) {
+        if (!(this.name in names)) {
             const input = form.find(`input[name="${this.name}"]`);
             const checked = input.filter(':checked');
 
