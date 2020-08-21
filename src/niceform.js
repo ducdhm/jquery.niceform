@@ -54,6 +54,7 @@ export default class NiceForm {
 
             if (typeof options.onBeforeValidate === 'function') {
                 options.onBeforeValidate(form, options);
+                form.trigger('nf:onBeforeValidate', [form, options]);
             }
 
             if (validateForm(form, options)) {
