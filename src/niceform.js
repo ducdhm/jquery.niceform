@@ -52,6 +52,10 @@ export default class NiceForm {
                 options.hideError(form, options);
             }
 
+            if (typeof options.onBeforeValidate === 'function') {
+                options.onBeforeValidate(form, options);
+            }
+
             if (validateForm(form, options)) {
                 if (typeof options.onValid === 'function') {
                     options.onValid(form, options);

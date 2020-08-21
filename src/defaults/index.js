@@ -34,7 +34,7 @@ export default {
 
     onValid: null,
     onInvalid: null,
-
+    onBeforeValidate: null,
     onBeforeSerializeForm: null,
     onBeforePostForm: null,
 
