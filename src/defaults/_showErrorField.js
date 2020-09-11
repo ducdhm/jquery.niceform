@@ -5,6 +5,7 @@ export default (form, field, message) => {
         let formGroup = field.closest('.form-group');
         let inputGroup = field.closest('.input-group');
         let feedback = formGroup.find('.form-control-feedback');
+        let select2 = formGroup.find('.select2');
 
         formGroup.addClass('has-error');
 
@@ -15,9 +16,11 @@ export default (form, field, message) => {
             if (inputGroup.length > 0) {
                 inputGroup.after(errorMessageEl);
             } else if (feedback.length > 0) {
-                feedback.after(errorMessageEl)
+                feedback.after(errorMessageEl);
+            } else if (select2.length > 0) {
+                select2.after(errorMessageEl);
             } else {
-                field.after(errorMessageEl)
+                field.after(errorMessageEl);
             }
         }
 
